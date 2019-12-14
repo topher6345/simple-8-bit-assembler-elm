@@ -1,8 +1,9 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, button, div, text)
-import Html.Events exposing (onClick)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 
 
 type alias Model =
@@ -38,6 +39,34 @@ view model =
         [ button [ onClick Increment ] [ text "+1" ]
         , div [] [ text <| String.fromInt model.count ]
         , button [ onClick Decrement ] [ text "-1" ]
+        , h2 [] [ text "Registers/Flags" ]
+        , table [ style "border" "2px solid blue" ]
+            [ thead [ style "border" "2px solid blue" ]
+                [ th [] [ text "A" ]
+                , th [] [ text "B" ]
+                , th [] [ text "C" ]
+                , th [] [ text "D" ]
+                , th [] [ text "IP" ]
+                , th [] [ text "SP" ]
+                , th [] [ text "Z" ]
+                , th [] [ text "C" ]
+                , th [] [ text "F" ]
+                ]
+            , tbody [ style "border" "2px solid blue" ]
+                [ tr
+                    []
+                    [ td [] [ text "A" ]
+                    , td [] [ text "B" ]
+                    , td [] [ text "C" ]
+                    , td [] [ text "D" ]
+                    , td [] [ text "IP" ]
+                    , td [] [ text "SP" ]
+                    , td [] [ text "Z" ]
+                    , td [] [ text "C" ]
+                    , td [] [ text "F" ]
+                    ]
+                ]
+            ]
         ]
 
 
