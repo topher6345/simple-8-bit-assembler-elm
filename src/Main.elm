@@ -12,8 +12,6 @@ type alias Model =
     { count : Int
     , code : String
     , memory : Array Int
-
-    -- , registerA : Int
     }
 
 
@@ -40,10 +38,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Increment ] [ text "+1" ]
-        , div [] [ text <| String.fromInt model.count ]
-        , button [ onClick Decrement ] [ text "-1" ]
-        , h2 [] [ text "Registers/Flags" ]
+        [ h2 [] [ text "Registers/Flags" ]
         , table []
             [ thead []
                 [ th [] [ text "A" ]
