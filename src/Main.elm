@@ -7,7 +7,8 @@ import Html.Events exposing (onClick)
 
 type alias Model =
     { count : Int
-    , registerA : Int
+
+    -- , registerA : Int
     }
 
 
