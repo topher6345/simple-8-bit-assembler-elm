@@ -16,7 +16,7 @@ toInt (Byte int) =
 
 
 byteAdd (Byte a) (Byte b) =
-    Byte (a + b)
+    mkByte (a + b)
 
 
 toHexstring (Byte int) =
