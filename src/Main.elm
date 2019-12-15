@@ -17,10 +17,10 @@ type alias Model =
     , registerB : Byte
     , registerC : Byte
     , registerD : Byte
+    , instructionPointer : Byte
+    , stackPointer : Byte
+    , zeroFlag : Bool
 
-    --, instructionPointer : Byte
-    --, stackPointer : Byte
-    --, zeroFlag : Bool
     --, carryFlag : Bool
     }
 
@@ -34,6 +34,9 @@ initialModel =
     , registerB = mkByte 127
     , registerC = mkByte 254
     , registerD = mkByte 254
+    , instructionPointer = mkByte 0
+    , stackPointer = mkByte 231
+    , zeroFlag = False
     }
 
 
@@ -50,6 +53,15 @@ update msg model =
 
         Decrement ->
             { model | count = model.count - 1 }
+
+
+displayZeroFlag bool =
+    case bool of
+        True ->
+            "true"
+
+        False ->
+            "false"
 
 
 view : Model -> Html Msg
@@ -75,9 +87,9 @@ view model =
                     , td [] [ text <| String.fromInt <| toInt model.registerB ]
                     , td [] [ text <| String.fromInt <| toInt model.registerC ]
                     , td [] [ text <| String.fromInt <| toInt model.registerD ]
-                    , td [] [ text "IP" ]
-                    , td [] [ text "SP" ]
-                    , td [] [ text "Z" ]
+                    , td [] [ text <| String.fromInt <| toInt model.instructionPointer ]
+                    , td [] [ text <| String.fromInt <| toInt model.stackPointer ]
+                    , td [] [ text <| displayZeroFlag model.zeroFlag ]
                     , td [] [ text "C" ]
                     , td [] [ text "F" ]
                     ]
