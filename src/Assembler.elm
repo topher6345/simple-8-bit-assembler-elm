@@ -3,6 +3,7 @@ module Assembler exposing (assemble)
 import Array
 
 
+assemble : String -> Array Byte
 assemble string =
     Array.initialize 256 <| always <| mkByte 0
 
