@@ -72,4 +72,9 @@ suite =
                     in
                     Expect.equal expected actual
             ]
+        , describe "Assembler"
+            [ test "assemble empty sring" <|
+                \_ ->
+                    Expect.equal False True
+            ]
         ]
