@@ -35,8 +35,16 @@ lookupRegister cpu (Byte int) =
             mkByte 0
 
 
+blankRam =
+    Array.initialize 256 <| always <| mkByte 0
+
+
+initialRam =
+    Array.set 232 (mkByte 80) blankRam
+
+
 initalCPU =
-    { ram = Array.initialize 256 <| always <| mkByte 0
+    { ram = initialRam
     , registerA = mkByte 0
     , registerB = mkByte 0
     , registerC = mkByte 0

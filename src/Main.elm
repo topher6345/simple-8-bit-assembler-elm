@@ -50,23 +50,19 @@ displayBool bool =
             "false"
 
 
-showOutput : Array Byte -> String
 showOutput ram =
     let
         f byte =
-            String.fromChar <| Char.fromCode <| Byte.toInt byte
+            span [ style "background-color" "grey" ] [ text <| String.fromChar <| Char.fromCode <| Byte.toInt byte ]
     in
-    String.join "" <|
-        List.map f <|
-            Array.toList <|
-                Array.slice 232 256 ram
+    List.map f <| Array.toList <| Array.slice 232 256 ram
 
 
 view : Model -> Html Msg
 view model =
     div []
         [ h2 [] [ text "Output" ]
-        , p [] [ text <| showOutput model.cpu.ram ]
+        , div [] <| showOutput model.cpu.ram
         , h2 [] [ text "Registers/Flags" ]
         , table []
             [ thead []
