@@ -2,22 +2,11 @@ module Main exposing (main)
 
 import Array exposing (..)
 import Browser
+import Byte exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Encode as Encode
-
-
-type Byte
-    = Byte Int
-
-
-mkByte int =
-    Byte (modBy 255 int)
-
-
-toInt (Byte int) =
-    int
 
 
 type alias Model =
