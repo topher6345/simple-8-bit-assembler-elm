@@ -12,12 +12,17 @@ type alias Model =
     { count : Int
     , code : String
     , memory : Array Int
+    , registerA : Int
     }
 
 
 initialModel : Model
 initialModel =
-    { count = 0, memory = initialize 256 (always 0), code = "; Simple example\n; Writes Hello World to the output\n\n    JMP start\nhello: DB \"Hello World!\" ; Variable\n       DB 0 ; String terminator\n\nstart:\n    MOV C, hello    ; Point to var \n    MOV D, 232  ; Point to output\n    CALL print\n        HLT             ; Stop execution\n\nprint:          ; print(C:*from, D:*to)\n    PUSH A\n    PUSH B\n    MOV B, 0\n.loop:\n    MOV A, [C]  ; Get char from var\n    MOV [D], A  ; Write to output\n    INC C\n    INC D  \n    CMP B, [C]  ; Check if end\n    JNZ .loop   ; jump if not\n\n    POP B\n    POP A\n    RET\n" }
+    { count = 0
+    , memory = initialize 256 (always 0)
+    , code = "; Simple example\n; Writes Hello World to the output\n\n    JMP start\nhello: DB \"Hello World!\" ; Variable\n       DB 0 ; String terminator\n\nstart:\n    MOV C, hello    ; Point to var \n    MOV D, 232  ; Point to output\n    CALL print\n        HLT             ; Stop execution\n\nprint:          ; print(C:*from, D:*to)\n    PUSH A\n    PUSH B\n    MOV B, 0\n.loop:\n    MOV A, [C]  ; Get char from var\n    MOV [D], A  ; Write to output\n    INC C\n    INC D  \n    CMP B, [C]  ; Check if end\n    JNZ .loop   ; jump if not\n\n    POP B\n    POP A\n    RET\n"
+    , registerA = 127
+    }
 
 
 type Msg
@@ -54,7 +59,7 @@ view model =
             , tbody []
                 [ tr
                     []
-                    [ td [] [ text "A" ]
+                    [ td [] [ text <| String.fromInt model.registerA ]
                     , td [] [ text "B" ]
                     , td [] [ text "C" ]
                     , td [] [ text "D" ]
