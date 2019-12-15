@@ -67,7 +67,8 @@ displayBool bool =
 view : Model -> Html Msg
 view model =
     div []
-        [ h2 [] [ text "Registers/Flags" ]
+        [ h2 [] [ text "Output" ]
+        , h2 [] [ text "Registers/Flags" ]
         , table []
             [ thead []
                 [ th [] [ text "A" ]
@@ -104,7 +105,6 @@ view model =
             , value model.code
             ]
             []
-        , h2 [] [ text "Output" ]
         , button [] [ text "Run" ]
         , button [] [ text "Step" ]
         , button [] [ text "Reset" ]
@@ -121,22 +121,26 @@ addRow tdList =
 
 
 memoryRows array =
-    [ addRow <| mapA mkByteTd <| slice 0 15 array
-    , addRow <| mapA mkByteTd <| slice 16 31 array
-    , addRow <| mapA mkByteTd <| slice 32 47 array
-    , addRow <| mapA mkByteTd <| slice 48 63 array
-    , addRow <| mapA mkByteTd <| slice 64 79 array
-    , addRow <| mapA mkByteTd <| slice 80 95 array
-    , addRow <| mapA mkByteTd <| slice 96 111 array
-    , addRow <| mapA mkByteTd <| slice 112 127 array
-    , addRow <| mapA mkByteTd <| slice 128 143 array
-    , addRow <| mapA mkByteTd <| slice 144 159 array
-    , addRow <| mapA mkByteTd <| slice 160 175 array
-    , addRow <| mapA mkByteTd <| slice 176 191 array
-    , addRow <| mapA mkByteTd <| slice 192 207 array
-    , addRow <| mapA mkByteTd <| slice 208 223 array
-    , addRow <| mapA mkByteTd <| slice 224 239 array
-    , addRow <| mapA mkByteTd <| slice 240 255 array
+    let
+        row x y =
+            addRow <| mapA mkByteTd <| slice x y array
+    in
+    [ row 0 15
+    , row 16 31
+    , row 32 47
+    , row 48 63
+    , row 64 79
+    , row 80 95
+    , row 96 111
+    , row 112 127
+    , row 128 143
+    , row 144 159
+    , row 160 175
+    , row 176 191
+    , row 192 207
+    , row 208 223
+    , row 224 239
+    , row 240 255
     ]
 
 
