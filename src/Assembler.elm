@@ -1,15 +1,16 @@
 module Assembler exposing (assemble)
 
-import Array
+import Array exposing (Array)
+import Byte exposing (Byte, mkByte)
 import Regex
 
 
-tyle alias RAM =
+type alias Ram =
     Array Byte
 
 
-assemble : String -> RAM
-assemble =
+assemble : String -> Ram
+assemble string =
     case string of
         _ ->
             Array.initialize 256 <| always <| mkByte 0
