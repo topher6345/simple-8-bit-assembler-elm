@@ -11,10 +11,6 @@ mkByte int =
     Byte (modBy 256 int)
 
 
-
--- Result, Carry, Zero
-
-
 carryAdd : Byte -> Byte -> ( Byte, Bool, Bool )
 carryAdd (Byte a) (Byte b) =
     let
