@@ -79,13 +79,13 @@ update opcode cpu =
                 ip =
                     byteAdd cpu.instructionPointer (Byte 2)
 
-                ( sum, carry ) =
+                ( sum, carryFlag, zeroFlag ) =
                     carryAdd (lookupRegister cpu reg) (Byte 1)
 
                 model =
                     updateRegister cpu reg sum
             in
-            { model | instructionPointer = ip, carryFlag = carry }
+            { model | instructionPointer = ip, carryFlag = carryFlag, zeroFlag = zeroFlag }
 
         MOV_REG_BYTE sourceRegister destinationRegister ->
             let
