@@ -1,11 +1,26 @@
 module Assembler exposing (assemble)
 
 import Array
+import Regex
 
 
-assemble : String -> Array Byte
-assemble string =
-    Array.initialize 256 <| always <| mkByte 0
+tyle alias RAM =
+    Array Byte
+
+
+assemble : String -> RAM
+assemble =
+    case string of
+        _ ->
+            Array.initialize 256 <| always <| mkByte 0
+
+
+pattern =
+    Regex.fromString "[a-z]+"
+
+
+assembleLine string =
+    string
 
 
 

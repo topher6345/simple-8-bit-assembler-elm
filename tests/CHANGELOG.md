@@ -1,5 +1,16 @@
 # Changelog
 
+
+## Parser
+
+
+Base case
+
+Empty string to empty ram = init
+
+
+start with just `MOV [232], 'h'` (this first part of hello world)
+
 ## Why build a CPU emulator in Elm?
 
 advent of code stuff
