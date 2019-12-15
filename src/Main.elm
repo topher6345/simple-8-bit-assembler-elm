@@ -9,10 +9,8 @@ import Html.Events exposing (..)
 import Json.Encode as Encode
 
 
-type alias Model =
-    { count : Int
-    , code : String
-    , memory : Array Byte
+type alias CPU =
+    { memory : Array Byte
     , registerA : Byte
     , registerB : Byte
     , registerC : Byte
@@ -24,19 +22,28 @@ type alias Model =
     }
 
 
+type alias Model =
+    { count : Int
+    , code : String
+    , cpu : CPU
+    }
+
+
 initialModel : Model
 initialModel =
     { count = 0
-    , memory = Array.initialize 256 <| always <| mkByte 0
     , code = "; Simple example\n; Writes Hello World to the output\n\n    JMP start\nhello: DB \"Hello World!\" ; Variable\n       DB 0 ; String terminator\n\nstart:\n    MOV C, hello    ; Point to var \n    MOV D, 232  ; Point to output\n    CALL print\n        HLT             ; Stop execution\n\nprint:          ; print(C:*from, D:*to)\n    PUSH A\n    PUSH B\n    MOV B, 0\n.loop:\n    MOV A, [C]  ; Get char from var\n    MOV [D], A  ; Write to output\n    INC C\n    INC D  \n    CMP B, [C]  ; Check if end\n    JNZ .loop   ; jump if not\n\n    POP B\n    POP A\n    RET\n"
-    , registerA = mkByte 127
-    , registerB = mkByte 127
-    , registerC = mkByte 254
-    , registerD = mkByte 254
-    , instructionPointer = mkByte 0
-    , stackPointer = mkByte 231
-    , zeroFlag = False
-    , carryFlag = False
+    , cpu =
+        { memory = Array.initialize 256 <| always <| mkByte 0
+        , registerA = mkByte 0
+        , registerB = mkByte 0
+        , registerC = mkByte 0
+        , registerD = mkByte 0
+        , instructionPointer = mkByte 0
+        , stackPointer = mkByte 231
+        , zeroFlag = False
+        , carryFlag = False
+        }
     }
 
 
@@ -84,20 +91,20 @@ view model =
             , tbody []
                 [ tr
                     []
-                    [ td [] [ text <| toHexstring model.registerA ]
-                    , td [] [ text <| String.fromInt <| toInt model.registerB ]
-                    , td [] [ text <| String.fromInt <| toInt model.registerC ]
-                    , td [] [ text <| String.fromInt <| toInt model.registerD ]
-                    , td [] [ text <| String.fromInt <| toInt model.instructionPointer ]
-                    , td [] [ text <| String.fromInt <| toInt model.stackPointer ]
-                    , td [] [ text <| displayBool model.zeroFlag ]
-                    , td [] [ text <| displayBool model.carryFlag ]
+                    [ td [] [ text <| toHexstring model.cpu.registerA ]
+                    , td [] [ text <| String.fromInt <| toInt model.cpu.registerB ]
+                    , td [] [ text <| String.fromInt <| toInt model.cpu.registerC ]
+                    , td [] [ text <| String.fromInt <| toInt model.cpu.registerD ]
+                    , td [] [ text <| String.fromInt <| toInt model.cpu.instructionPointer ]
+                    , td [] [ text <| String.fromInt <| toInt model.cpu.stackPointer ]
+                    , td [] [ text <| displayBool model.cpu.zeroFlag ]
+                    , td [] [ text <| displayBool model.cpu.carryFlag ]
                     , td [] [ text "F" ]
                     ]
                 ]
             ]
         , h2 [] [ text "memory" ]
-        , table [] <| memoryRows model.memory
+        , table [] <| memoryRows model.cpu.memory
         , h2 [] [ text "Code" ]
         , textarea
             [ cols 60
