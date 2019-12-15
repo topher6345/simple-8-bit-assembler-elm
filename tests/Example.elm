@@ -56,15 +56,15 @@ suite =
                     state =
                         { initalCPU | registerA = mkByte 1 }
 
-                    memory =
-                        Array.set 0 (Byte 1) initalCPU.memory
+                    ram =
+                        Array.set 0 (Byte 1) initalCPU.ram
 
                     actual =
                         update (MOV_REG_ADDRESS (Byte 0) (Byte 0)) state
 
                     expected =
                         { initalCPU
-                            | memory = memory
+                            | ram = ram
                             , registerA = Byte 1
                             , instructionPointer = Byte 3
                         }

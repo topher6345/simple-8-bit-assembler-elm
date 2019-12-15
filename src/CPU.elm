@@ -5,7 +5,7 @@ import Byte exposing (..)
 
 
 type alias CPU =
-    { memory : Array Byte
+    { ram : Array Byte
     , registerA : Byte
     , registerB : Byte
     , registerC : Byte
@@ -36,7 +36,7 @@ lookupRegister cpu (Byte int) =
 
 
 initalCPU =
-    { memory = Array.initialize 256 <| always <| mkByte 0
+    { ram = Array.initialize 256 <| always <| mkByte 0
     , registerA = mkByte 0
     , registerB = mkByte 0
     , registerC = mkByte 0
@@ -74,7 +74,7 @@ updateRegister cpu (Byte register) value =
 
 
 updateAddress cpu (Byte address) value =
-    Array.set address value cpu.memory
+    Array.set address value cpu.ram
 
 
 update opcode cpu =
@@ -108,8 +108,8 @@ update opcode cpu =
                 ip =
                     byteAdd cpu.instructionPointer (Byte 3)
 
-                memory =
+                ram =
                     updateAddress cpu destinationAddress <|
                         lookupRegister cpu sourceRegister
             in
-            { cpu | instructionPointer = ip, memory = memory }
+            { cpu | instructionPointer = ip, ram = ram }

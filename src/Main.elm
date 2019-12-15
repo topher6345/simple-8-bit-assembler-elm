@@ -20,7 +20,7 @@ type alias Model =
 initialModel : Model
 initialModel =
     { count = 0
-    , code = "; Simple example\n; Writes Hello World to the output\n\n    JMP start\nhello: DB \"Hello World!\" ; Variable\n       DB 0 ; String terminator\n\nstart:\n    MOV C, hello    ; Point to var \n    MOV D, 232  ; Point to output\n    CALL print\n        HLT             ; Stop execution\n\nprint:          ; print(C:*from, D:*to)\n    PUSH A\n    PUSH B\n    MOV B, 0\n.loop:\n    MOV A, [C]  ; Get char from var\n    MOV [D], A  ; Write to output\n    INC C\n    INC D  \n    CMP B, [C]  ; Check if end\n    JNZ .loop   ; jump if not\n\n    POP B\n    POP A\n    RET\n"
+    , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nHLT"
     , cpu = CPU.initalCPU
     }
 
@@ -81,8 +81,8 @@ view model =
                     ]
                 ]
             ]
-        , h2 [] [ text "memory" ]
-        , table [] <| memoryRows model.cpu.memory
+        , h2 [] [ text "ram" ]
+        , table [] <| memoryRows model.cpu.ram
         , h2 [] [ text "Code" ]
         , textarea
             [ cols 60
