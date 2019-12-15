@@ -1,4 +1,6 @@
-module Byte exposing (Byte, mkByte, toInt)
+module Byte exposing (Byte, mkByte, toHexstring, toInt)
+
+import Hex
 
 
 type Byte
@@ -11,3 +13,7 @@ mkByte int =
 
 toInt (Byte int) =
     int
+
+
+toHexstring (Byte int) =
+    Hex.toString int

@@ -17,10 +17,11 @@ type alias Model =
     , registerB : Byte
     , registerC : Byte
     , registerD : Byte
-    , instructionPointer : Byte
-    , stackPointer : Byte
-    , zeroFlag : Bool
-    , carryFlag : Bool
+
+    --, instructionPointer : Byte
+    --, stackPointer : Byte
+    --, zeroFlag : Bool
+    --, carryFlag : Bool
     }
 
 
@@ -70,7 +71,7 @@ view model =
             , tbody []
                 [ tr
                     []
-                    [ td [] [ text <| String.fromInt <| toInt model.registerA ]
+                    [ td [] [ text <| toHexstring model.registerA ]
                     , td [] [ text <| String.fromInt <| toInt model.registerB ]
                     , td [] [ text <| String.fromInt <| toInt model.registerC ]
                     , td [] [ text <| String.fromInt <| toInt model.registerD ]
