@@ -55,7 +55,7 @@ update msg model =
             { model | count = model.count - 1 }
 
 
-displayZeroFlag bool =
+displayBool bool =
     case bool of
         True ->
             "true"
@@ -89,7 +89,7 @@ view model =
                     , td [] [ text <| String.fromInt <| toInt model.registerD ]
                     , td [] [ text <| String.fromInt <| toInt model.instructionPointer ]
                     , td [] [ text <| String.fromInt <| toInt model.stackPointer ]
-                    , td [] [ text <| displayZeroFlag model.zeroFlag ]
+                    , td [] [ text <| displayBool model.zeroFlag ]
                     , td [] [ text "C" ]
                     , td [] [ text "F" ]
                     ]
