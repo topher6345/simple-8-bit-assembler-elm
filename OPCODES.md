@@ -1,0 +1,63 @@
+# Opcodes
+
+- [x] MOV reg, reg
+- [X] MOV reg, address
+- [ ] MOV reg, constant
+- [ ] MOV address, reg
+- [ ] MOV address, constant
+- [ ] DB constant
+- [ ] ADD reg, reg
+- [ ] ADD reg, address
+- [ ] ADD reg, constant
+- [ ] SUB reg, reg
+- [ ] SUB reg, address
+- [ ] SUB reg, constant
+- [x] INC reg
+- [ ] DEC reg
+- [ ] MUL reg
+- [ ] MUL address
+- [ ] MUL constant
+- [ ] DIV reg
+- [ ] DIV address
+- [ ] DIV constant
+- [ ] AND reg, reg
+- [ ] AND reg, address
+- [ ] AND reg, constant
+- [ ] OR reg, reg
+- [ ] OR reg, address
+- [ ] OR reg, constant
+- [ ] XOR reg, reg
+- [ ] XOR reg, address
+- [ ] XOR reg, constant
+- [ ] NOT reg
+- [ ] SHL reg, reg
+- [ ] SHL reg, address
+- [ ] SHL reg, constant
+- [ ] SHR reg, reg
+- [ ] SHR reg, address
+- [ ] SHR reg, constant
+- [ ] CMP reg, reg
+- [ ] CMP reg, address
+- [ ] CMP reg, constant
+- [ ] JMP address
+- [ ] JC address
+- [ ] JNC address
+- [ ] JZ address
+- [ ] JNZ address
+- [ ] JA address
+- [ ] JNBE address
+- [ ] JAE address
+- [ ] JNB address
+- [ ] JB address
+- [ ] JNAE address
+- [ ] JBE address
+- [ ] JNA address
+- [ ] JE address
+- [ ] JNE address
+- [ ] CALL address
+- [ ] RET
+- [ ] PUSH reg
+- [ ] PUSH address
+- [ ] PUSH constant
+- [ ] POP reg
+- [ ] HLT

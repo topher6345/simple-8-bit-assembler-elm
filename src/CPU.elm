@@ -51,6 +51,7 @@ initalCPU =
 type Msg
     = --Copies a value from src to dest
       MOV_REG_BYTE Byte Byte
+    | MOV_REG_ADDRESS Byte Byte
     | INC_REG Byte
 
 
@@ -70,6 +71,10 @@ updateRegister cpu (Byte register) value =
 
         _ ->
             cpu
+
+
+updateAddress cpu (Byte address) value =
+    Array.set address value cpu.memory
 
 
 update opcode cpu =
@@ -97,3 +102,14 @@ update opcode cpu =
                         lookupRegister cpu sourceRegister
             in
             { model | instructionPointer = ip }
+
+        MOV_REG_ADDRESS sourceRegister destinationAddress ->
+            let
+                ip =
+                    byteAdd cpu.instructionPointer (Byte 3)
+
+                memory =
+                    updateAddress cpu destinationAddress <|
+                        lookupRegister cpu sourceRegister
+            in
+            { cpu | instructionPointer = ip, memory = memory }

@@ -1,5 +1,6 @@
 module Example exposing (suite)
 
+import Array exposing (..)
 import Byte exposing (..)
 import CPU exposing (..)
 import Expect exposing (Expectation)
@@ -47,6 +48,26 @@ suite =
 
                     expected =
                         { initalCPU | registerA = Byte 0, instructionPointer = Byte 2, carryFlag = True }
+                in
+                Expect.equal expected actual
+        , test "appy MOV_REG_ADDRESS" <|
+            \_ ->
+                let
+                    state =
+                        { initalCPU | registerA = mkByte 1 }
+
+                    memory =
+                        Array.set 0 (Byte 1) initalCPU.memory
+
+                    actual =
+                        update (MOV_REG_ADDRESS (Byte 0) (Byte 0)) state
+
+                    expected =
+                        { initalCPU
+                            | memory = memory
+                            , registerA = Byte 1
+                            , instructionPointer = Byte 3
+                        }
                 in
                 Expect.equal expected actual
         ]
