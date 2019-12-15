@@ -22,7 +22,7 @@ suite =
                     expected =
                         { initalCPU | registerA = Byte 1, registerB = Byte 1, instructionPointer = Byte 3 }
                 in
-                actual |> Expect.equal expected
+                Expect.equal expected actual
         , test "apply INC_REG by 1" <|
             \_ ->
                 let
@@ -35,7 +35,7 @@ suite =
                     expected =
                         { initalCPU | registerA = Byte 2, instructionPointer = Byte 2 }
                 in
-                actual |> Expect.equal expected
+                Expect.equal expected actual
         , test "apply INC_REG with Carry" <|
             \_ ->
                 let
@@ -48,5 +48,5 @@ suite =
                     expected =
                         { initalCPU | registerA = Byte 0, instructionPointer = Byte 2, carryFlag = True }
                 in
-                actual |> Expect.equal expected
+                Expect.equal expected actual
         ]
