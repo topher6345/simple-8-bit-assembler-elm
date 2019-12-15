@@ -1,4 +1,4 @@
-module Byte exposing (Byte(..), byteAdd, mkByte, toHexstring, toInt)
+module Byte exposing (Byte(..), byteAdd, carryAdd, mkByte, toHexstring, toInt)
 
 import Hex
 
@@ -8,7 +8,15 @@ type Byte
 
 
 mkByte int =
-    Byte (modBy 255 int)
+    Byte (modBy 256 int)
+
+
+carryAdd (Byte a) (Byte b) =
+    if a + b > 255 then
+        ( mkByte (a + b), True )
+
+    else
+        ( mkByte (a + b), False )
 
 
 toInt (Byte int) =

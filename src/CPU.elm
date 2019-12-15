@@ -1,4 +1,4 @@
-module CPU exposing (CPU, Msg(..), byteToRegisterValue, initalCPU, update)
+module CPU exposing (CPU, Msg(..), initalCPU, lookupRegister, update)
 
 import Array exposing (Array)
 import Byte exposing (..)
@@ -17,7 +17,7 @@ type alias CPU =
     }
 
 
-byteToRegisterValue cpu (Byte int) =
+lookupRegister cpu (Byte int) =
     case int of
         0 ->
             cpu.registerA
@@ -51,7 +51,7 @@ initalCPU =
 type Msg
     = --Copies a value from src to dest
       MOV_REG_BYTE Byte Byte
-    | INC_REG_BYTE Byte
+    | INC_REG Byte
 
 
 updateRegister cpu (Byte register) value =
@@ -74,18 +74,31 @@ updateRegister cpu (Byte register) value =
 
 update opcode cpu =
     case opcode of
-        INC_REG_BYTE (Byte reg) ->
-            cpu
+        INC_REG reg ->
+            let
+                value =
+                    lookupRegister cpu reg
+
+                ip =
+                    byteAdd cpu.instructionPointer (Byte 2)
+
+                ( sum, carry ) =
+                    carryAdd value (Byte 1)
+
+                model =
+                    updateRegister cpu reg sum
+            in
+            { model | instructionPointer = ip, carryFlag = carry }
 
         MOV_REG_BYTE src reg ->
             let
                 value =
-                    byteToRegisterValue cpu src
+                    lookupRegister cpu src
 
                 ip =
                     byteAdd cpu.instructionPointer (Byte 3)
 
-                foo =
+                model =
                     updateRegister cpu reg value
             in
-            { foo | instructionPointer = ip }
+            { model | instructionPointer = ip }
