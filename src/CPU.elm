@@ -90,15 +90,13 @@ update opcode cpu =
             in
             { model | instructionPointer = ip, carryFlag = carry }
 
-        MOV_REG_BYTE src reg ->
+        MOV_REG_BYTE sourceRegister destinationRegister ->
             let
-                value =
-                    lookupRegister cpu src
-
                 ip =
                     byteAdd cpu.instructionPointer (Byte 3)
 
                 model =
-                    updateRegister cpu reg value
+                    updateRegister cpu destinationRegister <|
+                        lookupRegister cpu sourceRegister
             in
             { model | instructionPointer = ip }
