@@ -3,23 +3,11 @@ module Main exposing (Model, Msg(..), displayBool, initialModel, main, mapA, mem
 import Array exposing (Array)
 import Browser
 import Byte exposing (..)
+import CPU exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Encode as Encode
-
-
-type alias CPU =
-    { memory : Array Byte
-    , registerA : Byte
-    , registerB : Byte
-    , registerC : Byte
-    , registerD : Byte
-    , instructionPointer : Byte
-    , stackPointer : Byte
-    , zeroFlag : Bool
-    , carryFlag : Bool
-    }
 
 
 type alias Model =
