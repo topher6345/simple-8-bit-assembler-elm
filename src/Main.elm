@@ -8,20 +8,38 @@ import Html.Events exposing (..)
 import Json.Encode as Encode
 
 
+type Byte
+    = Byte Int
+
+
+mkByte int =
+    Byte (modBy 255 int)
+
+
+toInt (Byte int) =
+    int
+
+
 type alias Model =
     { count : Int
     , code : String
-    , memory : Array Int
-    , registerA : Int
+    , memory : Array Byte
+    , registerA : Byte
+    , registerB : Byte
+    , registerC : Byte
+    , registerD : Byte
     }
 
 
 initialModel : Model
 initialModel =
     { count = 0
-    , memory = initialize 256 (always 0)
+    , memory = initialize 256 (always mkByte 0)
     , code = "; Simple example\n; Writes Hello World to the output\n\n    JMP start\nhello: DB \"Hello World!\" ; Variable\n       DB 0 ; String terminator\n\nstart:\n    MOV C, hello    ; Point to var \n    MOV D, 232  ; Point to output\n    CALL print\n        HLT             ; Stop execution\n\nprint:          ; print(C:*from, D:*to)\n    PUSH A\n    PUSH B\n    MOV B, 0\n.loop:\n    MOV A, [C]  ; Get char from var\n    MOV [D], A  ; Write to output\n    INC C\n    INC D  \n    CMP B, [C]  ; Check if end\n    JNZ .loop   ; jump if not\n\n    POP B\n    POP A\n    RET\n"
-    , registerA = 127
+    , registerA = mkByte 127
+    , registerB = mkByte 127
+    , registerC = mkByte 254
+    , registerD = mkByte 254
     }
 
 
@@ -59,9 +77,9 @@ view model =
             , tbody []
                 [ tr
                     []
-                    [ td [] [ text <| String.fromInt model.registerA ]
-                    , td [] [ text "B" ]
-                    , td [] [ text "C" ]
+                    [ td [] [ text <| String.fromInt <| toInt model.registerA ]
+                    , td [] [ text <| String.fromInt <| toInt model.registerB ]
+                    , td [] [ text <| String.fromInt <| toInt model.registerC ]
                     , td [] [ text "D" ]
                     , td [] [ text "IP" ]
                     , td [] [ text "SP" ]
@@ -94,7 +112,7 @@ view model =
 foo model =
     Array.toList <|
         Array.map
-            (\i -> td [] [ text (String.fromInt i) ])
+            (\i -> td [] [ text <| String.fromInt <| toInt i ])
             model.memory
 
 
