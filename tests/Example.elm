@@ -50,7 +50,7 @@ suite =
                         { initalCPU | registerA = Byte 0, instructionPointer = Byte 2, carryFlag = True }
                 in
                 Expect.equal expected actual
-        , test "appy MOV_REG_ADDRESS" <|
+        , test "apply MOV_REG_ADDRESS" <|
             \_ ->
                 let
                     state =
