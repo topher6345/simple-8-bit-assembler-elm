@@ -1,7 +1,7 @@
-module CPU exposing (CPU, initalCPU)
+module CPU exposing (CPU, Msg(..), byteToRegisterValue, initalCPU, update)
 
 import Array exposing (Array)
-import Byte exposing (Byte(..), mkByte)
+import Byte exposing (..)
 
 
 type alias CPU =
@@ -48,11 +48,30 @@ initalCPU =
     }
 
 
-type Opcode
-    = MOV_REG_BYTE Byte Byte
+type Msg
+    = --Copies a value from src to dest
+      MOV_REG_BYTE Byte Byte
 
 
-apply opcode cpu =
+update opcode cpu =
     case opcode of
-        MOV_REG_BYTE reg byte ->
-            cpu
+        MOV_REG_BYTE src (Byte dest) ->
+            let
+                value =
+                    byteToRegisterValue cpu src
+            in
+            case dest of
+                0 ->
+                    { cpu | registerA = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
+
+                1 ->
+                    { cpu | registerB = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
+
+                2 ->
+                    { cpu | registerC = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
+
+                3 ->
+                    { cpu | registerD = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
+
+                _ ->
+                    cpu

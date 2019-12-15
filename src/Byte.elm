@@ -1,4 +1,4 @@
-module Byte exposing (Byte(..), mkByte, toHexstring, toInt)
+module Byte exposing (Byte(..), byteAdd, mkByte, toHexstring, toInt)
 
 import Hex
 
@@ -13,6 +13,10 @@ mkByte int =
 
 toInt (Byte int) =
     int
+
+
+byteAdd (Byte a) (Byte b) =
+    Byte (a + b)
 
 
 toHexstring (Byte int) =
