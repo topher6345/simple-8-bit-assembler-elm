@@ -17,6 +17,10 @@ type alias Model =
     , registerB : Byte
     , registerC : Byte
     , registerD : Byte
+    , instructionPointer : Byte
+    , stackPointer : Byte
+    , zeroFlag : Bool
+    , carryFlag : Bool
     }
 
 
@@ -69,7 +73,7 @@ view model =
                     [ td [] [ text <| String.fromInt <| toInt model.registerA ]
                     , td [] [ text <| String.fromInt <| toInt model.registerB ]
                     , td [] [ text <| String.fromInt <| toInt model.registerC ]
-                    , td [] [ text "D" ]
+                    , td [] [ text <| String.fromInt <| toInt model.registerD ]
                     , td [] [ text "IP" ]
                     , td [] [ text "SP" ]
                     , td [] [ text "Z" ]
