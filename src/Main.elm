@@ -20,8 +20,7 @@ type alias Model =
     , instructionPointer : Byte
     , stackPointer : Byte
     , zeroFlag : Bool
-
-    --, carryFlag : Bool
+    , carryFlag : Bool
     }
 
 
@@ -37,6 +36,7 @@ initialModel =
     , instructionPointer = mkByte 0
     , stackPointer = mkByte 231
     , zeroFlag = False
+    , carryFlag = False
     }
 
 
@@ -90,7 +90,7 @@ view model =
                     , td [] [ text <| String.fromInt <| toInt model.instructionPointer ]
                     , td [] [ text <| String.fromInt <| toInt model.stackPointer ]
                     , td [] [ text <| displayBool model.zeroFlag ]
-                    , td [] [ text "C" ]
+                    , td [] [ text <| displayBool model.carryFlag ]
                     , td [] [ text "F" ]
                     ]
                 ]
