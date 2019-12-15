@@ -3,7 +3,7 @@ module Main exposing (Model, Msg(..), displayBool, initialModel, main, mapA, mem
 import Array exposing (Array)
 import Browser
 import Byte exposing (..)
-import CPU exposing (..)
+import CPU exposing (CPU)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -21,17 +21,7 @@ initialModel : Model
 initialModel =
     { count = 0
     , code = "; Simple example\n; Writes Hello World to the output\n\n    JMP start\nhello: DB \"Hello World!\" ; Variable\n       DB 0 ; String terminator\n\nstart:\n    MOV C, hello    ; Point to var \n    MOV D, 232  ; Point to output\n    CALL print\n        HLT             ; Stop execution\n\nprint:          ; print(C:*from, D:*to)\n    PUSH A\n    PUSH B\n    MOV B, 0\n.loop:\n    MOV A, [C]  ; Get char from var\n    MOV [D], A  ; Write to output\n    INC C\n    INC D  \n    CMP B, [C]  ; Check if end\n    JNZ .loop   ; jump if not\n\n    POP B\n    POP A\n    RET\n"
-    , cpu =
-        { memory = Array.initialize 256 <| always <| mkByte 0
-        , registerA = mkByte 0
-        , registerB = mkByte 0
-        , registerC = mkByte 0
-        , registerD = mkByte 0
-        , instructionPointer = mkByte 0
-        , stackPointer = mkByte 231
-        , zeroFlag = False
-        , carryFlag = False
-        }
+    , cpu = CPU.initalCPU
     }
 
 
