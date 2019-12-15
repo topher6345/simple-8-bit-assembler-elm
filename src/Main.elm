@@ -64,7 +64,7 @@ view model =
         [ h2 [] [ text "Output" ]
         , div [] <| showOutput model.cpu.ram
         , h2 [] [ text "Registers/Flags" ]
-        , table []
+        , table [ style "border" "1px solid black" ]
             [ thead []
                 [ th [] [ text "A" ]
                 , th [] [ text "B" ]
@@ -92,7 +92,7 @@ view model =
                 ]
             ]
         , h2 [] [ text "Ram" ]
-        , table [] <| memoryRows model.cpu.ram
+        , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram
         , h2 [] [ text "Code" ]
         , textarea
             [ cols 60
