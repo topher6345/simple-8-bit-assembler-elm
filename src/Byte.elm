@@ -1,4 +1,4 @@
-module Byte exposing (Byte, mkByte, toHexstring, toInt)
+module Byte exposing (Byte(..), mkByte, toHexstring, toInt)
 
 import Hex
 

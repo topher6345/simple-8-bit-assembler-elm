@@ -1,7 +1,7 @@
 module CPU exposing (CPU, initalCPU)
 
 import Array exposing (Array)
-import Byte exposing (Byte, mkByte)
+import Byte exposing (Byte(..), mkByte)
 
 
 type alias CPU =
@@ -15,6 +15,24 @@ type alias CPU =
     , zeroFlag : Bool
     , carryFlag : Bool
     }
+
+
+byteToRegisterValue cpu (Byte int) =
+    case int of
+        0 ->
+            cpu.registerA
+
+        1 ->
+            cpu.registerB
+
+        2 ->
+            cpu.registerC
+
+        3 ->
+            cpu.registerD
+
+        _ ->
+            mkByte 0
 
 
 initalCPU =
@@ -31,4 +49,10 @@ initalCPU =
 
 
 type Opcode
-    = MOV_BYTE Byte Byte
+    = MOV_REG_BYTE Byte Byte
+
+
+apply opcode cpu =
+    case opcode of
+        MOV_REG_BYTE reg byte ->
+            cpu
