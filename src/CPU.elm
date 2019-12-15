@@ -51,27 +51,41 @@ initalCPU =
 type Msg
     = --Copies a value from src to dest
       MOV_REG_BYTE Byte Byte
+    | INC_REG_BYTE Byte
+
+
+updateRegister cpu (Byte register) value =
+    case register of
+        0 ->
+            { cpu | registerA = value }
+
+        1 ->
+            { cpu | registerB = value }
+
+        2 ->
+            { cpu | registerC = value }
+
+        3 ->
+            { cpu | registerD = value }
+
+        _ ->
+            cpu
 
 
 update opcode cpu =
     case opcode of
-        MOV_REG_BYTE src (Byte dest) ->
+        INC_REG_BYTE (Byte reg) ->
+            cpu
+
+        MOV_REG_BYTE src reg ->
             let
                 value =
                     byteToRegisterValue cpu src
+
+                ip =
+                    byteAdd cpu.instructionPointer (Byte 3)
+
+                foo =
+                    updateRegister cpu reg value
             in
-            case dest of
-                0 ->
-                    { cpu | registerA = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
-
-                1 ->
-                    { cpu | registerB = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
-
-                2 ->
-                    { cpu | registerC = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
-
-                3 ->
-                    { cpu | registerD = value, instructionPointer = byteAdd cpu.instructionPointer (Byte 1) }
-
-                _ ->
-                    cpu
+            { foo | instructionPointer = ip }

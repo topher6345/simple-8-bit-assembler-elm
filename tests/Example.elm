@@ -20,7 +20,7 @@ suite =
                         update (MOV_REG_BYTE (Byte 0) (Byte 1)) state
 
                     expected =
-                        { initalCPU | registerA = Byte 1, registerB = Byte 1, instructionPointer = Byte 1 }
+                        { initalCPU | registerA = Byte 1, registerB = Byte 1, instructionPointer = Byte 3 }
                 in
                 actual |> Expect.equal expected
         ]
