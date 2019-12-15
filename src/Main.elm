@@ -115,6 +115,16 @@ view model =
         ]
 
 
+bar array =
+    Array.map
+        (\i -> td [] [ text <| String.fromInt <| toInt i ])
+        array
+
+
+mapA f array =
+    Array.toList <| Array.map f array
+
+
 foo model =
     Array.toList <|
         Array.map
