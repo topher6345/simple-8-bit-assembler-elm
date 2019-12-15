@@ -1,4 +1,4 @@
-module Byte exposing (Byte(..), mkByte, toInt)
+module Byte exposing (Byte, mkByte, toInt)
 
 
 type Byte
