@@ -76,14 +76,11 @@ update opcode cpu =
     case opcode of
         INC_REG reg ->
             let
-                value =
-                    lookupRegister cpu reg
-
                 ip =
                     byteAdd cpu.instructionPointer (Byte 2)
 
                 ( sum, carry ) =
-                    carryAdd value (Byte 1)
+                    carryAdd (lookupRegister cpu reg) (Byte 1)
 
                 model =
                     updateRegister cpu reg sum
