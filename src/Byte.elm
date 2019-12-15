@@ -12,11 +12,7 @@ mkByte int =
 
 
 carryAdd (Byte a) (Byte b) =
-    if a + b > 255 then
-        ( mkByte (a + b), True )
-
-    else
-        ( mkByte (a + b), False )
+    ( mkByte (a + b), a + b > 255 )
 
 
 toInt (Byte int) =
