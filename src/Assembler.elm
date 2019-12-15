@@ -1,19 +1,35 @@
-module Assembler exposing (assemble)
+module Assembler exposing (Point, Ram, assemble, assembleLine, pattern, point)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
+import CPU
+import Parser exposing ((|.), (|=), Parser, float, run, spaces, succeed, symbol)
 import Regex
+
+
+type alias Point =
+    { x : Float
+    , y : Float
+    , z : Float
+    }
+
+
+point : Parser Point
+point =
+    succeed Point
+        |. spaces
+        |= float
+        |. spaces
+        |= float
+        |. spaces
+        |. symbol ","
+        |. spaces
+        |= float
+        |. spaces
 
 
 type alias Ram =
     Array Byte
-
-
-assemble : String -> Ram
-assemble string =
-    case string of
-        _ ->
-            Array.initialize 256 <| always <| mkByte 0
 
 
 pattern =
@@ -21,7 +37,17 @@ pattern =
 
 
 assembleLine string =
-    string
+    run point string
+
+
+assemble : String -> ( String, Ram )
+assemble string =
+    case assembleLine string of
+        Ok _ ->
+            ( "", CPU.initalCPU.ram )
+
+        Err problems ->
+            ( Debug.toString problems, CPU.initalCPU.ram )
 
 
 
