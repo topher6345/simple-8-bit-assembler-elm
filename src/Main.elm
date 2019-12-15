@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Main exposing (Model, Msg(..), displayBool, initialModel, main, mapA, memoryRows, mkByteTd, update, view)
 
 import Array exposing (..)
 import Browser
@@ -96,10 +96,7 @@ view model =
                 ]
             ]
         , h2 [] [ text "memory" ]
-        , table []
-            (foo
-                model
-            )
+        , table [] <| memoryRows model.memory
         , h2 [] [ text "Code" ]
         , textarea
             [ cols 60
@@ -115,21 +112,36 @@ view model =
         ]
 
 
-bar array =
-    Array.map
-        (\i -> td [] [ text <| String.fromInt <| toInt i ])
-        array
-
-
 mapA f array =
     Array.toList <| Array.map f array
 
 
-foo model =
-    Array.toList <|
-        Array.map
-            (\i -> td [] [ text <| String.fromInt <| toInt i ])
-            model.memory
+addRow tdList =
+    tr [] tdList
+
+
+memoryRows array =
+    [ addRow <| mapA mkByteTd <| slice 0 15 array
+    , addRow <| mapA mkByteTd <| slice 16 31 array
+    , addRow <| mapA mkByteTd <| slice 32 47 array
+    , addRow <| mapA mkByteTd <| slice 48 63 array
+    , addRow <| mapA mkByteTd <| slice 64 79 array
+    , addRow <| mapA mkByteTd <| slice 80 95 array
+    , addRow <| mapA mkByteTd <| slice 96 111 array
+    , addRow <| mapA mkByteTd <| slice 112 127 array
+    , addRow <| mapA mkByteTd <| slice 128 143 array
+    , addRow <| mapA mkByteTd <| slice 144 159 array
+    , addRow <| mapA mkByteTd <| slice 160 175 array
+    , addRow <| mapA mkByteTd <| slice 176 191 array
+    , addRow <| mapA mkByteTd <| slice 192 207 array
+    , addRow <| mapA mkByteTd <| slice 208 223 array
+    , addRow <| mapA mkByteTd <| slice 224 239 array
+    , addRow <| mapA mkByteTd <| slice 240 255 array
+    ]
+
+
+mkByteTd byte =
+    td [] [ text <| String.fromInt <| toInt byte ]
 
 
 main : Program () Model Msg
