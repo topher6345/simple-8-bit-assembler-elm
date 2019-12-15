@@ -4,6 +4,7 @@ import Array exposing (Array)
 import Browser
 import Byte exposing (..)
 import CPU exposing (CPU)
+import Char
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -49,10 +50,23 @@ displayBool bool =
             "false"
 
 
+showOutput : Array Byte -> String
+showOutput ram =
+    let
+        f byte =
+            String.fromChar <| Char.fromCode <| Byte.toInt byte
+    in
+    String.join "" <|
+        List.map f <|
+            Array.toList <|
+                Array.slice 232 256 ram
+
+
 view : Model -> Html Msg
 view model =
     div []
         [ h2 [] [ text "Output" ]
+        , p [] [ text <| showOutput model.cpu.ram ]
         , h2 [] [ text "Registers/Flags" ]
         , table []
             [ thead []
