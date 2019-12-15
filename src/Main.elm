@@ -91,7 +91,7 @@ view model =
                     ]
                 ]
             ]
-        , h2 [] [ text "ram" ]
+        , h2 [] [ text "Ram" ]
         , table [] <| memoryRows model.cpu.ram
         , h2 [] [ text "Code" ]
         , textarea
@@ -136,7 +136,7 @@ memoryRows array =
 
 
 mkByteTd byte =
-    td [] [ text <| String.fromInt <| toInt byte ]
+    td [ style "width" "2em" ] [ text <| String.fromInt <| toInt byte ]
 
 
 main : Program () Model Msg
