@@ -1,4 +1,4 @@
-module Assembler exposing (OpcodeAirty3, Ram, assemble, assembleLine, pattern, point)
+module Assembler exposing (OpcodeAirty3, Ram, assemble, assembleLine, foo, pattern, point)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -9,9 +9,34 @@ import Regex
 
 type alias OpcodeAirty3 =
     { x : String
-    , y : String
-    , z : String
+    , y : Argument
+    , z : Argument
     }
+
+
+type Argument
+    = Constant String
+    | AddressRegister String
+    | AddressConstant String
+    | Register String
+
+
+foo : Parser Argument
+foo =
+    oneOf
+        [ succeed AddressConstant
+            |. symbol "["
+            |= (Parser.getChompedString <| chompIf Char.isDigit)
+            |. symbol "]"
+        , succeed Constant
+            |= (Parser.getChompedString <| chompIf Char.isDigit)
+        , succeed Register
+            |= (Parser.getChompedString <| chompIf Char.isAlpha)
+        , succeed AddressRegister
+            |. symbol "["
+            |= (Parser.getChompedString <| chompIf Char.isAlpha)
+            |. symbol "]"
+        ]
 
 
 point : Parser OpcodeAirty3
@@ -20,22 +45,11 @@ point =
         |. spaces
         |= (Parser.getChompedString <| chompWhile Char.isAlpha)
         |. spaces
-        |= oneOf
-            [ succeed identity
-                |. symbol "["
-                |= (Parser.getChompedString <| chompWhile Char.isDigit)
-                |. symbol "]"
-            , Parser.getChompedString <| chompWhile Char.isDigit
-            , Parser.getChompedString <| chompWhile Char.isAlpha
-            , succeed identity
-                |. symbol "["
-                |= (Parser.getChompedString <| chompWhile Char.isAlpha)
-                |. symbol "]"
-            ]
+        |= foo
         |. spaces
         |. symbol ","
         |. spaces
-        |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+        |= foo
         |. spaces
 
 
@@ -51,11 +65,16 @@ assembleLine string =
     run point string
 
 
+
+--opToString op =
+--    op.x ++ " " ++ op.y ++ " " ++ op.z
+
+
 assemble : String -> ( String, Ram )
 assemble string =
     case assembleLine string of
-        Ok _ ->
-            ( "", CPU.initalCPU.ram )
+        Ok a ->
+            ( Debug.toString a, CPU.initalCPU.ram )
 
         Err problems ->
             ( Debug.toString problems, CPU.initalCPU.ram )
