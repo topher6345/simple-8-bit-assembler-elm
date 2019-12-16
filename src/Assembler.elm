@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty3, Ram, addressRegister, argParser, assemble, assembleLine, pattern, point)
+module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, argParser, assemble, assembleLine, opcode, opcodeAirty1)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -7,10 +7,16 @@ import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, chompIf, cho
 import Regex
 
 
-type alias OpcodeAirty3 =
+type alias OpcodeAirty2 =
     { x : String
     , y : Argument
     , z : Argument
+    }
+
+
+type alias OpcodeAirty1 =
+    { x : String
+    , y : Argument
     }
 
 
@@ -58,9 +64,8 @@ argParser =
         ]
 
 
-point : Parser OpcodeAirty3
-point =
-    succeed OpcodeAirty3
+opcodeAirty2 =
+    succeed OpcodeAirty2
         |. spaces
         |= (Parser.getChompedString <| chompWhile Char.isAlpha)
         |. spaces
@@ -72,21 +77,26 @@ point =
         |. spaces
 
 
+opcodeAirty1 =
+    succeed OpcodeAirty1
+        |. spaces
+        |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+        |. spaces
+        |= argParser
+        |. spaces
+
+
+opcode : Parser OpcodeAirty2
+opcode =
+    opcodeAirty2
+
+
 type alias Ram =
     Array Byte
 
 
-pattern =
-    Regex.fromString "[a-z]+"
-
-
 assembleLine string =
-    run point string
-
-
-
---opToString op =
---    op.x ++ " " ++ op.y ++ " " ++ op.z
+    run opcode string
 
 
 assemble : String -> ( String, Ram )
