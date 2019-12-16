@@ -105,5 +105,20 @@ suite =
                                     Debug.toString a
                     in
                     Expect.equal result "A"
+            , test "argParser [A]" <|
+                \_ ->
+                    let
+                        result =
+                            case Parser.run argParser "[A]" of
+                                Ok (AddressRegister a) ->
+                                    a
+
+                                Ok a ->
+                                    Debug.toString a
+
+                                Err a ->
+                                    Debug.toString a
+                    in
+                    Expect.equal result "A"
             ]
         ]
