@@ -1,4 +1,4 @@
-module Assembler exposing (Point, Ram, assemble, assembleLine, keyword, pattern, point)
+module Assembler exposing (OpcodeAirty3, Ram, assemble, assembleLine, pattern, point)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -7,41 +7,16 @@ import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, chompIf, cho
 import Regex
 
 
-type alias Point =
+type alias OpcodeAirty3 =
     { x : String
     , y : String
     , z : String
     }
 
 
-keyword : String -> Parser ()
-keyword kwd =
-    succeed identity
-        |. backtrackable (token kwd)
-        |= oneOf
-            [ map (\_ -> True) (backtrackable (chompIf isVarChar))
-            , succeed False
-            ]
-        |> andThen (checkEnding kwd)
-
-
-checkEnding : String -> Bool -> Parser ()
-checkEnding kwd isBadEnding =
-    if isBadEnding then
-        problem ("expecting the `" ++ kwd ++ "` keyword")
-
-    else
-        commit ()
-
-
-isVarChar : Char -> Bool
-isVarChar char =
-    Char.isAlphaNum char || char == '_'
-
-
-point : Parser Point
+point : Parser OpcodeAirty3
 point =
-    succeed Point
+    succeed OpcodeAirty3
         |. spaces
         |= (Parser.getChompedString <| chompWhile Char.isAlpha)
         |. spaces
