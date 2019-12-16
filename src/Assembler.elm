@@ -39,11 +39,9 @@ register =
 
 addressConstant =
     succeed AddressConstant
-        |. spaces
         |. symbol "["
         |= charChomper Char.isDigit
         |. symbol "]"
-        |. spaces
 
 
 constant =
@@ -53,10 +51,10 @@ constant =
 argParser : Parser Argument
 argParser =
     oneOf
-        [ addressRegister
-        , addressConstant
+        [ register
         , constant
-        , register
+        , backtrackable addressRegister
+        , backtrackable addressConstant
         ]
 
 
