@@ -54,7 +54,7 @@ argParser =
         [ register
         , constant
         , backtrackable addressRegister
-        , backtrackable addressConstant
+        , addressConstant
         ]
 
 
