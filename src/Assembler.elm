@@ -14,32 +14,28 @@ type alias OpcodeAirty3 =
     }
 
 
-opcodeArg =
-    oneOf
-        [ succeed identity
-            |. symbol "["
-            |= (Parser.getChompedString <| chompWhile Char.isDigit)
-            |. symbol "]"
-        , succeed identity
-            |. symbol "["
-            |= (Parser.getChompedString <| chompWhile Char.isAlpha)
-            |. symbol "]"
-        , Parser.getChompedString <| chompWhile Char.isAlpha
-        , Parser.getChompedString <| chompWhile Char.isDigit
-        ]
-
-
 point : Parser OpcodeAirty3
 point =
     succeed OpcodeAirty3
         |. spaces
         |= (Parser.getChompedString <| chompWhile Char.isAlpha)
         |. spaces
-        |= opcodeArg
+        |= oneOf
+            [ succeed identity
+                |. symbol "["
+                |= (Parser.getChompedString <| chompWhile Char.isDigit)
+                |. symbol "]"
+            , Parser.getChompedString <| chompWhile Char.isDigit
+            , Parser.getChompedString <| chompWhile Char.isAlpha
+            , succeed identity
+                |. symbol "["
+                |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+                |. symbol "]"
+            ]
         |. spaces
         |. symbol ","
         |. spaces
-        |= opcodeArg
+        |= (Parser.getChompedString <| chompWhile Char.isAlpha)
         |. spaces
 
 

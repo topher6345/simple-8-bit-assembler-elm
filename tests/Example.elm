@@ -1,6 +1,7 @@
 module Example exposing (suite)
 
 import Array exposing (..)
+import Assembler exposing (assemble)
 import Byte exposing (..)
 import CPU exposing (..)
 import Expect exposing (Expectation)
@@ -73,8 +74,19 @@ suite =
                     Expect.equal expected actual
             ]
         , describe "Assembler"
-            [ test "assemble empty sring" <|
+            [ test "assemble MOV [123], B" <|
                 \_ ->
-                    Expect.equal False True
+                    let
+                        ( string, cpu ) =
+                            assemble "MOV [123], B"
+                    in
+                    Expect.equal string ""
+            , test "assemble MOV 123, B" <|
+                \_ ->
+                    let
+                        ( string, cpu ) =
+                            assemble "MOV 123, B"
+                    in
+                    Expect.equal string ""
             ]
         ]
