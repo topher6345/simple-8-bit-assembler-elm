@@ -75,7 +75,7 @@ suite =
                     Expect.equal expected actual
             ]
         , describe "Assembler"
-            [ test "argParser [1]" <|
+            [ test "argParser 1" <|
                 \_ ->
                     let
                         result =
@@ -90,5 +90,20 @@ suite =
                                     ""
                     in
                     Expect.equal result "1"
+            , test "argParser A" <|
+                \_ ->
+                    let
+                        result =
+                            case Parser.run argParser "A" of
+                                Ok (Register a) ->
+                                    a
+
+                                Ok a ->
+                                    Debug.toString a
+
+                                Err a ->
+                                    Debug.toString a
+                    in
+                    Expect.equal result "A"
             ]
         ]
