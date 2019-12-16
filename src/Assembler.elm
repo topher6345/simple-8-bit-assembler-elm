@@ -53,10 +53,8 @@ constant =
 argParser : Parser Argument
 argParser =
     oneOf
-        [ oneOf
-            [ addressRegister
-            , addressConstant
-            ]
+        [ addressRegister
+        , addressConstant
         , constant
         , register
         ]
