@@ -1,4 +1,4 @@
-module Assembler exposing (OpcodeAirty3, Ram, assemble, assembleLine, foo, pattern, point)
+module Assembler exposing (Argument(..), OpcodeAirty3, Ram, addressRegister, argParser, assemble, assembleLine, pattern, point)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -21,21 +21,44 @@ type Argument
     | Register String
 
 
-foo : Parser Argument
-foo =
+charChomper f =
+    Parser.getChompedString <| chompIf f
+
+
+addressRegister =
+    succeed AddressRegister
+        |. symbol "["
+        |= charChomper Char.isAlpha
+        |. symbol "]"
+
+
+register =
+    succeed Register
+        |= charChomper Char.isAlpha
+
+
+addressConstant =
+    succeed AddressConstant
+        |. spaces
+        |. symbol "["
+        |= charChomper Char.isDigit
+        |. symbol "]"
+        |. spaces
+
+
+constant =
+    succeed Constant |= charChomper Char.isDigit
+
+
+argParser : Parser Argument
+argParser =
     oneOf
-        [ succeed AddressConstant
-            |. symbol "["
-            |= (Parser.getChompedString <| chompIf Char.isDigit)
-            |. symbol "]"
-        , succeed Constant
-            |= (Parser.getChompedString <| chompIf Char.isDigit)
-        , succeed Register
-            |= (Parser.getChompedString <| chompIf Char.isAlpha)
-        , succeed AddressRegister
-            |. symbol "["
-            |= (Parser.getChompedString <| chompIf Char.isAlpha)
-            |. symbol "]"
+        [ oneOf
+            [ addressRegister
+            , addressConstant
+            ]
+        , constant
+        , register
         ]
 
 
@@ -45,11 +68,11 @@ point =
         |. spaces
         |= (Parser.getChompedString <| chompWhile Char.isAlpha)
         |. spaces
-        |= foo
+        |= argParser
         |. spaces
         |. symbol ","
         |. spaces
-        |= foo
+        |= argParser
         |. spaces
 
 

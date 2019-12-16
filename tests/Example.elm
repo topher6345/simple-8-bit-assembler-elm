@@ -1,11 +1,12 @@
 module Example exposing (suite)
 
 import Array exposing (..)
-import Assembler exposing (assemble)
+import Assembler exposing (..)
 import Byte exposing (..)
 import CPU exposing (..)
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
+import Parser
 import Test exposing (..)
 
 
@@ -74,19 +75,20 @@ suite =
                     Expect.equal expected actual
             ]
         , describe "Assembler"
-            [ test "assemble MOV [123], B" <|
+            [ test "argParser [1]" <|
                 \_ ->
                     let
-                        ( string, cpu ) =
-                            assemble "MOV [123], B"
+                        result =
+                            case Parser.run argParser "1" of
+                                Ok (Constant a) ->
+                                    a
+
+                                Ok _ ->
+                                    ""
+
+                                Err _ ->
+                                    ""
                     in
-                    Expect.equal string ""
-            , test "assemble MOV 123, B" <|
-                \_ ->
-                    let
-                        ( string, cpu ) =
-                            assemble "MOV 123, B"
-                    in
-                    Expect.equal string ""
+                    Expect.equal result "1"
             ]
         ]
