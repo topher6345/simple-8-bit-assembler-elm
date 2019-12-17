@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, argParser, assemble, assembleLine, charConstant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1)
+module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, arguments, assemble, assembleLine, charConstant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -94,8 +94,12 @@ constant =
     succeed Constant |= map String.fromInt Parser.int
 
 
-argParser : Parser Argument
-argParser =
+function =
+    Parser.getChompedString <| chompWhile Char.isAlpha
+
+
+arguments : Parser Argument
+arguments =
     oneOf
         [ register
         , constant
@@ -108,13 +112,13 @@ argParser =
 opcodeAirty2 =
     succeed OpcodeAirty2
         |. spaces
-        |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+        |= function
         |. spaces
-        |= argParser
+        |= arguments
         |. spaces
         |. symbol ","
         |. spaces
-        |= argParser
+        |= arguments
         |. spaces
         |. end
 
@@ -122,9 +126,9 @@ opcodeAirty2 =
 opcodeAirty1 =
     succeed OpcodeAirty1
         |. spaces
-        |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+        |= function
         |. spaces
-        |= argParser
+        |= arguments
         |. spaces
         |. end
 
@@ -132,7 +136,7 @@ opcodeAirty1 =
 opcodeAirty0 =
     succeed OpcodeAirty0
         |. spaces
-        |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+        |= function
         |. spaces
         |. end
 
