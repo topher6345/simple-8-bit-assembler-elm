@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, argParser, assemble, assembleLine, opcode, opcodeAirty1)
+module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, argParser, assemble, assembleLine, opcode, opcodeAirty0, opcodeAirty1)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -20,11 +20,21 @@ type alias OpcodeAirty1 =
     }
 
 
+type alias OpcodeAirty0 =
+    { x : String }
+
+
 type Argument
     = Constant String
     | AddressRegister String
     | AddressConstant String
     | Register String
+
+
+type Opcodes
+    = A0 OpcodeAirty0
+    | A1 OpcodeAirty1
+    | A2 OpcodeAirty2
 
 
 charChomper f =
@@ -86,9 +96,19 @@ opcodeAirty1 =
         |. spaces
 
 
-opcode : Parser OpcodeAirty2
+opcodeAirty0 =
+    succeed OpcodeAirty0
+        |. spaces
+        |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+
+
+opcode : Parser Opcodes
 opcode =
-    opcodeAirty2
+    oneOf
+        [ map A2 <| backtrackable opcodeAirty2
+        , map A1 <| backtrackable opcodeAirty1
+        , map A0 opcodeAirty0
+        ]
 
 
 type alias Ram =
