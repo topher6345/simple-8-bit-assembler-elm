@@ -1,6 +1,7 @@
 # Changelog
 
 
+`end`!! was the special sauce
 
 ```elm
 assembleLine "HLT AAfdsafdsa, 1"
