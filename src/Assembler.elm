@@ -1,10 +1,22 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, argParser, assemble, assembleLine, opcode, opcodeAirty0, opcodeAirty1)
+module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, argParser, assemble, assembleLine, charConstant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
 import CPU
-import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, chompIf, chompWhile, commit, end, float, getChompedString, loop, map, oneOf, problem, run, spaces, succeed, symbol, token)
+import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, chompIf, chompWhile, commit, end, float, getChompedString, keyword, loop, map, oneOf, problem, run, spaces, succeed, symbol, token)
 import Regex
+
+
+
+-- General purpose (GP) register: A, B, C, D
+-- Stack pointer register: SP
+-- Address using a GP register: [A]
+-- Address using a GP register and offset: [D-3]
+-- Address using SP register and offset: [SP+2]
+-- Address using a constant: [100]
+-- Address using a label: label
+-- Constant: Any number between 0..255 (8bit unsigned)
+-- Offset for indirect addressing: Integer between -16..+15 (sign is mandatory)
 
 
 type alias OpcodeAirty2 =
@@ -28,6 +40,7 @@ type Argument
     = Constant String
     | AddressRegister String
     | AddressConstant String
+    | CharConstant String
     | Register String
 
 
@@ -39,6 +52,16 @@ type Opcodes
 
 charChomper f =
     Parser.getChompedString <| chompIf f
+
+
+keywordRegister =
+    succeed identity
+        |= oneOf
+            [ keyword "A"
+            , keyword "B"
+            , keyword "C"
+            , keyword "D"
+            ]
 
 
 addressRegister =
@@ -60,6 +83,13 @@ addressConstant =
         |. symbol "]"
 
 
+charConstant =
+    succeed CharConstant
+        |. symbol "'"
+        |= charChomper Char.isAlpha
+        |. symbol "'"
+
+
 constant =
     succeed Constant |= map String.fromInt Parser.int
 
@@ -69,8 +99,9 @@ argParser =
     oneOf
         [ register
         , constant
+        , backtrackable charConstant
         , backtrackable addressRegister
-        , addressConstant
+        , backtrackable addressConstant
         ]
 
 
@@ -111,7 +142,7 @@ opcode =
     oneOf
         [ map A2 <| backtrackable opcodeAirty2
         , map A1 <| backtrackable opcodeAirty1
-        , map A0 opcodeAirty0
+        , map A0 <| backtrackable opcodeAirty0
         ]
 
 
