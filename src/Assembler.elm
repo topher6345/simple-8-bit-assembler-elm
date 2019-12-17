@@ -3,7 +3,7 @@ module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, arg
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
 import CPU
-import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, chompIf, chompWhile, commit, float, getChompedString, map, oneOf, problem, run, spaces, succeed, symbol, token)
+import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, chompIf, chompWhile, commit, end, float, getChompedString, loop, map, oneOf, problem, run, spaces, succeed, symbol, token)
 import Regex
 
 
@@ -61,7 +61,7 @@ addressConstant =
 
 
 constant =
-    succeed Constant |= charChomper Char.isDigit
+    succeed Constant |= map String.fromInt Parser.int
 
 
 argParser : Parser Argument
@@ -85,6 +85,7 @@ opcodeAirty2 =
         |. spaces
         |= argParser
         |. spaces
+        |. end
 
 
 opcodeAirty1 =
@@ -94,12 +95,15 @@ opcodeAirty1 =
         |. spaces
         |= argParser
         |. spaces
+        |. end
 
 
 opcodeAirty0 =
     succeed OpcodeAirty0
         |. spaces
         |= (Parser.getChompedString <| chompWhile Char.isAlpha)
+        |. spaces
+        |. end
 
 
 opcode : Parser Opcodes

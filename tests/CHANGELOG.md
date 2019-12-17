@@ -1,6 +1,22 @@
 # Changelog
 
 
+
+```elm
+assembleLine "HLT AAfdsafdsa, 1"
+Ok (A1 { x = "HLT", y = Register "A" })
+    : Result (List Parser.DeadEnd) Opcodes
+```
+
+) :
+
+## Sill Parsing
+
+Parse 1 line of airty 2 opcode!
+
+Need to limit to 3? Bytes?
+
+
 ## Parser
 
 
