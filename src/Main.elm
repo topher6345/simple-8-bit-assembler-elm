@@ -193,9 +193,11 @@ memoryRows array displayHex =
 
 
 mkByteTd byte =
-    td [ style "width" "2em", style "text-align" "center" ]
-        [ text <| String.padLeft 3 '0' <| String.fromInt <| toInt byte
-        ]
+    td [ style "width" "2em", style "text-align" "center" ] [ text <| byteToInt byte ]
+
+
+byteToInt byte =
+    String.padLeft 3 '0' <| String.fromInt <| toInt byte
 
 
 byteToHex byte =
@@ -206,9 +208,7 @@ byteToHex byte =
 
 
 mkByteTdHex byte =
-    td [ style "width" "2em", style "text-align" "center" ]
-        [ text <| byteToHex byte
-        ]
+    td [ style "width" "2em", style "text-align" "center" ] [ text <| byteToHex byte ]
 
 
 main : Program () Model Msg
