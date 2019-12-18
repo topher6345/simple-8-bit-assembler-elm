@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), displayBool, initialModel, main, mapA, memoryRows, mkByteTd, update, view)
+module Main exposing (Model, Msg(..), displayBool, initialModel, main, mapA, memoryRows, update, view)
 
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
@@ -189,10 +189,6 @@ memoryRows array displayHex =
     ]
 
 
-mkByteTd byte =
-    td [ style "width" "2em", style "text-align" "center" ] [ text <| byteToDecimal byte ]
-
-
 displayByte : Bool -> Byte -> String
 displayByte displayHex byte =
     if displayHex then
@@ -203,22 +199,21 @@ displayByte displayHex byte =
 
 
 byteToDecimal byte =
-    String.padLeft 3 '0' <| String.fromInt <| toInt byte
+    toInt byte
+        |> String.fromInt
+        |> String.padLeft 3 '0'
 
 
+byteToHex : Byte -> String
 byteToHex byte =
-    String.toUpper <|
-        String.padLeft 2 '0' <|
-            Hex.toString <|
-                toInt byte
+    toInt byte
+        |> Hex.toString
+        |> String.padLeft 2 '0'
+        |> String.toUpper
 
 
 cpuByteTd string =
     td [ style "width" "2em", style "text-align" "center" ] [ text string ]
-
-
-mkByteTdHex byte =
-    td [ style "width" "2em", style "text-align" "center" ] [ text <| byteToHex byte ]
 
 
 main : Program () Model Msg
