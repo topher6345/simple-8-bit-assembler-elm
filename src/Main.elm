@@ -165,11 +165,7 @@ memoryRows : Array Byte -> Bool -> List (Html msg)
 memoryRows array displayHex =
     let
         formatter =
-            if displayHex then
-                cpuByteTd << byteToDecimal
-
-            else
-                cpuByteTd << byteToHex
+            cpuByteTd << displayByte displayHex
 
         row x y =
             tr [] <| mapA formatter <| Array.slice x y array
@@ -197,8 +193,8 @@ mkByteTd byte =
     td [ style "width" "2em", style "text-align" "center" ] [ text <| byteToDecimal byte ]
 
 
-displayByte : Byte -> Bool -> String
-displayByte byte displayHex =
+displayByte : Bool -> Byte -> String
+displayByte displayHex byte =
     if displayHex then
         byteToHex byte
 
