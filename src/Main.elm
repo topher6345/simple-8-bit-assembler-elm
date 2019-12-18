@@ -161,6 +161,7 @@ mapA f array =
     Array.toList <| Array.map f array
 
 
+memoryRows : Array Byte -> Bool -> List (Html msg)
 memoryRows array displayHex =
     let
         formatter =
