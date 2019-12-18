@@ -1,4 +1,4 @@
-module CPU exposing (CPU, Msg(..), blankRam, initalCPU, loadRam, lookupRegister, update)
+module CPU exposing (CPU, Msg(..), blankRam, fetch, fetchInstruction, initalCPU, initialRam, loadRam, lookupRegister, update, updateAddress, updateRegister)
 
 import Array exposing (Array)
 import Byte exposing (..)
@@ -91,14 +91,25 @@ updateAddress cpu (Byte address) value =
     Array.set address value cpu.ram
 
 
-fetch cpu index =
-    Maybe.withDefault (Byte 0) <| Array.get cpu.memory index
+fetch cpu (Byte index) =
+    Maybe.withDefault (Byte 0) <| Array.get index cpu.ram
 
 
-fetchOpcode cpu (Byte int) =
+fetchInstruction : CPU -> Byte -> Msg
+fetchInstruction cpu (Byte int) =
     case int of
         7 ->
-            MOV_CONST_CHAR_TO_CONST_ADDR (byteAdd (fetch cpu cpu.instructionPointer) (Byte 1)) (byteAdd (fetch cpu cpu.instructionPointer) (Byte 2))
+            let
+                ip =
+                    cpu.instructionPointer
+
+                x =
+                    fetch cpu (byteAdd ip (Byte 1))
+
+                y =
+                    fetch cpu (byteAdd ip (Byte 2))
+            in
+            MOV_CONST_CHAR_TO_CONST_ADDR x y
 
         _ ->
             HLT
