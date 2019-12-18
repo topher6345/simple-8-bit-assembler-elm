@@ -117,15 +117,12 @@ update opcode cpu =
             { model | instructionPointer = ip }
 
         MOV_REG_ADDRESS sourceRegister destinationAddress ->
-            let
-                ip =
-                    byteAdd cpu.instructionPointer (Byte 3)
-
-                ram =
+            { cpu
+                | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
+                , ram =
                     updateAddress cpu destinationAddress <|
                         lookupRegister cpu sourceRegister
-            in
-            { cpu | instructionPointer = ip, ram = ram }
+            }
 
         MOV_CONST_CHAR_TO_CONST_ADDR destinationAddress char ->
             { cpu
