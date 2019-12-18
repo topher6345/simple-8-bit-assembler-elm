@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assemble, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1, toBytes)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assemble, assembleCode, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -209,6 +209,10 @@ toBytes string =
 
         Err problems ->
             []
+
+
+assembleCode string =
+    List.concat <| List.map toBytes <| String.lines string
 
 
 assemble : String -> ( String, Ram )

@@ -154,5 +154,12 @@ suite =
                             toBytes "MOV [232], 'h'"
                     in
                     Expect.equal result [ Byte 7, Byte 232, Byte 104 ]
+            , test "assemble code 2 lines" <|
+                \_ ->
+                    let
+                        result =
+                            assembleCode "MOV [232], 'h'\nMOV [233], 'e'"
+                    in
+                    Expect.equal result [ Byte 7, Byte 232, Byte 104, Byte 7, Byte 233, Byte 101 ]
             ]
         ]
