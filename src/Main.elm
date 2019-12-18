@@ -167,12 +167,9 @@ view model =
 memoryRows : Array Byte -> Bool -> List (Html msg)
 memoryRows array displayHex =
     let
-        formatter =
-            cpuByteTd << displayByte displayHex
-
         row x y =
             Array.slice x y array
-                |> Array.map formatter
+                |> Array.map (displayByte displayHex >> cpuByteTd False)
                 |> Array.toList
                 |> tr []
     in
@@ -218,8 +215,19 @@ byteToHex byte =
         |> String.toUpper
 
 
-cpuByteTd string =
-    td [ style "width" "2em", style "text-align" "center" ] [ text string ]
+cpuByteTd : Bool -> String -> Html msg
+cpuByteTd selected string =
+    td
+        [ style "width" "2em"
+        , style "text-align" "center"
+        , style "background-color" <|
+            if selected then
+                "yellow"
+
+            else
+                "white"
+        ]
+        [ text string ]
 
 
 main : Program () Model Msg
