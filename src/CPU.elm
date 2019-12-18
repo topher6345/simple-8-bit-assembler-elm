@@ -91,6 +91,17 @@ updateAddress cpu (Byte address) value =
     Array.set address value cpu.ram
 
 
+tick cpu =
+    let
+        ip =
+            fetch cpu cpu.instructionPointer
+
+        instruction =
+            fetchInstruction cpu ip
+    in
+    update instruction cpu
+
+
 fetch cpu (Byte index) =
     Maybe.withDefault (Byte 0) <| Array.get index cpu.ram
 
