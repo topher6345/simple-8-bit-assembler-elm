@@ -1,4 +1,4 @@
-module CPU exposing (CPU, Msg(..), blankRam, fetch, fetchInstruction, initalCPU, initialRam, loadRam, lookupRegister, update, updateAddress, updateRegister)
+module CPU exposing (CPU, Msg(..), blankRam, fetch, fetchInstruction, initalCPU, initialRam, loadRam, lookupRegister, tick, update, updateAddress, updateRegister)
 
 import Array exposing (Array)
 import Byte exposing (..)

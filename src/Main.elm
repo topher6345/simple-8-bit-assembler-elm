@@ -35,6 +35,7 @@ type Msg
     | Assemble
     | Reset
     | CodeChange String
+    | Step
 
 
 update : Msg -> Model -> Model
@@ -60,7 +61,7 @@ update msg model =
                 mem =
                     { cpu | ram = newRam }
             in
-            { model | flash = Debug.toString result, cpu = mem }
+            { model | cpu = mem }
 
         Reset ->
             let
@@ -74,6 +75,9 @@ update msg model =
 
         CodeChange string ->
             { model | code = string }
+
+        Step ->
+            { model | cpu = CPU.tick model.cpu }
 
 
 displayBool bool =
@@ -132,13 +136,13 @@ view model =
         , h2 [] [ text "Code" ]
         , textarea
             [ cols 60
-            , rows 30
+            , rows 10
             , value model.code
             , onInput CodeChange
             ]
             []
         , button [] [ text "Run" ]
-        , button [] [ text "Step" ]
+        , button [ onClick Step ] [ text "Step" ]
         , button [ onClick Reset ] [ text "Reset" ]
         , button [ onClick Assemble ] [ text "Assemble" ]
         ]
@@ -173,7 +177,7 @@ memoryRows array =
 
 
 mkByteTd byte =
-    td [ style "width" "2em" ] [ text <| String.fromInt <| toInt byte ]
+    td [ style "width" "2em", style "text-align" "center" ] [ text <| String.fromInt <| toInt byte ]
 
 
 main : Program () Model Msg
