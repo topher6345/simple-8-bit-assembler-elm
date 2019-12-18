@@ -6,6 +6,7 @@ import Browser
 import Byte exposing (..)
 import CPU exposing (CPU)
 import Char
+import Hex
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -17,6 +18,7 @@ type alias Model =
     , code : String
     , cpu : CPU
     , flash : String
+    , cpuDisplayHex : Bool
     }
 
 
@@ -26,6 +28,7 @@ initialModel =
     , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nHLT"
     , cpu = CPU.initalCPU
     , flash = ""
+    , cpuDisplayHex = False
     }
 
 
@@ -132,7 +135,7 @@ view model =
                 ]
             ]
         , h2 [] [ text "Ram" ]
-        , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram
+        , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram model.cpuDisplayHex
         , h2 [] [ text "Code" ]
         , textarea
             [ cols 60
@@ -148,14 +151,17 @@ view model =
         ]
 
 
-mapA f array =
+mapA f displayHex array =
     Array.toList <| Array.map f array
 
 
-memoryRows array =
+memoryRows array displayHex =
     let
+        f =
+            mapA mkByteTd displayHex
+
         row x y =
-            tr [] <| mapA mkByteTd <| Array.slice x y array
+            tr [] <| mapA mkByteTdHex displayHex <| Array.slice x y array
     in
     [ row 0 15
     , row 16 31
@@ -178,6 +184,10 @@ memoryRows array =
 
 mkByteTd byte =
     td [ style "width" "2em", style "text-align" "center" ] [ text <| String.fromInt <| toInt byte ]
+
+
+mkByteTdHex byte =
+    td [ style "width" "2em", style "text-align" "center" ] [ text <| String.toUpper <| String.padLeft 2 '0' <| Hex.toString <| toInt byte ]
 
 
 main : Program () Model Msg
