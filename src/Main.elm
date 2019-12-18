@@ -99,9 +99,16 @@ displayBool bool =
 showOutput ram =
     let
         f byte =
-            span [ style "background-color" "grey" ] [ text <| String.fromChar <| Char.fromCode <| Byte.toInt byte ]
+            span [ style "background-color" "grey" ]
+                [ Byte.toInt byte
+                    |> Char.fromCode
+                    |> String.fromChar
+                    |> text
+                ]
     in
-    List.map f <| Array.toList <| Array.slice 232 256 ram
+    Array.slice 232 256 ram
+        |> Array.toList
+        |> List.map f
 
 
 view : Model -> Html Msg
