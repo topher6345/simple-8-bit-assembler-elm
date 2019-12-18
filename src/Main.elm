@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), displayBool, initialModel, main, mapA, memoryRows, update, view)
+module Main exposing (Model, Msg(..), displayBool, initialModel, main, memoryRows, update, view)
 
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
@@ -157,10 +157,6 @@ view model =
         ]
 
 
-mapA f array =
-    Array.toList <| Array.map f array
-
-
 memoryRows : Array Byte -> Bool -> List (Html msg)
 memoryRows array displayHex =
     let
@@ -169,7 +165,8 @@ memoryRows array displayHex =
 
         row x y =
             Array.slice x y array
-                |> mapA formatter
+                |> Array.map formatter
+                |> Array.toList
                 |> tr []
     in
     [ row 0 15
