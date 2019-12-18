@@ -75,11 +75,11 @@ suite =
                     Expect.equal expected actual
             ]
         , describe "Assembler"
-            [ test "argParser 1" <|
+            [ test "arguments 1" <|
                 \_ ->
                     let
                         result =
-                            case Parser.run argParser "1" of
+                            case Parser.run arguments "1" of
                                 Ok (Constant a) ->
                                     a
 
@@ -90,11 +90,11 @@ suite =
                                     ""
                     in
                     Expect.equal result "1"
-            , test "argParser A" <|
+            , test "arguments A" <|
                 \_ ->
                     let
                         result =
-                            case Parser.run argParser "A" of
+                            case Parser.run arguments "A" of
                                 Ok (Register a) ->
                                     a
 
@@ -105,11 +105,11 @@ suite =
                                     Debug.toString a
                     in
                     Expect.equal result "A"
-            , test "argParser [A]" <|
+            , test "arguments [A]" <|
                 \_ ->
                     let
                         result =
-                            case Parser.run argParser "[A]" of
+                            case Parser.run arguments "[A]" of
                                 Ok (AddressRegister a) ->
                                     a
 
@@ -120,11 +120,11 @@ suite =
                                     Debug.toString a
                     in
                     Expect.equal result "A"
-            , test "argParser [1]" <|
+            , test "arguments [1]" <|
                 \_ ->
                     let
                         result =
-                            case Parser.run argParser "[1]" of
+                            case Parser.run arguments "[1]" of
                                 Ok (AddressConstant a) ->
                                     a
 
