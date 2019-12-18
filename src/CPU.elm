@@ -128,11 +128,7 @@ update opcode cpu =
             { cpu | instructionPointer = ip, ram = ram }
 
         MOV_CONST_CHAR_TO_CONST_ADDR destinationAddress char ->
-            let
-                ip =
-                    byteAdd cpu.instructionPointer (Byte 3)
-
-                ram =
-                    updateAddress cpu destinationAddress char
-            in
-            { cpu | instructionPointer = ip, ram = ram }
+            { cpu
+                | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
+                , ram = updateAddress cpu destinationAddress char
+            }
