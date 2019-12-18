@@ -165,10 +165,10 @@ memoryRows array displayHex =
     let
         formatter =
             if displayHex then
-                mkByteTd
+                cpuByteTd << byteToDecimal
 
             else
-                mkByteTdHex
+                cpuByteTd << byteToHex
 
         row x y =
             tr [] <| mapA formatter <| Array.slice x y array
@@ -193,10 +193,19 @@ memoryRows array displayHex =
 
 
 mkByteTd byte =
-    td [ style "width" "2em", style "text-align" "center" ] [ text <| byteToInt byte ]
+    td [ style "width" "2em", style "text-align" "center" ] [ text <| byteToDecimal byte ]
 
 
-byteToInt byte =
+displayByte : Byte -> Bool -> String
+displayByte byte displayHex =
+    if displayHex then
+        byteToHex byte
+
+    else
+        byteToDecimal byte
+
+
+byteToDecimal byte =
     String.padLeft 3 '0' <| String.fromInt <| toInt byte
 
 
@@ -205,6 +214,10 @@ byteToHex byte =
         String.padLeft 2 '0' <|
             Hex.toString <|
                 toInt byte
+
+
+cpuByteTd string =
+    td [ style "width" "2em", style "text-align" "center" ] [ text string ]
 
 
 mkByteTdHex byte =
