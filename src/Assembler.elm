@@ -50,6 +50,24 @@ type Opcodes
     | A2 OpcodeAirty2
 
 
+argumentToBytes argument =
+    case argument of
+        Constant string ->
+            mkByte <| Maybe.withDefault 0 <| String.toInt string
+
+        AddressRegister string ->
+            mkByte 0
+
+        AddressConstant string ->
+            mkByte <| Maybe.withDefault 0 <| String.toInt string
+
+        CharConstant string ->
+            mkByte 0
+
+        Register string ->
+            mkByte 0
+
+
 charChomper f =
     Parser.getChompedString <| chompIf f
 
@@ -157,6 +175,40 @@ type alias Ram =
 
 assembleLine string =
     run opcode string
+
+
+lookup1ArgOpcodes string =
+    case string of
+        "HLT" ->
+            mkByte 0
+
+        "RET" ->
+            mkByte 255
+
+        _ ->
+            mkByte 0
+
+
+opcodeToBytes : Opcodes -> List Byte
+opcodeToBytes opc =
+    case opc of
+        A0 op0 ->
+            [ lookup1ArgOpcodes op0.x ]
+
+        A1 op1 ->
+            [ lookup1ArgOpcodes op1.x, argumentToBytes op1.y ]
+
+        A2 op2 ->
+            [ lookup1ArgOpcodes op2.x, argumentToBytes op2.y, argumentToBytes op2.z ]
+
+
+toBytes string =
+    case assembleLine string of
+        Ok a ->
+            ( Debug.toString a, CPU.initalCPU.ram )
+
+        Err problems ->
+            ( Debug.toString problems, CPU.initalCPU.ram )
 
 
 assemble : String -> ( String, Ram )
