@@ -202,6 +202,7 @@ opcodeToBytes opc =
             [ lookup1ArgOpcodes op2.x, argumentToBytes op2.y, argumentToBytes op2.z ]
 
 
+toBytes : String -> List Byte
 toBytes string =
     case assembleLine string of
         Ok a ->
