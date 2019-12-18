@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assemble, assembleCode, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1, toBytes)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assembleCode, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -213,13 +213,3 @@ toBytes string =
 
 assembleCode string =
     List.concat <| List.map toBytes <| String.lines string
-
-
-assemble : String -> ( String, Ram )
-assemble string =
-    case assembleLine string of
-        Ok a ->
-            ( Debug.toString a, CPU.initalCPU.ram )
-
-        Err problems ->
-            ( Debug.toString problems, CPU.initalCPU.ram )

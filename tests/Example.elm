@@ -73,6 +73,22 @@ suite =
                             }
                     in
                     Expect.equal expected actual
+            , test "apply MOV_CONST_CHAR_TO_CONST_ADDR" <|
+                \_ ->
+                    let
+                        ram =
+                            Array.set 232 (Byte 104) initalCPU.ram
+
+                        actual =
+                            update (MOV_CONST_CHAR_TO_CONST_ADDR (Byte 232) (Byte 104)) initalCPU
+
+                        expected =
+                            { initalCPU
+                                | ram = ram
+                                , instructionPointer = Byte 3
+                            }
+                    in
+                    Expect.equal expected actual
             ]
         , describe "Assembler"
             [ test "arguments 1" <|

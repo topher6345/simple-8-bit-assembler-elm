@@ -65,6 +65,7 @@ type Msg
       MOV_REG_BYTE Byte Byte
     | MOV_REG_ADDRESS Byte Byte
     | INC_REG Byte
+    | MOV_CONST_CHAR_TO_CONST_ADDR Byte Byte
 
 
 updateRegister cpu (Byte register) value =
@@ -123,5 +124,15 @@ update opcode cpu =
                 ram =
                     updateAddress cpu destinationAddress <|
                         lookupRegister cpu sourceRegister
+            in
+            { cpu | instructionPointer = ip, ram = ram }
+
+        MOV_CONST_CHAR_TO_CONST_ADDR destinationAddress char ->
+            let
+                ip =
+                    byteAdd cpu.instructionPointer (Byte 3)
+
+                ram =
+                    updateAddress cpu destinationAddress char
             in
             { cpu | instructionPointer = ip, ram = ram }
