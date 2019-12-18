@@ -168,7 +168,9 @@ memoryRows array displayHex =
             cpuByteTd << displayByte displayHex
 
         row x y =
-            tr [] <| mapA formatter <| Array.slice x y array
+            Array.slice x y array
+                |> mapA formatter
+                |> tr []
     in
     [ row 0 15
     , row 16 31
