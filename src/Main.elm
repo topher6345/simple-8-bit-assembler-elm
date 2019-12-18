@@ -198,13 +198,16 @@ mkByteTd byte =
         ]
 
 
+byteToHex byte =
+    String.toUpper <|
+        String.padLeft 2 '0' <|
+            Hex.toString <|
+                toInt byte
+
+
 mkByteTdHex byte =
     td [ style "width" "2em", style "text-align" "center" ]
-        [ text <|
-            String.toUpper <|
-                String.padLeft 2 '0' <|
-                    Hex.toString <|
-                        toInt byte
+        [ text <| byteToHex byte
         ]
 
 
