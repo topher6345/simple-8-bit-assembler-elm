@@ -53,17 +53,16 @@ update msg model =
 
         Assemble ->
             let
-                result =
-                    Array.fromList <| assembleCode model.code
-
-                newRam =
-                    CPU.loadRam result
-
                 cpu =
                     model.cpu
 
                 mem =
-                    { cpu | ram = newRam }
+                    { cpu
+                        | ram =
+                            assembleCode model.code
+                                |> Array.fromList
+                                |> CPU.loadRam
+                    }
             in
             { model | cpu = mem }
 
