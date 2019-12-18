@@ -73,7 +73,7 @@ update msg model =
                     model.cpu
 
                 mem =
-                    { cpu | ram = CPU.blankRam }
+                    { cpu | ram = CPU.blankRam, instructionPointer = mkByte 0 }
             in
             { model | cpu = mem }
 
