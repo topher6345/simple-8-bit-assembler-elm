@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Ram, addressRegister, arguments, assemble, assembleLine, charConstant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assemble, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -79,7 +79,7 @@ register =
 addressConstant =
     succeed AddressConstant
         |. symbol "["
-        |= charChomper Char.isDigit
+        |= map String.fromInt Parser.int
         |. symbol "]"
 
 
@@ -91,7 +91,8 @@ charConstant =
 
 
 constant =
-    succeed Constant |= map String.fromInt Parser.int
+    succeed Constant
+        |= map String.fromInt Parser.int
 
 
 function =

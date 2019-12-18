@@ -135,5 +135,17 @@ suite =
                                     Debug.toString a
                     in
                     Expect.equal result "1"
+            , test "assembleLine MOV [232], 'h'" <|
+                \_ ->
+                    let
+                        result =
+                            case assembleLine "MOV [232], 'h'" of
+                                Ok a ->
+                                    a
+
+                                Err _ ->
+                                    A0 { x = "XXX" }
+                    in
+                    Expect.equal result (A2 { x = "MOV", y = AddressConstant "232", z = CharConstant "h" })
             ]
         ]
