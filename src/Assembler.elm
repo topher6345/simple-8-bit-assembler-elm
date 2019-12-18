@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assemble, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assemble, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -62,7 +62,7 @@ argumentToBytes argument =
             mkByte <| Maybe.withDefault 0 <| String.toInt string
 
         CharConstant string ->
-            mkByte 0
+            mkByte <| Char.toCode <| Maybe.withDefault '0' <| List.head <| String.toList string
 
         Register string ->
             mkByte 0
@@ -182,8 +182,8 @@ lookup1ArgOpcodes string =
         "HLT" ->
             mkByte 0
 
-        "RET" ->
-            mkByte 255
+        "MOV" ->
+            mkByte 7
 
         _ ->
             mkByte 0
@@ -205,10 +205,10 @@ opcodeToBytes opc =
 toBytes string =
     case assembleLine string of
         Ok a ->
-            ( Debug.toString a, CPU.initalCPU.ram )
+            opcodeToBytes a
 
         Err problems ->
-            ( Debug.toString problems, CPU.initalCPU.ram )
+            []
 
 
 assemble : String -> ( String, Ram )

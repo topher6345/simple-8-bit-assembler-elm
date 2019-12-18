@@ -147,5 +147,12 @@ suite =
                                     A0 { x = "XXX" }
                     in
                     Expect.equal result (A2 { x = "MOV", y = AddressConstant "232", z = CharConstant "h" })
+            , test "bytes out of MOV [232], 'h'" <|
+                \_ ->
+                    let
+                        result =
+                            toBytes "MOV [232], 'h'"
+                    in
+                    Expect.equal result [ Byte 7, Byte 232, Byte 104 ]
             ]
         ]
