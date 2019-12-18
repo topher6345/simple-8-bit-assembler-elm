@@ -38,6 +38,7 @@ type Msg
     | Assemble
     | Reset
     | CodeChange String
+    | ToggleHexDisplay
     | Step
 
 
@@ -81,6 +82,9 @@ update msg model =
 
         Step ->
             { model | cpu = CPU.tick model.cpu }
+
+        ToggleHexDisplay ->
+            { model | cpuDisplayHex = not model.cpuDisplayHex }
 
 
 displayBool bool =
@@ -135,6 +139,8 @@ view model =
                 ]
             ]
         , h2 [] [ text "Ram" ]
+        , label [] [ text "hex display" ]
+        , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
         , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram model.cpuDisplayHex
         , h2 [] [ text "Code" ]
         , textarea
@@ -151,17 +157,21 @@ view model =
         ]
 
 
-mapA f displayHex array =
+mapA f array =
     Array.toList <| Array.map f array
 
 
 memoryRows array displayHex =
     let
-        f =
-            mapA mkByteTd displayHex
+        formatter =
+            if displayHex then
+                mkByteTd
+
+            else
+                mkByteTdHex
 
         row x y =
-            tr [] <| mapA mkByteTdHex displayHex <| Array.slice x y array
+            tr [] <| mapA formatter <| Array.slice x y array
     in
     [ row 0 15
     , row 16 31
@@ -183,11 +193,19 @@ memoryRows array displayHex =
 
 
 mkByteTd byte =
-    td [ style "width" "2em", style "text-align" "center" ] [ text <| String.fromInt <| toInt byte ]
+    td [ style "width" "2em", style "text-align" "center" ]
+        [ text <| String.padLeft 3 '0' <| String.fromInt <| toInt byte
+        ]
 
 
 mkByteTdHex byte =
-    td [ style "width" "2em", style "text-align" "center" ] [ text <| String.toUpper <| String.padLeft 2 '0' <| Hex.toString <| toInt byte ]
+    td [ style "width" "2em", style "text-align" "center" ]
+        [ text <|
+            String.toUpper <|
+                String.padLeft 2 '0' <|
+                    Hex.toString <|
+                        toInt byte
+        ]
 
 
 main : Program () Model Msg
