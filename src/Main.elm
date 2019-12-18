@@ -33,6 +33,8 @@ type Msg
     = Increment
     | Decrement
     | Assemble
+    | Reset
+    | CodeChange String
 
 
 update : Msg -> Model -> Model
@@ -59,6 +61,19 @@ update msg model =
                     { cpu | ram = newRam }
             in
             { model | flash = Debug.toString result, cpu = mem }
+
+        Reset ->
+            let
+                cpu =
+                    model.cpu
+
+                mem =
+                    { cpu | ram = CPU.blankRam }
+            in
+            { model | cpu = mem }
+
+        CodeChange string ->
+            { model | code = string }
 
 
 displayBool bool =
@@ -119,11 +134,12 @@ view model =
             [ cols 60
             , rows 30
             , value model.code
+            , onInput CodeChange
             ]
             []
         , button [] [ text "Run" ]
         , button [] [ text "Step" ]
-        , button [] [ text "Reset" ]
+        , button [ onClick Reset ] [ text "Reset" ]
         , button [ onClick Assemble ] [ text "Assemble" ]
         ]
 
