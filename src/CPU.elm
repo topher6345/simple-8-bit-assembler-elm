@@ -66,6 +66,7 @@ type Msg
     | MOV_REG_ADDRESS Byte Byte
     | INC_REG Byte
     | MOV_CONST_CHAR_TO_CONST_ADDR Byte Byte
+    | HLT
 
 
 updateRegister cpu (Byte register) value =
@@ -88,6 +89,19 @@ updateRegister cpu (Byte register) value =
 
 updateAddress cpu (Byte address) value =
     Array.set address value cpu.ram
+
+
+fetch cpu index =
+    Maybe.withDefault (Byte 0) <| Array.get cpu.memory index
+
+
+fetchOpcode cpu (Byte int) =
+    case int of
+        7 ->
+            MOV_CONST_CHAR_TO_CONST_ADDR (byteAdd (fetch cpu cpu.instructionPointer) (Byte 1)) (byteAdd (fetch cpu cpu.instructionPointer) (Byte 2))
+
+        _ ->
+            HLT
 
 
 update opcode cpu =
@@ -129,3 +143,6 @@ update opcode cpu =
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
                 , ram = updateAddress cpu destinationAddress char
             }
+
+        HLT ->
+            cpu
