@@ -1,4 +1,4 @@
-module CPU exposing (CPU, Msg(..), initalCPU, lookupRegister, update)
+module CPU exposing (CPU, Msg(..), initalCPU, loadRam, lookupRegister, update)
 
 import Array exposing (Array)
 import Byte exposing (..)
@@ -15,6 +15,10 @@ type alias CPU =
     , zeroFlag : Bool
     , carryFlag : Bool
     }
+
+
+loadRam cpu =
+    Array.initialize 256 <| \x -> Maybe.withDefault (mkByte 0) <| Array.get x cpu
 
 
 lookupRegister cpu (Byte int) =

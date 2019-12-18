@@ -1,6 +1,7 @@
 module Main exposing (Model, Msg(..), displayBool, initialModel, main, mapA, memoryRows, mkByteTd, update, view)
 
 import Array exposing (Array)
+import Assembler exposing (assembleCode)
 import Browser
 import Byte exposing (..)
 import CPU exposing (CPU)
@@ -15,6 +16,7 @@ type alias Model =
     { count : Int
     , code : String
     , cpu : CPU
+    , flash : String
     }
 
 
@@ -23,12 +25,14 @@ initialModel =
     { count = 0
     , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nHLT"
     , cpu = CPU.initalCPU
+    , flash = ""
     }
 
 
 type Msg
     = Increment
     | Decrement
+    | Assemble
 
 
 update : Msg -> Model -> Model
@@ -39,6 +43,22 @@ update msg model =
 
         Decrement ->
             { model | count = model.count - 1 }
+
+        Assemble ->
+            let
+                result =
+                    Array.fromList <| assembleCode model.code
+
+                newRam =
+                    CPU.loadRam result
+
+                cpu =
+                    model.cpu
+
+                mem =
+                    { cpu | ram = newRam }
+            in
+            { model | flash = Debug.toString result, cpu = mem }
 
 
 displayBool bool =
@@ -62,6 +82,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ h2 [] [ text "Output" ]
+        , div [] [ text model.flash ]
         , div [] <| showOutput model.cpu.ram
         , h2 [] [ text "Registers/Flags" ]
         , table [ style "border" "1px solid black" ]
@@ -103,7 +124,7 @@ view model =
         , button [] [ text "Run" ]
         , button [] [ text "Step" ]
         , button [] [ text "Reset" ]
-        , button [] [ text "Assemble" ]
+        , button [ onClick Assemble ] [ text "Assemble" ]
         ]
 
 
