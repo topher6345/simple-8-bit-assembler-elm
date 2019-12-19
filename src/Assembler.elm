@@ -104,8 +104,12 @@ addressConstant =
 charConstant =
     succeed CharConstant
         |. symbol "'"
-        |= charChomper Char.isAlpha
+        |= charChomper isValidChar
         |. symbol "'"
+
+
+isValidChar char =
+    Char.isAlpha char || (char == ' ')
 
 
 constant =
