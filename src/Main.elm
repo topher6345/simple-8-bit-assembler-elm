@@ -147,7 +147,7 @@ view model =
         , h2 [] [ text "Ram" ]
         , label [] [ text "hex display" ]
         , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
-        , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram model.cpuDisplayHex
+        , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram model.cpuDisplayHex <| toInt model.cpu.instructionPointer
         , h2 [] [ text "Code" ]
         , textarea
             [ cols 60
@@ -163,12 +163,14 @@ view model =
         ]
 
 
-memoryRows : Array Byte -> Bool -> List (Html msg)
-memoryRows array displayHex =
+memoryRows : Array Byte -> Bool -> Int -> List (Html msg)
+memoryRows array bool ip =
     let
         row x y =
-            Array.slice x y array
-                |> Array.map (displayByte displayHex >> cpuByteTd False)
+            array
+                |> Array.indexedMap
+                    (\index elem -> displayByte bool elem |> cpuByteTd (index == ip))
+                |> Array.slice x y
                 |> Array.toList
                 |> tr []
     in
