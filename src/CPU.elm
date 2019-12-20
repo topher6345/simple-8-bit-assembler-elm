@@ -112,29 +112,22 @@ fetch cpu (Byte index) =
 
 
 fetchInstruction : CPU -> Byte -> Msg
-fetchInstruction cpu (Byte int) =
-    case int of
+fetchInstruction cpu (Byte instructionByte) =
+    let
+        ip =
+            cpu.instructionPointer
+
+        x =
+            fetch cpu (byteAdd ip (Byte 1))
+
+        y =
+            fetch cpu (byteAdd ip (Byte 2))
+    in
+    case instructionByte of
         7 ->
-            let
-                ip =
-                    cpu.instructionPointer
-
-                x =
-                    fetch cpu (byteAdd ip (Byte 1))
-
-                y =
-                    fetch cpu (byteAdd ip (Byte 2))
-            in
             MOV_CONST_CHAR_TO_CONST_ADDR x y
 
         18 ->
-            let
-                ip =
-                    cpu.instructionPointer
-
-                x =
-                    fetch cpu (byteAdd ip (Byte 1))
-            in
             INC_REG x
 
         _ ->
