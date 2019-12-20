@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assembleCode, assembleLine, charChomper, charConstant, constant, opcode, opcodeAirty0, opcodeAirty1, register, toBytes)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, argumentToBytes, arguments, assembleCode, assembleLine, charChomper, charConstant, constant, opcode, opcodeAirty0, opcodeAirty1, opcodeToBytes, register, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -50,6 +50,24 @@ type Opcodes
     | A2 OpcodeAirty2
 
 
+registerToByte string =
+    case string of
+        "A" ->
+            mkByte 0
+
+        "B" ->
+            mkByte 1
+
+        "C" ->
+            mkByte 2
+
+        "D" ->
+            mkByte 3
+
+        _ ->
+            mkByte 127
+
+
 argumentToBytes argument =
     case argument of
         Constant string ->
@@ -59,7 +77,7 @@ argumentToBytes argument =
                 |> mkByte
 
         AddressRegister string ->
-            mkByte 0
+            registerToByte string
 
         AddressConstant string ->
             string
@@ -76,7 +94,7 @@ argumentToBytes argument =
                 |> mkByte
 
         Register string ->
-            mkByte 0
+            registerToByte string
 
 
 charChomper : (Char -> Bool) -> Parser String
