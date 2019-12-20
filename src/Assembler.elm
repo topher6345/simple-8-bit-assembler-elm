@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assembleCode, assembleLine, charConstant, constant, keywordRegister, opcode, opcodeAirty0, opcodeAirty1, toBytes)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assembleCode, assembleLine, charChomper, charConstant, constant, opcode, opcodeAirty0, opcodeAirty1, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -79,19 +79,10 @@ argumentToBytes argument =
             mkByte 0
 
 
+charChomper : (Char -> Bool) -> Parser String
 charChomper predicate =
-    chompIf predicate
+    Parser.chompIf predicate
         |> Parser.getChompedString
-
-
-keywordRegister =
-    succeed identity
-        |= oneOf
-            [ keyword "A"
-            , keyword "B"
-            , keyword "C"
-            , keyword "D"
-            ]
 
 
 addressRegister =
@@ -121,7 +112,8 @@ charConstant =
 
 
 isValidChar char =
-    Char.isAlpha char || (char == ' ')
+    Char.isAlpha char
+        || (char == ' ')
 
 
 constant =
@@ -130,7 +122,8 @@ constant =
 
 
 function =
-    Parser.getChompedString <| chompWhile Char.isAlpha
+    chompWhile Char.isAlpha
+        |> Parser.getChompedString
 
 
 arguments : Parser Argument
