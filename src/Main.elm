@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), displayBool, initialModel, main, memoryRows, update, view)
+module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, update, view)
 
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
@@ -150,21 +150,47 @@ view model =
         , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram model.cpuDisplayHex <| toInt model.cpu.instructionPointer
         , h2 [] [ text "Code" ]
         , textarea
-            [ cols 60
-            , rows 10
-            , value model.code
-            , onInput CodeChange
-            , spellcheck False
-            , selectionStart 0
-            , selectionEnd 10
-            , autofocus True
-            ]
+            ([ cols 60
+             , rows 10
+             , value model.code
+             , onInput CodeChange
+             , spellcheck False
+             , autofocus True
+             ]
+                ++ displaySelections 0 model.code
+            )
             []
         , button [] [ text "Run" ]
         , button [ onClick Step ] [ text "Step" ]
         , button [ onClick Reset ] [ text "Reset" ]
         , button [ onClick Assemble ] [ text "Assemble" ]
         ]
+
+
+displaySelections index code =
+    let
+        ( a, b ) =
+            findSelections code
+                |> Array.fromList
+                |> Array.get index
+                |> Maybe.withDefault ( 0, 0 )
+                |> Tuple.mapBoth selectionStart selectionEnd
+    in
+    [ a, b ]
+
+
+findSelections code =
+    let
+        ends =
+            String.indexes "\n" code
+
+        foo =
+            List.map (\x -> x + 1) ends
+
+        starts =
+            [ 0 ] ++ foo
+    in
+    List.map2 Tuple.pair starts ends
 
 
 selectionStart : Int -> Attribute msg
