@@ -96,6 +96,7 @@ updateAddress cpu (Byte address) value =
     Array.set address value cpu.ram
 
 
+tick : CPU -> CPU
 tick cpu =
     let
         ip =
