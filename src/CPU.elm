@@ -135,6 +135,7 @@ fetchInstruction cpu (Byte instructionByte) =
             HLT
 
 
+update : Msg -> CPU -> CPU
 update opcode cpu =
     case opcode of
         INC_REG reg ->
