@@ -79,8 +79,9 @@ argumentToBytes argument =
             mkByte 0
 
 
-charChomper f =
-    Parser.getChompedString <| chompIf f
+charChomper predicate =
+    chompIf predicate
+        |> Parser.getChompedString
 
 
 keywordRegister =
