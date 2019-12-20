@@ -165,8 +165,8 @@ view model =
         , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram model.cpuDisplayHex <| toInt model.cpu.instructionPointer
         , h2 [] [ text "Code" ]
         , textarea
-            ([ cols 30
-             , rows 15
+            ([ cols 20
+             , rows 12
              , id "code-editor"
              , value model.code
              , onInput CodeChange
