@@ -53,16 +53,27 @@ type Opcodes
 argumentToBytes argument =
     case argument of
         Constant string ->
-            mkByte <| Maybe.withDefault 0 <| String.toInt string
+            string
+                |> String.toInt
+                |> Maybe.withDefault 0
+                |> mkByte
 
         AddressRegister string ->
             mkByte 0
 
         AddressConstant string ->
-            mkByte <| Maybe.withDefault 0 <| String.toInt string
+            string
+                |> String.toInt
+                |> Maybe.withDefault 0
+                |> mkByte
 
         CharConstant string ->
-            mkByte <| Char.toCode <| Maybe.withDefault '0' <| List.head <| String.toList string
+            string
+                |> String.toList
+                |> List.head
+                |> Maybe.withDefault '0'
+                |> Char.toCode
+                |> mkByte
 
         Register string ->
             mkByte 0
