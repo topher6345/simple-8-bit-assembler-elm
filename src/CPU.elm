@@ -107,6 +107,7 @@ tick cpu =
     update instruction cpu
 
 
+fetch : CPU -> Byte -> Byte
 fetch cpu (Byte index) =
     Array.get index cpu.ram
         |> Maybe.withDefault (Byte 0)
