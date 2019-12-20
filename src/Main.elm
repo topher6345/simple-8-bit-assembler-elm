@@ -80,7 +80,7 @@ update msg model =
             { model | code = string }
 
         Step ->
-            { model | cpu = CPU.tick model.cpu }
+            { model | cpu = CPU.tick model.cpu, count = model.count + 1 }
 
         ToggleHexDisplay ->
             { model | cpuDisplayHex = not model.cpuDisplayHex }
@@ -157,7 +157,7 @@ view model =
              , spellcheck False
              , autofocus True
              ]
-                ++ displaySelections 0 model.code
+                ++ displaySelections model.count model.code
             )
             []
         , button [] [ text "Run" ]
