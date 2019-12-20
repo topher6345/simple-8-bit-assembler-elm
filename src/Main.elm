@@ -3,6 +3,7 @@ module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelect
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
 import Browser
+import Browser.Dom as Dom
 import Byte exposing (..)
 import CPU exposing (CPU)
 import Char
@@ -11,6 +12,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Encode as Encode
+import Task
 
 
 type alias Model =
@@ -22,14 +24,15 @@ type alias Model =
     }
 
 
-initialModel : Model
-initialModel =
-    { count = 0
-    , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nHLT"
-    , cpu = CPU.initalCPU
-    , flash = ""
-    , cpuDisplayHex = False
-    }
+initialModel _ =
+    ( { count = 0
+      , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nHLT"
+      , cpu = CPU.initalCPU
+      , flash = ""
+      , cpuDisplayHex = False
+      }
+    , Cmd.none
+    )
 
 
 type Msg
@@ -40,16 +43,21 @@ type Msg
     | CodeChange String
     | ToggleHexDisplay
     | Step
+    | FocusResult (Result Dom.Error ())
 
 
-update : Msg -> Model -> Model
+focus =
+    Task.attempt FocusResult (Dom.focus "code-editor")
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Increment ->
-            { model | count = model.count + 1 }
+            ( { model | count = model.count + 1 }, Cmd.none )
 
         Decrement ->
-            { model | count = model.count - 1 }
+            ( { model | count = model.count - 1 }, Cmd.none )
 
         Assemble ->
             let
@@ -64,7 +72,7 @@ update msg model =
                                 |> CPU.loadRam
                     }
             in
-            { model | cpu = mem }
+            ( { model | cpu = mem }, focus )
 
         Reset ->
             let
@@ -74,16 +82,19 @@ update msg model =
                 mem =
                     { cpu | ram = CPU.blankRam, instructionPointer = mkByte 0 }
             in
-            { model | cpu = mem }
+            ( { model | cpu = mem, count = 0 }, Cmd.none )
 
         CodeChange string ->
-            { model | code = string }
+            ( { model | code = string }, Cmd.none )
 
         Step ->
-            { model | cpu = CPU.tick model.cpu, count = model.count + 1 }
+            ( { model | cpu = CPU.tick model.cpu, count = model.count + 1 }, focus )
 
         ToggleHexDisplay ->
-            { model | cpuDisplayHex = not model.cpuDisplayHex }
+            ( { model | cpuDisplayHex = not model.cpuDisplayHex }, Cmd.none )
+
+        FocusResult _ ->
+            ( model, Cmd.none )
 
 
 displayBool bool =
@@ -116,6 +127,10 @@ view model =
         [ h2 [] [ text "Output" ]
         , div [] [ text model.flash ]
         , div [] <| showOutput model.cpu.ram
+        , button [] [ text "Run" ]
+        , button [ onClick Step ] [ text "Step" ]
+        , button [ onClick Reset ] [ text "Reset" ]
+        , button [ onClick Assemble ] [ text "Assemble" ]
         , h2 [] [ text "Registers/Flags" ]
         , table [ style "border" "1px solid black" ]
             [ thead []
@@ -150,8 +165,9 @@ view model =
         , table [ style "border" "1px solid black" ] <| memoryRows model.cpu.ram model.cpuDisplayHex <| toInt model.cpu.instructionPointer
         , h2 [] [ text "Code" ]
         , textarea
-            ([ cols 60
-             , rows 10
+            ([ cols 30
+             , rows 15
+             , id "code-editor"
              , value model.code
              , onInput CodeChange
              , spellcheck False
@@ -160,10 +176,6 @@ view model =
                 ++ displaySelections model.count model.code
             )
             []
-        , button [] [ text "Run" ]
-        , button [ onClick Step ] [ text "Step" ]
-        , button [ onClick Reset ] [ text "Reset" ]
-        , button [ onClick Assemble ] [ text "Assemble" ]
         ]
 
 
@@ -275,8 +287,14 @@ cpuByteTd selected string =
 
 main : Program () Model Msg
 main =
-    Browser.sandbox
+    Browser.element
         { init = initialModel
         , view = view
         , update = update
+        , subscriptions = subscriptions
         }
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.none
