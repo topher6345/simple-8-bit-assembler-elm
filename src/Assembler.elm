@@ -247,4 +247,7 @@ toBytes string =
 
 
 assembleCode string =
-    List.concat <| List.map toBytes <| String.lines string
+    string
+        |> String.lines
+        |> List.map toBytes
+        |> List.concat
