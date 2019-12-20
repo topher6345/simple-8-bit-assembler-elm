@@ -108,7 +108,8 @@ tick cpu =
 
 
 fetch cpu (Byte index) =
-    Maybe.withDefault (Byte 0) <| Array.get index cpu.ram
+    Array.get index cpu.ram
+        |> Maybe.withDefault (Byte 0)
 
 
 fetchInstruction : CPU -> Byte -> Msg
@@ -156,8 +157,8 @@ update opcode cpu =
                     byteAdd cpu.instructionPointer (Byte 3)
 
                 model =
-                    updateRegister cpu destinationRegister <|
-                        lookupRegister cpu sourceRegister
+                    lookupRegister cpu sourceRegister
+                        |> updateRegister cpu destinationRegister
             in
             { model | instructionPointer = ip }
 
@@ -165,8 +166,8 @@ update opcode cpu =
             { cpu
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
                 , ram =
-                    updateAddress cpu destinationAddress <|
-                        lookupRegister cpu sourceRegister
+                    lookupRegister cpu sourceRegister
+                        |> updateAddress cpu destinationAddress
             }
 
         MOV_CONST_CHAR_TO_CONST_ADDR destinationAddress char ->
