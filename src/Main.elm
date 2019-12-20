@@ -174,22 +174,22 @@ memoryRows array bool ip =
                 |> Array.toList
                 |> tr []
     in
-    [ row 0 15
-    , row 16 31
-    , row 32 47
-    , row 48 63
-    , row 64 79
-    , row 80 95
-    , row 96 111
-    , row 112 127
-    , row 128 143
-    , row 144 159
-    , row 160 175
-    , row 176 191
-    , row 192 207
-    , row 208 223
-    , row 224 239
-    , row 240 255
+    [ row 0 16
+    , row 16 32
+    , row 32 48
+    , row 48 64
+    , row 64 80
+    , row 80 96
+    , row 96 112
+    , row 112 128
+    , row 128 144
+    , row 144 160
+    , row 160 176
+    , row 176 192
+    , row 192 208
+    , row 208 224
+    , row 224 240
+    , row 240 256
     ]
 
 
@@ -223,7 +223,7 @@ cpuByteTd selected string =
         , style "text-align" "center"
         , style "background-color" <|
             if selected then
-                "yellow"
+                "orange"
 
             else
                 "white"
