@@ -136,7 +136,7 @@ view model =
                     , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.registerB ]
                     , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
                     , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]
-                    , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
+                    , td [ style "background-color" "orange" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
                     , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
                     , td [] [ text <| displayBool model.cpu.zeroFlag ]
                     , td [] [ text <| displayBool model.cpu.carryFlag ]
