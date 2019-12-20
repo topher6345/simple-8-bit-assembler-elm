@@ -198,6 +198,9 @@ lookup1ArgOpcodes string =
         "MOV" ->
             mkByte 7
 
+        "INC" ->
+            mkByte 18
+
         _ ->
             mkByte 0
 

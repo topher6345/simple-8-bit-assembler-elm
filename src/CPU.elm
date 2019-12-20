@@ -18,7 +18,12 @@ type alias CPU =
 
 
 loadRam cpu =
-    Array.initialize 256 <| \x -> Maybe.withDefault (mkByte 0) <| Array.get x cpu
+    let
+        constructor x =
+            Array.get x cpu
+                |> Maybe.withDefault (mkByte 0)
+    in
+    Array.initialize 256 constructor
 
 
 lookupRegister cpu (Byte int) =
@@ -121,6 +126,16 @@ fetchInstruction cpu (Byte int) =
                     fetch cpu (byteAdd ip (Byte 2))
             in
             MOV_CONST_CHAR_TO_CONST_ADDR x y
+
+        18 ->
+            let
+                ip =
+                    cpu.instructionPointer
+
+                x =
+                    fetch cpu (byteAdd ip (Byte 1))
+            in
+            INC_REG x
 
         _ ->
             HLT
