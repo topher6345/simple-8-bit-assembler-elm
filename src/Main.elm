@@ -154,6 +154,7 @@ view model =
             , rows 10
             , value model.code
             , onInput CodeChange
+            , spellcheck False
             ]
             []
         , button [] [ text "Run" ]
@@ -169,7 +170,9 @@ memoryRows array bool ip =
         row x y =
             array
                 |> Array.indexedMap
-                    (\index elem -> displayByte bool elem |> cpuByteTd (index == ip))
+                    (\index elem ->
+                        cpuByteTd (index == ip) <| displayByte bool elem
+                    )
                 |> Array.slice x y
                 |> Array.toList
                 |> tr []
