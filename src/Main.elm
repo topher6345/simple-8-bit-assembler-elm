@@ -155,6 +155,9 @@ view model =
             , value model.code
             , onInput CodeChange
             , spellcheck False
+            , selectionStart 0
+            , selectionEnd 10
+            , autofocus True
             ]
             []
         , button [] [ text "Run" ]
@@ -162,6 +165,16 @@ view model =
         , button [ onClick Reset ] [ text "Reset" ]
         , button [ onClick Assemble ] [ text "Assemble" ]
         ]
+
+
+selectionStart : Int -> Attribute msg
+selectionStart position =
+    property "selectionStart" (Encode.int position)
+
+
+selectionEnd : Int -> Attribute msg
+selectionEnd position =
+    property "selectionEnd" (Encode.int position)
 
 
 memoryRows : Array Byte -> Bool -> Int -> List (Html msg)
