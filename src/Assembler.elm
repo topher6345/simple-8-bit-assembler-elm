@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assembleCode, assembleLine, charChomper, charConstant, constant, opcode, opcodeAirty0, opcodeAirty1, toBytes)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, arguments, assembleCode, assembleLine, charChomper, charConstant, constant, opcode, opcodeAirty0, opcodeAirty1, register, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -88,13 +88,17 @@ charChomper predicate =
 addressRegister =
     succeed AddressRegister
         |. symbol "["
-        |= charChomper Char.isAlpha
+        |= charChomper isRegister
         |. symbol "]"
+
+
+isRegister char =
+    List.member char [ 'A', 'B', 'C', 'D' ]
 
 
 register =
     succeed Register
-        |= charChomper Char.isAlpha
+        |= charChomper isRegister
 
 
 addressConstant =
