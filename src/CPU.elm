@@ -74,8 +74,8 @@ type Msg
     | HLT
 
 
-updateRegister cpu (Byte register) value =
-    case register of
+updateRegister cpu (Byte registerByte) value =
+    case registerByte of
         0 ->
             { cpu | registerA = value }
 
@@ -147,7 +147,11 @@ update opcode cpu =
                 model =
                     updateRegister cpu reg sum
             in
-            { model | instructionPointer = ip, carryFlag = carryFlag, zeroFlag = zeroFlag }
+            { model
+                | instructionPointer = ip
+                , carryFlag = carryFlag
+                , zeroFlag = zeroFlag
+            }
 
         MOV_REG_BYTE sourceRegister destinationRegister ->
             let
