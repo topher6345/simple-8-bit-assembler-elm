@@ -127,17 +127,21 @@ replaceWhitespaceWithHtmlEntities string =
         string
 
 
+stdoutStyles =
+    [ style "display" "inline-block"
+    , style "min-width" "1em"
+    , style "color" "lightgreen"
+    , style "background-color" "black"
+    , style "margin" "1px"
+    , style "font-size" "2em"
+    ]
+
+
 showOutput ram =
     let
         f byte =
             pre
-                [ style "display" "inline-block"
-                , style "min-width" "1em"
-                , style "color" "lightgreen"
-                , style "background-color" "black"
-                , style "margin" "1px"
-                , style "font-size" "2em"
-                ]
+                stdoutStyles
                 [ Byte.toInt byte
                     |> replaceControlCharacters
                     |> Char.fromCode
@@ -149,6 +153,10 @@ showOutput ram =
     Array.slice 233 256 ram
         |> Array.toList
         |> List.map f
+
+
+nullInstructPointer cpu =
+    CPU.fetch cpu cpu.instructionPointer == Byte 0
 
 
 topBarStyles =
@@ -173,6 +181,7 @@ view model =
                      , autofocus True
                      , style "width" "100%"
                      , style "min-height" "80%"
+                     , style "font-size" "1.5em"
                      ]
                         ++ displaySelections model.count model.code
                     )
@@ -181,7 +190,7 @@ view model =
             , div [ style "order" "2" ]
                 [ h2 [] [ text "CPU" ]
                 , button [ disabled True ] [ text "Run" ]
-                , button [ onClick Step ] [ text "Step" ]
+                , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
                 , button [ onClick Reset ] [ text "Reset" ]
                 , button [ onClick Assemble ] [ text "Assemble" ]
                 , h3 [] [ text "Output" ]
@@ -330,7 +339,7 @@ cpuByteTd index ip string =
                 "lightgrey"
 
             else
-                "white"
+                "seashell"
     in
     td
         [ style "width" "2em"
