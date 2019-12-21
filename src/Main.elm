@@ -179,16 +179,17 @@ view model =
                     []
                 ]
             , div [ style "order" "2" ]
-                [ button [ disabled True ] [ text "Run" ]
+                [ h2 [] [ text "CPU" ]
+                , button [ disabled True ] [ text "Run" ]
                 , button [ onClick Step ] [ text "Step" ]
                 , button [ onClick Reset ] [ text "Reset" ]
                 , button [ onClick Assemble ] [ text "Assemble" ]
-                , h2 [] [ text "Output" ]
+                , h3 [] [ text "Output" ]
                 , div [] [ text model.flash ]
                 , div []
                     [ div [] <| showOutput model.cpu.ram
                     ]
-                , h2 [] [ text "Registers/Flags" ]
+                , h3 [] [ text "Registers/Flags" ]
                 , table [ style "border" "1px solid black" ]
                     [ thead []
                         [ th [] [ text "A" ]
@@ -216,10 +217,10 @@ view model =
                             ]
                         ]
                     ]
-                , h2 [] [ text "Ram" ]
+                , h3 [] [ text "RAM" ]
                 , label [] [ text "hex display" ]
                 , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
-                , table [ style "border" "1px solid black" ] <|
+                , table [ style "border" "1px solid black", style "font-family" "Monospace" ] <|
                     memoryRows model.cpu.ram model.cpuDisplayHex <|
                         toInt model.cpu.instructionPointer
                 ]
