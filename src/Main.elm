@@ -146,7 +146,7 @@ showOutput ram =
                     |> text
                 ]
     in
-    Array.slice 232 256 ram
+    Array.slice 233 256 ram
         |> Array.toList
         |> List.map f
 
@@ -320,15 +320,21 @@ byteToHex byte =
 
 cpuByteTd : Int -> Int -> String -> Html msg
 cpuByteTd index ip string =
-    td
-        [ style "width" "2em"
-        , style "text-align" "center"
-        , style "background-color" <|
+    let
+        color =
             if index == ip then
                 "orange"
 
+            else if index > 232 then
+                "lightgrey"
+
             else
                 "white"
+    in
+    td
+        [ style "width" "2em"
+        , style "text-align" "center"
+        , style "background-color" color
         ]
         [ text string ]
 

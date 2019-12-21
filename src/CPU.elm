@@ -93,7 +93,7 @@ updateRegister cpu (Byte registerByte) value =
 
 
 updateAddress cpu (Byte address) value =
-    Array.set address value cpu.ram
+    Array.set (address + 1) value cpu.ram
 
 
 tick : CPU -> CPU
