@@ -173,6 +173,7 @@ view model =
         , div [ style "display" "flex", style "flex-direction" "row" ]
             [ div [ style "order" "1", style "min-width" "50%", style "padding" "10px" ]
                 [ h2 [] [ text "Code" ]
+                , button [ onClick Assemble, style "margin-bottom" "1em" ] [ text "Assemble" ]
                 , textarea
                     ([ id "code-editor"
                      , value model.code
@@ -192,7 +193,6 @@ view model =
                 , button [ disabled True ] [ text "Run" ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
                 , button [ onClick Reset ] [ text "Reset" ]
-                , button [ onClick Assemble ] [ text "Assemble" ]
                 , h3 [] [ text "Output" ]
                 , div [] [ text model.flash ]
                 , div []
