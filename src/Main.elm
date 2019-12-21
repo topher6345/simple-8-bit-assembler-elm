@@ -106,13 +106,43 @@ displayBool bool =
             "false"
 
 
+replaceControlCharacters int =
+    if (int > 32) && (int < 127) then
+        int
+
+    else
+        32
+
+
+noBreakSpace =
+    String.fromChar
+        '\u{00A0}'
+
+
+replaceWhitespaceWithHtmlEntities string =
+    if string == " " then
+        noBreakSpace
+
+    else
+        string
+
+
 showOutput ram =
     let
         f byte =
-            span [ style "background-color" "grey" ]
+            pre
+                [ style "display" "inline-block"
+                , style "min-width" "1em"
+                , style "color" "lightgreen"
+                , style "background-color" "black"
+                , style "margin" "1px"
+                , style "font-size" "2em"
+                ]
                 [ Byte.toInt byte
+                    |> replaceControlCharacters
                     |> Char.fromCode
                     |> String.fromChar
+                    |> replaceWhitespaceWithHtmlEntities
                     |> text
                 ]
     in
@@ -146,7 +176,9 @@ view model =
             , button [ onClick Assemble ] [ text "Assemble" ]
             , h2 [] [ text "Output" ]
             , div [] [ text model.flash ]
-            , div [] <| showOutput model.cpu.ram
+            , div []
+                [ div [] <| showOutput model.cpu.ram
+                ]
             , h2 [] [ text "Registers/Flags" ]
             , table [ style "border" "1px solid black" ]
                 [ thead []
