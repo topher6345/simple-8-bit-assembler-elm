@@ -270,7 +270,7 @@ memoryRows array bool ip =
             array
                 |> Array.indexedMap
                     (\index elem ->
-                        cpuByteTd (index == ip) <| displayByte bool elem
+                        cpuByteTd index ip <| displayByte bool elem
                     )
                 |> Array.slice x y
                 |> Array.toList
@@ -318,13 +318,13 @@ byteToHex byte =
         |> String.toUpper
 
 
-cpuByteTd : Bool -> String -> Html msg
-cpuByteTd selected string =
+cpuByteTd : Int -> Int -> String -> Html msg
+cpuByteTd index ip string =
     td
         [ style "width" "2em"
         , style "text-align" "center"
         , style "background-color" <|
-            if selected then
+            if index == ip then
                 "orange"
 
             else
