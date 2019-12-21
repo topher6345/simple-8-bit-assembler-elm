@@ -29,7 +29,7 @@ initialModel _ =
       , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nHLT"
       , cpu = CPU.initalCPU
       , flash = ""
-      , cpuDisplayHex = False
+      , cpuDisplayHex = True
       }
     , Cmd.none
     )
@@ -160,7 +160,7 @@ topBarStyles =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ style "font-family" "Sans-serif" ]
         [ div topBarStyles [ h1 [ style "margin" "0" ] [ text "8 Bit Assembler Simulator in Elm" ] ]
         , div [ style "display" "flex", style "flex-direction" "row" ]
             [ div [ style "order" "1", style "min-width" "50%", style "padding" "10px" ]
@@ -202,7 +202,7 @@ view model =
                         , th [] [ text "C" ]
                         , th [] [ text "F" ]
                         ]
-                    , tbody []
+                    , tbody [ style "font-family" "Monospace", style "text-align" "center" ]
                         [ tr
                             []
                             [ td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerA ]
@@ -218,7 +218,7 @@ view model =
                         ]
                     ]
                 , h3 [] [ text "RAM" ]
-                , label [] [ text "hex display" ]
+                , label [] [ text "Decimal display" ]
                 , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
                 , table [ style "border" "1px solid black", style "font-family" "Monospace" ] <|
                     memoryRows model.cpu.ram model.cpuDisplayHex <|
