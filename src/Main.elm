@@ -151,68 +151,78 @@ showOutput ram =
         |> List.map f
 
 
+topBarStyles =
+    [ style "display" "block"
+    , style "width" "100%"
+    , style "background-color" "lightgrey"
+    ]
+
+
 view : Model -> Html Msg
 view model =
-    div [ style "display" "flex", style "flex-direction" "row" ]
-        [ div [ style "order" "1", style "min-width" "50%", style "padding" "10px" ]
-            [ h2 [] [ text "Code" ]
-            , textarea
-                ([ id "code-editor"
-                 , value model.code
-                 , onInput CodeChange
-                 , spellcheck False
-                 , autofocus True
-                 , style "width" "100%"
-                 , style "height" "100%"
-                 ]
-                    ++ displaySelections model.count model.code
-                )
-                []
-            ]
-        , div [ style "order" "2" ]
-            [ button [ disabled True ] [ text "Run" ]
-            , button [ onClick Step ] [ text "Step" ]
-            , button [ onClick Reset ] [ text "Reset" ]
-            , button [ onClick Assemble ] [ text "Assemble" ]
-            , h2 [] [ text "Output" ]
-            , div [] [ text model.flash ]
-            , div []
-                [ div [] <| showOutput model.cpu.ram
+    div []
+        [ div topBarStyles [ h1 [ style "margin" "0" ] [ text "8 Bit Assembler Simulator in Elm" ] ]
+        , div [ style "display" "flex", style "flex-direction" "row" ]
+            [ div [ style "order" "1", style "min-width" "50%", style "padding" "10px" ]
+                [ h2 [] [ text "Code" ]
+                , textarea
+                    ([ id "code-editor"
+                     , value model.code
+                     , onInput CodeChange
+                     , spellcheck False
+                     , autofocus True
+                     , style "width" "100%"
+                     , style "min-height" "80%"
+                     ]
+                        ++ displaySelections model.count model.code
+                    )
+                    []
                 ]
-            , h2 [] [ text "Registers/Flags" ]
-            , table [ style "border" "1px solid black" ]
-                [ thead []
-                    [ th [] [ text "A" ]
-                    , th [] [ text "B" ]
-                    , th [] [ text "C" ]
-                    , th [] [ text "D" ]
-                    , th [] [ text "IP" ]
-                    , th [] [ text "SP" ]
-                    , th [] [ text "Z" ]
-                    , th [] [ text "C" ]
-                    , th [] [ text "F" ]
+            , div [ style "order" "2" ]
+                [ button [ disabled True ] [ text "Run" ]
+                , button [ onClick Step ] [ text "Step" ]
+                , button [ onClick Reset ] [ text "Reset" ]
+                , button [ onClick Assemble ] [ text "Assemble" ]
+                , h2 [] [ text "Output" ]
+                , div [] [ text model.flash ]
+                , div []
+                    [ div [] <| showOutput model.cpu.ram
                     ]
-                , tbody []
-                    [ tr
-                        []
-                        [ td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerA ]
-                        , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerB ]
-                        , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
-                        , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]
-                        , td [ style "width" "2em", style "background-color" "orange" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
-                        , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
-                        , td [ style "width" "2em" ] [ text <| displayBool model.cpu.zeroFlag ]
-                        , td [ style "width" "2em" ] [ text <| displayBool model.cpu.carryFlag ]
-                        , td [ style "width" "2em" ] [ text "F" ]
+                , h2 [] [ text "Registers/Flags" ]
+                , table [ style "border" "1px solid black" ]
+                    [ thead []
+                        [ th [] [ text "A" ]
+                        , th [] [ text "B" ]
+                        , th [] [ text "C" ]
+                        , th [] [ text "D" ]
+                        , th [] [ text "IP" ]
+                        , th [] [ text "SP" ]
+                        , th [] [ text "Z" ]
+                        , th [] [ text "C" ]
+                        , th [] [ text "F" ]
+                        ]
+                    , tbody []
+                        [ tr
+                            []
+                            [ td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerA ]
+                            , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerB ]
+                            , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
+                            , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]
+                            , td [ style "width" "2em", style "background-color" "orange" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
+                            , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
+                            , td [ style "width" "2em" ] [ text <| displayBool model.cpu.zeroFlag ]
+                            , td [ style "width" "2em" ] [ text <| displayBool model.cpu.carryFlag ]
+                            , td [ style "width" "2em" ] [ text "F" ]
+                            ]
                         ]
                     ]
+                , h2 [] [ text "Ram" ]
+                , label [] [ text "hex display" ]
+                , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
+                , table [ style "border" "1px solid black" ] <|
+                    memoryRows model.cpu.ram model.cpuDisplayHex <|
+                        toInt model.cpu.instructionPointer
                 ]
-            , h2 [] [ text "Ram" ]
-            , label [] [ text "hex display" ]
-            , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
-            , table [ style "border" "1px solid black" ] <|
-                memoryRows model.cpu.ram model.cpuDisplayHex <|
-                    toInt model.cpu.instructionPointer
             ]
         ]
 
