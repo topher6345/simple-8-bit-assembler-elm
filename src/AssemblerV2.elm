@@ -1,4 +1,4 @@
-module AssemblerV2 exposing (RegexParseResult, assemble, getValue, regex, regexParse)
+module AssemblerV2 exposing (RegexParseResult, assemble, getValue, parseLabel, parseRegister, regex, regexParse)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -8,6 +8,11 @@ import Regex
 
 
 --Based on https://github.com/Schweigi/assembler-simulator/blob/master/src/assembler/asm.js
+
+
+type Value
+    = ValueString String
+    | ValueByte Byte
 
 
 type alias RegexParseResult =
@@ -46,13 +51,75 @@ regexParse string =
     }
 
 
+parseRegister input =
+    case String.toUpper input of
+        "A" ->
+            Just (mkByte 0)
+
+        "B" ->
+            Just (mkByte 1)
+
+        "C" ->
+            Just (mkByte 2)
+
+        "D" ->
+            Just (mkByte 3)
+
+        _ ->
+            Nothing
+
+
 
 --// REGISTER, NUMBER or LABEL
 
 
-parseRegOrNumber : String -> Reg -> Reg -> ( Reg, Byte )
-parseRegOrNumber input rega regb =
-    ( Address, mkByte 0 )
+parseNumber input =
+    Just (mkByte 0)
+
+
+parseOffsetAddressing input =
+    Just (mkByte 0)
+
+
+
+--MATCHES: "(.L)abel"
+
+
+labelRegex =
+    Regex.fromString "^[.A-Za-z]\\w*$"
+        |> Maybe.withDefault Regex.never
+
+
+parseLabel input =
+    input
+        |> Regex.find labelRegex
+        |> List.map .match
+        |> List.head
+
+
+parseRegOrNumber : String -> Reg -> Reg -> Result String ( Reg, Value )
+parseRegOrNumber input regType numberType =
+    case parseRegister input of
+        Just byte ->
+            Ok ( Register, ValueByte byte )
+
+        Nothing ->
+            case parseLabel input of
+                Just string ->
+                    Ok ( Number, ValueString string )
+
+                Nothing ->
+                    case ( regType, parseOffsetAddressing input ) of
+                        ( RegisterAddress, Just byte ) ->
+                            Ok ( regType, ValueByte byte )
+
+                        _ ->
+                            case parseNumber input of
+                                Just byte ->
+                                    Ok ( numberType, ValueByte byte )
+
+                                Nothing ->
+                                    Err "Not a number"
 
 
 type Reg
