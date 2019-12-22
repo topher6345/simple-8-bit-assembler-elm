@@ -1,4 +1,4 @@
-module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, argumentToBytes, arguments, assembleCode, assembleLine, charChomper, charConstant, constant, opcode, opcodeAirty0, opcodeAirty1, opcodeToBytes, register, toBytes)
+module Assembler exposing (Argument(..), OpcodeAirty2, Opcodes(..), Ram, addressConstant, addressRegister, argumentToBytes, arguments, assembleCode, assembleLine, charChomper, charConstant, constant, opcode, opcodeAirty0, opcodeAirty1, opcodeToBytes, regexParse, register, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -17,6 +17,41 @@ import Regex
 -- Address using a label: label
 -- Constant: Any number between 0..255 (8bit unsigned)
 -- Offset for indirect addressing: Integer between -16..+15 (sign is mandatory)
+
+
+type alias RegexParseResult =
+    { label : String
+    , instruction : String
+    , operand1 : String
+    , operand2 : String
+    }
+
+
+regex =
+    Maybe.withDefault Regex.never <|
+        Regex.fromString
+            "^[\\t ]*(?:([.A-Za-z]\\w*)[:])?(?:[\\t ]*([A-Za-z]{2,4})(?:[\\t ]+(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*)(?:[\\t ]*[,][\\t ]*(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*))?)?)?"
+
+
+regexParse string =
+    let
+        result =
+            Array.fromList <|
+                case Regex.find regex string of
+                    x :: [] ->
+                        x.submatches
+
+                    _ ->
+                        []
+
+        fetch i =
+            Array.get i result |> Maybe.withDefault Nothing
+    in
+    { label = fetch 0
+    , instruction = fetch 1
+    , operand1 = fetch 2
+    , operand2 = fetch 6
+    }
 
 
 type alias OpcodeAirty2 =

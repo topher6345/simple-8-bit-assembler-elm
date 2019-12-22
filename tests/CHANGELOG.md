@@ -1,6 +1,27 @@
 # Changelog
 
 
+
+lots of UI changes/improvements
+
+planning on having a UI workflow for adding to the parser
+
+finally took a look at
+
+https://www.mschweighauser.com/make-your-own-assembler-simulator-in-javascript-part-2/#theassembler
+
+Regexes are used in the reference implementation
+
+The parenthesis arent arbirarily nested, no pushdown automata is needed
+
+I need some kind of quiz - "Is this language parseable by...."
+
+looking at elm-regex again...
+
+https://package.elm-lang.org/packages/elm/regex/latest/Regex
+
+> This is kind of garbage to use, and using a package like elm/parser is probably easier.
+
 `end`!! was the special sauce
 
 ```elm

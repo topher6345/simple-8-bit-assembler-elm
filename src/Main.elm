@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, update, view)
+module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, regex, update, view)
 
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
@@ -12,6 +12,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Encode as Encode
+import Regex
 import Task
 
 
