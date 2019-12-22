@@ -46,6 +46,23 @@ regexParse string =
     }
 
 
+
+--// REGISTER, NUMBER or LABEL
+
+
+parseRegOrNumber : String -> Reg -> Reg -> ( Reg, Byte )
+parseRegOrNumber input rega regb =
+    ( Address, mkByte 0 )
+
+
+type Reg
+    = Address
+    | Register
+    | Numbers
+    | Number
+    | RegisterAddress
+
+
 getValue input =
     case String.split "" input of
         "[" :: rest ->
@@ -55,11 +72,17 @@ getValue input =
 
                 length =
                     Array.length array
+
+                string =
+                    array
+                        |> Array.slice 0 (length - 1)
+                        |> Array.toList
+                        |> String.concat
             in
-            Array.slice 0 (length - 1) array
+            parseRegOrNumber string RegisterAddress Address
 
         _ ->
-            [ "" ] |> Array.fromList
+            parseRegOrNumber input Register Number
 
 
 parseMov op1 op2 =
