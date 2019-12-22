@@ -1,9 +1,13 @@
-module AssemblerV2 exposing (RegexParseResult, assemble, regex, regexParse)
+module AssemblerV2 exposing (RegexParseResult, assemble, getValue, regex, regexParse)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
 import CPU
 import Regex
+
+
+
+--Based on https://github.com/Schweigi/assembler-simulator/blob/master/src/assembler/asm.js
 
 
 type alias RegexParseResult =
@@ -42,13 +46,33 @@ regexParse string =
     }
 
 
+getValue input =
+    case String.split "" input of
+        "[" :: rest ->
+            let
+                array =
+                    Array.fromList rest
+
+                length =
+                    Array.length array
+            in
+            Array.slice 0 (length - 1) array
+
+        _ ->
+            [ "" ] |> Array.fromList
+
+
+parseMov op1 op2 =
+    Ok [ mkByte 7 ]
+
+
 toBytes regexParseResult =
     case regexParseResult.instruction of
         Just "HLT" ->
             Ok [ mkByte 0 ]
 
         Just "MOV" ->
-            Ok [ mkByte 7 ]
+            parseMov regexParseResult.operand1 regexParseResult.operand1
 
         Just i ->
             Err <| String.concat [ "Error: Unrecognized opcdoe: ", i ]
