@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, regex, update, view)
+module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, update, view)
 
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
@@ -55,10 +55,18 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Increment ->
-            ( { model | count = model.count + 1 }, Cmd.none )
+            ( { model
+                | count = model.count + 1
+              }
+            , Cmd.none
+            )
 
         Decrement ->
-            ( { model | count = model.count - 1 }, Cmd.none )
+            ( { model
+                | count = model.count - 1
+              }
+            , Cmd.none
+            )
 
         Assemble ->
             let
@@ -73,7 +81,11 @@ update msg model =
                                 |> CPU.loadRam
                     }
             in
-            ( { model | cpu = mem }, focus )
+            ( { model
+                | cpu = mem
+              }
+            , focus
+            )
 
         Reset ->
             let
@@ -83,28 +95,45 @@ update msg model =
                 mem =
                     { cpu | ram = CPU.blankRam, instructionPointer = mkByte 0 }
             in
-            ( { model | cpu = mem, count = 0 }, Cmd.none )
+            ( { model
+                | cpu = mem
+                , count = 0
+              }
+            , Cmd.none
+            )
 
         CodeChange string ->
-            ( { model | code = string }, Cmd.none )
+            ( { model
+                | code = string
+              }
+            , Cmd.none
+            )
 
         Step ->
-            ( { model | cpu = CPU.tick model.cpu, count = model.count + 1 }, focus )
+            ( { model
+                | cpu = CPU.tick model.cpu
+                , count = model.count + 1
+              }
+            , focus
+            )
 
         ToggleHexDisplay ->
-            ( { model | cpuDisplayHex = not model.cpuDisplayHex }, Cmd.none )
+            ( { model
+                | cpuDisplayHex = not model.cpuDisplayHex
+              }
+            , Cmd.none
+            )
 
         FocusResult _ ->
             ( model, Cmd.none )
 
 
 displayBool bool =
-    case bool of
-        True ->
-            "true"
+    if bool then
+        "true"
 
-        False ->
-            "false"
+    else
+        "false"
 
 
 replaceControlCharacters int =
@@ -138,16 +167,21 @@ stdoutStyles =
     ]
 
 
+formatByte byte =
+    byte
+        |> Byte.toInt
+        |> replaceControlCharacters
+        |> Char.fromCode
+        |> String.fromChar
+        |> replaceWhitespaceWithHtmlEntities
+
+
 showOutput ram =
     let
         f byte =
             pre
                 stdoutStyles
-                [ Byte.toInt byte
-                    |> replaceControlCharacters
-                    |> Char.fromCode
-                    |> String.fromChar
-                    |> replaceWhitespaceWithHtmlEntities
+                [ formatByte byte
                     |> text
                 ]
     in

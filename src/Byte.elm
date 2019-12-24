@@ -16,14 +16,8 @@ carryAdd (Byte a) (Byte b) =
     let
         sum =
             a + b
-
-        carry =
-            a + b > 255
-
-        zero =
-            sum == 0
     in
-    ( mkByte sum, carry, zero )
+    ( mkByte sum, sum > 255, sum == 0 )
 
 
 toInt (Byte int) =

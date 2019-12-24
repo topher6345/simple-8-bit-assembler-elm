@@ -29,19 +29,21 @@ regex =
             "^[\\t ]*(?:([.A-Za-z]\\w*)[:])?(?:[\\t ]*([A-Za-z]{2,4})(?:[\\t ]+(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*)(?:[\\t ]*[,][\\t ]*(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*))?)?)?"
 
 
+regexFind string =
+    case Regex.find regex string of
+        { submatches } :: [] ->
+            submatches
+
+        _ ->
+            []
+
+
 regexParse string =
     let
-        result =
-            Array.fromList <|
-                case Regex.find regex string of
-                    x :: [] ->
-                        x.submatches
-
-                    _ ->
-                        []
-
         fetch i =
-            Array.get i result
+            regexFind string
+                |> Array.fromList
+                |> Array.get i
                 |> Maybe.withDefault Nothing
     in
     { label = fetch 0

@@ -20,7 +20,8 @@ type alias CPU =
 loadRam cpu =
     let
         constructor x =
-            Array.get x cpu
+            cpu
+                |> Array.get x
                 |> Maybe.withDefault (mkByte 0)
     in
     Array.initialize 256 constructor
@@ -45,7 +46,9 @@ lookupRegister cpu (Byte int) =
 
 
 blankRam =
-    Array.initialize 256 <| always <| mkByte 0
+    mkByte 0
+        |> always
+        |> Array.initialize 256
 
 
 initialRam =
