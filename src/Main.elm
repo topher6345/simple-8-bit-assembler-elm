@@ -178,16 +178,13 @@ formatByte byte =
 
 showOutput ram =
     let
-        f byte =
-            pre
-                stdoutStyles
-                [ formatByte byte
-                    |> text
-                ]
+        viewByte byte =
+            pre stdoutStyles
+                [ formatByte byte |> text ]
     in
     Array.slice 233 256 ram
         |> Array.toList
-        |> List.map f
+        |> List.map viewByte
 
 
 nullInstructPointer cpu =
@@ -274,7 +271,8 @@ view model =
 displaySelections index code =
     let
         ( a, b ) =
-            findSelections code
+            code
+                |> findSelections
                 |> Array.fromList
                 |> Array.get index
                 |> Maybe.withDefault ( 0, 0 )
@@ -288,11 +286,14 @@ findSelections code =
         ends =
             String.indexes "\n" code
 
-        foo =
-            List.map (\x -> x + 1) ends
+        incr x =
+            x + 1
+
+        tail =
+            List.map incr ends
 
         starts =
-            [ 0 ] ++ foo
+            [ 0 ] ++ tail
     in
     List.map2 Tuple.pair starts ends
 
@@ -310,12 +311,13 @@ selectionEnd position =
 memoryRows : Array Byte -> Bool -> Int -> List (Html msg)
 memoryRows array bool ip =
     let
+        field index elem =
+            displayByte bool elem
+                |> cpuByteTd index ip
+
         row x y =
             array
-                |> Array.indexedMap
-                    (\index elem ->
-                        cpuByteTd index ip <| displayByte bool elem
-                    )
+                |> Array.indexedMap field
                 |> Array.slice x y
                 |> Array.toList
                 |> tr []

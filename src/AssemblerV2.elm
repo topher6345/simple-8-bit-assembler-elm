@@ -1,4 +1,4 @@
-module AssemblerV2 exposing (RegexParseResult, assemble, getValue, parseLabel, parseRegister, regex, regexParse)
+module AssemblerV2 exposing (RegexParseResult, assemble, getValue, parseLabel, parseRegOrNumber, parseRegister, regex, regexParse, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
@@ -7,7 +7,10 @@ import Regex
 
 
 
---Based on https://github.com/Schweigi/assembler-simulator/blob/master/src/assembler/asm.js
+-- Based on https://github.com/Schweigi/assembler-simulator/blob/master/src/assembler/asm.js
+-- Use https://www.debuggex.com/
+-- Matches: "label: INSTRUCTION (["')OPERAND1(]"'), (["')OPERAND2(]"')
+-- GROUPS:      1       2               3                    7
 
 
 type Value
@@ -23,11 +26,23 @@ type alias RegexParseResult =
     }
 
 
-regex =
-    Maybe.withDefault Regex.never <|
-        Regex.fromString
-            "^[\\t ]*(?:([.A-Za-z]\\w*)[:])?(?:[\\t ]*([A-Za-z]{2,4})(?:[\\t ]+(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*)(?:[\\t ]*[,][\\t ]*(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*))?)?)?"
+mkRegex string =
+    string
+        |> Regex.fromString
+        |> Maybe.withDefault Regex.never
 
+
+regex =
+    mkRegex
+        "^[\\t ]*(?:([.A-Za-z]\\w*)[:])?(?:[\\t ]*([A-Za-z]{2,4})(?:[\\t ]+(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*)(?:[\\t ]*[,][\\t ]*(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*))?)?)?"
+
+
+regexNum =
+    mkRegex "^[-+]?[0-9]+$"
+
+
+regexLabel =
+    mkRegex  "^[.A-Za-z]\w*$"
 
 regexFind string =
     case Regex.find regex string of
