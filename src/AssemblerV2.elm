@@ -42,7 +42,8 @@ regexNum =
 
 
 regexLabel =
-    mkRegex  "^[.A-Za-z]\w*$"
+    mkRegex "^[.A-Za-z]\\w*$"
+
 
 regexFind string =
     case Regex.find regex string of
@@ -193,3 +194,120 @@ assemble string =
         |> String.lines
         |> List.map regexParse
         |> List.map toBytes
+
+
+lookupInstruction instr =
+    case instr of
+        "DB" ->
+            Ok []
+
+        "HLT" ->
+            Err "Not Implemented"
+
+        "MOV" ->
+            Err "Not Implemented"
+
+        "ADD" ->
+            Err "Not Implemented"
+
+        "SUB" ->
+            Err "Not Implemented"
+
+        "INC" ->
+            Err "Not Implemented"
+
+        "DEC" ->
+            Err "Not Implemented"
+
+        "CMP" ->
+            Err "Not Implemented"
+
+        "JMP" ->
+            Err "Not Implemented"
+
+        "JC" ->
+            Err "Not Implemented"
+
+        "JB" ->
+            Err "Not Implemented"
+
+        "JNAE" ->
+            Err "Not Implemented"
+
+        "JNC" ->
+            Err "Not Implemented"
+
+        "JNB" ->
+            Err "Not Implemented"
+
+        "JAE" ->
+            Err "Not Implemented"
+
+        "JZ" ->
+            Err "Not Implemented"
+
+        "JE" ->
+            Err "Not Implemented"
+
+        "JNZ" ->
+            Err "Not Implemented"
+
+        "JNE" ->
+            Err "Not Implemented"
+
+        "JA" ->
+            Err "Not Implemented"
+
+        "JNBE" ->
+            Err "Not Implemented"
+
+        "JNA" ->
+            Err "Not Implemented"
+
+        "JBE" ->
+            Err "Not Implemented"
+
+        "PUSH" ->
+            Err "Not Implemented"
+
+        "POP" ->
+            Err "Not Implemented"
+
+        "CALL" ->
+            Err "Not Implemented"
+
+        "RET" ->
+            Err "Not Implemented"
+
+        "MUL" ->
+            Err "Not Implemented"
+
+        "DIV" ->
+            Err "Not Implemented"
+
+        "AND" ->
+            Err "Not Implemented"
+
+        "OR" ->
+            Err "Not Implemented"
+
+        "XOR" ->
+            Err "Not Implemented"
+
+        "NOT" ->
+            Err "Not Implemented"
+
+        "SHL" ->
+            Err "Not Implemented"
+
+        "SAL" ->
+            Err "Not Implemented"
+
+        "SHR" ->
+            Err "Not Implemented"
+
+        "SAR" ->
+            Err "Not Implemented"
+
+        _ ->
+            Err "Not Implemented"
