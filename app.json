@@ -1,15 +1,4 @@
 {
     "name": "Simple 8-bit Assembler Simulator in Elm",
-    "repository": "https://github.com/topher6345/simple-8-bit-assembler-elm",
-    "env": {
-        "ELM_COMPILE": "elm make src/Main.elm --output js/elm.js"
-    },
-    "buildpacks": [
-        {
-            "url": "https://github.com/srid/heroku-buildpack-elm.git"
-        },
-        {
-            "url": "https://github.com/hone/heroku-buildpack-static"
-        }
-    ]
+    "repository": "https://github.com/topher6345/simple-8-bit-assembler-elm"
 }
