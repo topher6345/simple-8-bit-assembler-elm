@@ -1,3 +1,5 @@
 {
-    "root": "."
+    "root": ".",
+    "clean_urls": true
+
 }
