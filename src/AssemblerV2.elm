@@ -311,3 +311,17 @@ lookupInstruction instr =
 
         _ ->
             Err "Not Implemented"
+
+
+parse input =
+    let
+        code =
+            []
+
+        mapping =
+            []
+
+        labels =
+            []
+    in
+    ( code, mapping, labels )
