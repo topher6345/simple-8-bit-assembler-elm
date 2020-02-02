@@ -327,5 +327,12 @@ parse input =
         -- Hash map of label used to replace the labels after the assembler generated the code
         labels =
             Dict.fromList []
+
+        -- Hash of uppercase labels used to detect duplicates
+        normalizedLabels =
+            Dict.fromList []
+
+        lines =
+            String.split "\n" input
     in
     ( code, mapping, labels )
