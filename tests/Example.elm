@@ -178,4 +178,5 @@ suite =
                     in
                     Expect.equal result [ Byte 7, Byte 232, Byte 104, Byte 7, Byte 233, Byte 101 ]
             ]
+        , describe "AssemblerV2" []
         ]
