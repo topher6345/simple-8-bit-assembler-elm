@@ -23,6 +23,7 @@ type alias Model =
     , flash : String
     , cpuDisplayHex : Bool
     , showEditor : Bool
+    , assembled : Bool
     }
 
 
@@ -33,6 +34,7 @@ initialModel _ =
       , flash = ""
       , cpuDisplayHex = True
       , showEditor = True
+      , assembled = False
       }
     , Cmd.none
     )
@@ -86,6 +88,7 @@ update msg model =
             in
             ( { model
                 | cpu = mem
+                , assembled = True
               }
             , focus
             )
@@ -101,6 +104,7 @@ update msg model =
             ( { model
                 | cpu = mem
                 , count = 0
+                , assembled = False
               }
             , Cmd.none
             )
@@ -108,6 +112,7 @@ update msg model =
         CodeChange string ->
             ( { model
                 | code = string
+                , assembled = False
               }
             , Cmd.none
             )
@@ -211,7 +216,7 @@ topBarStyles =
 editor model =
     [ h2 [] [ text "Code" ]
     , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Documentation" ]
-    , button [ onClick Assemble, style "margin-bottom" "1em" ] [ text "Assemble" ]
+    , button [ onClick Assemble, style "margin-bottom" "1em", disabled model.assembled ] [ text "Assemble" ]
     , textarea
         ([ id "code-editor"
          , value model.code
@@ -229,10 +234,10 @@ editor model =
 
 
 documentation =
-    [ div [ style "line-height" "1.6em" ]
-        [ h2 [] [ text "Documentation" ]
-        , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Code" ]
-        , h3 [] [ text "Introduction" ]
+    [ h2 [] [ text "Documentation" ]
+    , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Code" ]
+    , div [ style "line-height" "1.6em" ]
+        [ h3 [] [ text "Introduction" ]
         , p [] [ text "This is a tribute to ", a [ href "https://schweigi.github.io/assembler-simulator/index.html", target "_blank" ] [ text "Simple 8-bit Assembler Simulator" ], text " by Marco Schweighauser" ]
         , p []
             [ q [ style "padding" "1em" ]
@@ -275,7 +280,7 @@ view model =
             , div [ style "order" "2" ]
                 [ h2 [] [ text "CPU" ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
-                , button [ onClick Reset, disabled (model.cpu == CPU.initalCPU) ] [ text "Reset" ]
+                , button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ]
                 , h3 [] [ text "Output" ]
                 , div [] [ text model.flash ]
                 , div []
