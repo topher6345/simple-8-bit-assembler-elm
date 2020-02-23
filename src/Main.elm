@@ -32,7 +32,7 @@ initialModel _ =
       , cpu = CPU.initalCPU
       , flash = ""
       , cpuDisplayHex = True
-      , showEditor = False
+      , showEditor = True
       }
     , Cmd.none
     )
@@ -244,7 +244,7 @@ documentation =
                     , li [] [ a [ href "http://cs.smith.edu/~thiebaut/ArtOfAssembly/artofasm.html" ] [ text "The Art of Assembly Language Programming" ] ]
                     , li [] [ a [ href "http://www.nasm.us/xdoc/2.10.09/html/nasmdoc3.html" ] [ text "NASM Language Documentation" ] ]
                     ]
-                , text "The simulator consists of a 8-bit cpu and 256 bytes of memory. All instructions (code) and variables (data) needs to fit inside the memory. For simplicity every instruction (and operand) is 1 byte. Therefore a MOV instruction will use 3 bytes of memory. The simulator provides a console output which is memory mapped from 0xE8 to 0xFF. Memory mapped means that every value written to this memory block is visible on the console."
+                , text "The simulator consists of a 8-bit cpu and 256 bytes of memory. All instructions (code) and variables (data) need to fit inside the memory. For simplicity, every instruction (and operand) is 1 byte. Therefore a MOV instruction will use 3 bytes of memory. The simulator provides a console output which is memory mapped from 0xE8 to 0xFF. Memory mapped means that every value written to this memory block is visible on the console."
                 ]
             ]
         , h3 [] [ text "Instruction Set" ]
