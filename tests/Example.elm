@@ -53,42 +53,6 @@ suite =
                             { initalCPU | registerA = Byte 0, instructionPointer = Byte 2, carryFlag = True }
                     in
                     Expect.equal expected actual
-            , test "apply MOV_REG_ADDRESS" <|
-                \_ ->
-                    let
-                        state =
-                            { initalCPU | registerA = mkByte 1 }
-
-                        ram =
-                            Array.set 0 (Byte 1) initalCPU.ram
-
-                        actual =
-                            update (MOV_REG_ADDRESS (Byte 0) (Byte 0)) state
-
-                        expected =
-                            { initalCPU
-                                | ram = ram
-                                , registerA = Byte 1
-                                , instructionPointer = Byte 3
-                            }
-                    in
-                    Expect.equal expected actual
-            , test "apply MOV_CONST_CHAR_TO_CONST_ADDR" <|
-                \_ ->
-                    let
-                        ram =
-                            Array.set 232 (Byte 104) initalCPU.ram
-
-                        actual =
-                            update (MOV_CONST_CHAR_TO_CONST_ADDR (Byte 232) (Byte 104)) initalCPU
-
-                        expected =
-                            { initalCPU
-                                | ram = ram
-                                , instructionPointer = Byte 3
-                            }
-                    in
-                    Expect.equal expected actual
             ]
         , describe "Assembler"
             [ test "arguments 1" <|
@@ -178,5 +142,13 @@ suite =
                     in
                     Expect.equal result [ Byte 7, Byte 232, Byte 104, Byte 7, Byte 233, Byte 101 ]
             ]
-        , describe "AssemblerV2" []
+        , describe "AssemblerV2"
+            [ test "assemble code 2 lines" <|
+                \_ ->
+                    let
+                        result =
+                            assembleCode "MOV [232], 'h'\nMOV [233], 'e'"
+                    in
+                    Expect.equal result [ Byte 7, Byte 232, Byte 104, Byte 7, Byte 233, Byte 101 ]
+            ]
         ]
