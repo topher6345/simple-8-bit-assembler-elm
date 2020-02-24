@@ -5444,9 +5444,10 @@ var $author$project$CPU$initalCPU = {
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Init$program = '\n    MOV [232], \'h\'\n    MOV [233], \'e\'\n    MOV [234], \'l\'\n    MOV [235], \'l\'\n    MOV [236], \'o\'\n    MOV [237], \' \'\n    MOV [238], \'w\'\n    MOV [239], \'o\'\n    MOV [240], \'r\'\n    MOV [241], \'l\'\n    MOV [242], \'d\'\n    MOV [232], \' \'\n    MOV [233], \' \'\n    MOV [234], \' \'\n    MOV [235], \' \'\n    MOV [236], \' \'\n    MOV [237], \' \'\n    MOV [238], \' \'\n    MOV [239], \' \'\n    MOV [240], \' \'\n    MOV [241], \' \'\n    MOV [242], \' \'\n    MOV [232], \'h\'\n    MOV [233], \'e\'\n    MOV [234], \'l\'\n    MOV [235], \'l\'\n    MOV [236], \'o\'\n    MOV [237], \' \'\n    MOV [238], \'w\'\n    MOV [239], \'o\'\n    MOV [240], \'r\'\n    MOV [241], \'l\'\n    MOV [242], \'d\'\n    MOV [232], \' \'\n    MOV [233], \' \'\n    MOV [234], \' \'\n    MOV [235], \' \'\n    MOV [236], \' \'\n    MOV [237], \' \'\n    MOV [238], \' \'\n    MOV [239], \' \'\n    MOV [240], \' \'\n    MOV [241], \' \'\n    MOV [242], \' \'\n    MOV [242], \'d\'\n    MOV [241], \'l\'\n    MOV [240], \'r\'\n    MOV [239], \'o\'\n    MOV [238], \'w\'\n    MOV [237], \' \'\n    MOV [236], \'o\'\n    MOV [235], \'l\'\n    MOV [234], \'l\'\n    MOV [233], \'e\'\n    MOV [232], \'h\'\n    HLT\n  ';
 var $author$project$Main$initialModel = function (_v0) {
 	return _Utils_Tuple2(
-		{assembled: false, clockRate: 200, code: 'MOV [232], \'h\'\nMOV [233], \'e\'\nMOV [234], \'l\'\nMOV [235], \'l\'\nMOV [236], \'o\'\nMOV [237], \' \'\nMOV [238], \'w\'\nMOV [239], \'o\'\nMOV [240], \'r\'\nMOV [241], \'l\'\nMOV [242], \'d\'\nMOV [232], \' \'\nMOV [233], \' \'\nMOV [234], \' \'\nMOV [235], \' \'\nMOV [236], \' \'\nMOV [237], \' \'\nMOV [238], \' \'\nMOV [239], \' \'\nMOV [240], \' \'\nMOV [241], \' \'\nMOV [242], \' \'\nMOV [232], \'h\'\nMOV [233], \'e\'\nMOV [234], \'l\'\nMOV [235], \'l\'\nMOV [236], \'o\'\nMOV [237], \' \'\nMOV [238], \'w\'\nMOV [239], \'o\'\nMOV [240], \'r\'\nMOV [241], \'l\'\nMOV [242], \'d\'\nMOV [232], \' \'\nMOV [233], \' \'\nMOV [234], \' \'\nMOV [235], \' \'\nMOV [236], \' \'\nMOV [237], \' \'\nMOV [238], \' \'\nMOV [239], \' \'\nMOV [240], \' \'\nMOV [241], \' \'\nMOV [242], \' \'\nMOV [242], \'d\'\nMOV [241], \'l\'\nMOV [240], \'r\'\nMOV [239], \'o\'\nMOV [238], \'w\'\nMOV [237], \' \'\nMOV [236], \'o\'\nMOV [235], \'l\'\nMOV [234], \'l\'\nMOV [233], \'e\'\nMOV [232], \'h\'\nHLT', count: 0, cpu: $author$project$CPU$initalCPU, cpuDisplayHex: true, flash: '', running: false, showEditor: true},
+		{assembled: false, clockRate: 200, code: $author$project$Init$program, count: 0, cpu: $author$project$CPU$initalCPU, cpuDisplayHex: true, flash: '', running: false, showEditor: true},
 		$elm$core$Platform$Cmd$none);
 };
 var $author$project$Main$Tick = {$: 'Tick'};
@@ -7467,7 +7468,7 @@ var $author$project$Main$documentation = _List_fromArray(
 													]))
 											]))
 									])),
-								$elm$html$Html$text('The simulator consists of a 8-bit cpu and 256 bytes of memory. All instructions (code) and variables (data) need to fit inside the memory. For simplicity, every instruction (and operand) is 1 byte. Therefore a MOV instruction will use 3 bytes of memory. The simulator provides a console output which is memory mapped from 0xE8 to 0xFF. Memory mapped means that every value written to this memory block is visible on the console.')
+								$elm$html$Html$text('\n                    The simulator consists of a 8-bit cpu and 256 bytes of memory.\n                    All instructions (code) and variables (data) need to fit inside the memory.\n                    For simplicity, every instruction (and operand) is 1 byte.\n                    Therefore a MOV instruction will use 3 bytes of memory.\n                    The simulator provides a console output which is memory mapped from 0xE8 to 0xFF.\n                    Memory mapped means that every value written to this memory block is visible on the console.\n                    ')
 							]))
 					])),
 				A2(

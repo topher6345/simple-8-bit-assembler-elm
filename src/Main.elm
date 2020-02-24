@@ -11,6 +11,7 @@ import Hex
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Init
 import Json.Encode as Encode
 import Regex
 import Task
@@ -32,7 +33,7 @@ type alias Model =
 
 initialModel _ =
     ( { count = 0
-      , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nMOV [232], ' '\nMOV [233], ' '\nMOV [234], ' '\nMOV [235], ' '\nMOV [236], ' '\nMOV [237], ' '\nMOV [238], ' '\nMOV [239], ' '\nMOV [240], ' '\nMOV [241], ' '\nMOV [242], ' '\nMOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nMOV [232], ' '\nMOV [233], ' '\nMOV [234], ' '\nMOV [235], ' '\nMOV [236], ' '\nMOV [237], ' '\nMOV [238], ' '\nMOV [239], ' '\nMOV [240], ' '\nMOV [241], ' '\nMOV [242], ' '\nMOV [242], 'd'\nMOV [241], 'l'\nMOV [240], 'r'\nMOV [239], 'o'\nMOV [238], 'w'\nMOV [237], ' '\nMOV [236], 'o'\nMOV [235], 'l'\nMOV [234], 'l'\nMOV [233], 'e'\nMOV [232], 'h'\nHLT"
+      , code = Init.program
       , cpu = CPU.initalCPU
       , flash = ""
       , cpuDisplayHex = True
@@ -293,7 +294,14 @@ documentation =
                     , li [] [ a [ href "http://cs.smith.edu/~thiebaut/ArtOfAssembly/artofasm.html" ] [ text "The Art of Assembly Language Programming" ] ]
                     , li [] [ a [ href "http://www.nasm.us/xdoc/2.10.09/html/nasmdoc3.html" ] [ text "NASM Language Documentation" ] ]
                     ]
-                , text "The simulator consists of a 8-bit cpu and 256 bytes of memory. All instructions (code) and variables (data) need to fit inside the memory. For simplicity, every instruction (and operand) is 1 byte. Therefore a MOV instruction will use 3 bytes of memory. The simulator provides a console output which is memory mapped from 0xE8 to 0xFF. Memory mapped means that every value written to this memory block is visible on the console."
+                , text """
+                    The simulator consists of a 8-bit cpu and 256 bytes of memory.
+                    All instructions (code) and variables (data) need to fit inside the memory.
+                    For simplicity, every instruction (and operand) is 1 byte.
+                    Therefore a MOV instruction will use 3 bytes of memory.
+                    The simulator provides a console output which is memory mapped from 0xE8 to 0xFF.
+                    Memory mapped means that every value written to this memory block is visible on the console.
+                    """
                 ]
             ]
         , h3 [] [ text "Instruction Set" ]
