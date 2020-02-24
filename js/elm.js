@@ -6864,13 +6864,13 @@ var $author$project$CPU$fetch = F2(
 			$author$project$Byte$Byte(0),
 			A2($elm$core$Array$get, index, cpu.ram));
 	});
-var $author$project$CPU$HLT = {$: 'HLT'};
-var $author$project$CPU$INC_REG = function (a) {
-	return {$: 'INC_REG', a: a};
+var $author$project$CPU$Hlt = {$: 'Hlt'};
+var $author$project$CPU$IncrReg = function (a) {
+	return {$: 'IncrReg', a: a};
 };
-var $author$project$CPU$MOV_CONST_CHAR_TO_CONST_ADDR = F2(
+var $author$project$CPU$MovConstCharToConstAddress = F2(
 	function (a, b) {
-		return {$: 'MOV_CONST_CHAR_TO_CONST_ADDR', a: a, b: b};
+		return {$: 'MovConstCharToConstAddress', a: a, b: b};
 	});
 var $author$project$Byte$byteAdd = F2(
 	function (_v0, _v1) {
@@ -6898,11 +6898,11 @@ var $author$project$CPU$fetchInstruction = F2(
 				$author$project$Byte$Byte(2)));
 		switch (instructionByte) {
 			case 7:
-				return A2($author$project$CPU$MOV_CONST_CHAR_TO_CONST_ADDR, x, y);
+				return A2($author$project$CPU$MovConstCharToConstAddress, x, y);
 			case 18:
-				return $author$project$CPU$INC_REG(x);
+				return $author$project$CPU$IncrReg(x);
 			default:
-				return $author$project$CPU$HLT;
+				return $author$project$CPU$Hlt;
 		}
 	});
 var $author$project$Byte$carryAdd = F2(
@@ -6963,7 +6963,7 @@ var $author$project$CPU$updateRegister = F3(
 var $author$project$CPU$update = F2(
 	function (opcode, cpu) {
 		switch (opcode.$) {
-			case 'INC_REG':
+			case 'IncrReg':
 				var reg = opcode.a;
 				var _v1 = A2(
 					$author$project$Byte$carryAdd,
@@ -6983,7 +6983,7 @@ var $author$project$CPU$update = F2(
 							$author$project$Byte$Byte(2)),
 						zeroFlag: zeroFlag
 					});
-			case 'MOV_REG_BYTE':
+			case 'MovRegByte':
 				var sourceRegister = opcode.a;
 				var destinationRegister = opcode.b;
 				var model = A3(
@@ -6998,7 +6998,7 @@ var $author$project$CPU$update = F2(
 				return _Utils_update(
 					model,
 					{instructionPointer: ip});
-			case 'MOV_REG_ADDRESS':
+			case 'MovRegAddress':
 				var sourceRegister = opcode.a;
 				var destinationAddress = opcode.b;
 				return _Utils_update(
@@ -7014,7 +7014,7 @@ var $author$project$CPU$update = F2(
 							destinationAddress,
 							A2($author$project$CPU$lookupRegister, cpu, sourceRegister))
 					});
-			case 'MOV_CONST_CHAR_TO_CONST_ADDR':
+			case 'MovConstCharToConstAddress':
 				var destinationAddress = opcode.a;
 				var _char = opcode.b;
 				return _Utils_update(

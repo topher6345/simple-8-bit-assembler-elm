@@ -70,11 +70,11 @@ initalCPU =
 
 type Msg
     = --Copies a value from src to dest
-      MOV_REG_BYTE Byte Byte
-    | MOV_REG_ADDRESS Byte Byte
-    | INC_REG Byte
-    | MOV_CONST_CHAR_TO_CONST_ADDR Byte Byte
-    | HLT
+      MovRegByte Byte Byte
+    | MovRegAddress Byte Byte
+    | IncrReg Byte
+    | MovConstCharToConstAddress Byte Byte
+    | Hlt
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -131,19 +131,19 @@ fetchInstruction cpu (Byte instructionByte) =
     in
     case instructionByte of
         7 ->
-            MOV_CONST_CHAR_TO_CONST_ADDR x y
+            MovConstCharToConstAddress x y
 
         18 ->
-            INC_REG x
+            IncrReg x
 
         _ ->
-            HLT
+            Hlt
 
 
 update : Msg -> CPU -> CPU
 update opcode cpu =
     case opcode of
-        INC_REG reg ->
+        IncrReg reg ->
             let
                 ( sum, carryFlag, zeroFlag ) =
                     carryAdd (lookupRegister cpu reg) (Byte 1)
@@ -157,7 +157,7 @@ update opcode cpu =
                 , zeroFlag = zeroFlag
             }
 
-        MOV_REG_BYTE sourceRegister destinationRegister ->
+        MovRegByte sourceRegister destinationRegister ->
             let
                 ip =
                     byteAdd cpu.instructionPointer (Byte 3)
@@ -168,7 +168,7 @@ update opcode cpu =
             in
             { model | instructionPointer = ip }
 
-        MOV_REG_ADDRESS sourceRegister destinationAddress ->
+        MovRegAddress sourceRegister destinationAddress ->
             { cpu
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
                 , ram =
@@ -176,11 +176,11 @@ update opcode cpu =
                         |> updateAddress cpu destinationAddress
             }
 
-        MOV_CONST_CHAR_TO_CONST_ADDR destinationAddress char ->
+        MovConstCharToConstAddress destinationAddress char ->
             { cpu
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
                 , ram = updateAddress cpu destinationAddress char
             }
 
-        HLT ->
+        Hlt ->
             cpu
