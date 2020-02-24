@@ -5446,7 +5446,7 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$initialModel = function (_v0) {
 	return _Utils_Tuple2(
-		{assembled: false, clockRate: 200, code: 'MOV [232], \'h\'\nMOV [233], \'e\'\nMOV [234], \'l\'\nMOV [235], \'l\'\nMOV [236], \'o\'\nMOV [237], \' \'\nMOV [238], \'w\'\nMOV [239], \'o\'\nMOV [240], \'r\'\nMOV [241], \'l\'\nMOV [242], \'d\'\nHLT', count: 0, cpu: $author$project$CPU$initalCPU, cpuDisplayHex: true, flash: '', running: false, showEditor: true},
+		{assembled: false, clockRate: 200, code: 'MOV [232], \'h\'\nMOV [233], \'e\'\nMOV [234], \'l\'\nMOV [235], \'l\'\nMOV [236], \'o\'\nMOV [237], \' \'\nMOV [238], \'w\'\nMOV [239], \'o\'\nMOV [240], \'r\'\nMOV [241], \'l\'\nMOV [242], \'d\'\nMOV [232], \' \'\nMOV [233], \' \'\nMOV [234], \' \'\nMOV [235], \' \'\nMOV [236], \' \'\nMOV [237], \' \'\nMOV [238], \' \'\nMOV [239], \' \'\nMOV [240], \' \'\nMOV [241], \' \'\nMOV [242], \' \'\nMOV [232], \'h\'\nMOV [233], \'e\'\nMOV [234], \'l\'\nMOV [235], \'l\'\nMOV [236], \'o\'\nMOV [237], \' \'\nMOV [238], \'w\'\nMOV [239], \'o\'\nMOV [240], \'r\'\nMOV [241], \'l\'\nMOV [242], \'d\'\nMOV [232], \' \'\nMOV [233], \' \'\nMOV [234], \' \'\nMOV [235], \' \'\nMOV [236], \' \'\nMOV [237], \' \'\nMOV [238], \' \'\nMOV [239], \' \'\nMOV [240], \' \'\nMOV [241], \' \'\nMOV [242], \' \'\nMOV [242], \'d\'\nMOV [241], \'l\'\nMOV [240], \'r\'\nMOV [239], \'o\'\nMOV [238], \'w\'\nMOV [237], \' \'\nMOV [236], \'o\'\nMOV [235], \'l\'\nMOV [234], \'l\'\nMOV [233], \'e\'\nMOV [232], \'h\'\nHLT', count: 0, cpu: $author$project$CPU$initalCPU, cpuDisplayHex: true, flash: '', running: false, showEditor: true},
 		$elm$core$Platform$Cmd$none);
 };
 var $author$project$Main$Tick = {$: 'Tick'};
@@ -8140,6 +8140,23 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$text('CPU')
 									])),
 								A2(
+								$elm$html$Html$div,
+								_List_Nil,
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$button,
+										_List_fromArray(
+											[
+												$elm$html$Html$Events$onClick($author$project$Main$Reset),
+												$elm$html$Html$Attributes$disabled(!model.assembled)
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('Reset')
+											]))
+									])),
+								A2(
 								$elm$html$Html$button,
 								_List_fromArray(
 									[
@@ -8150,17 +8167,6 @@ var $author$project$Main$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text('Step')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick($author$project$Main$Reset),
-										$elm$html$Html$Attributes$disabled(!model.assembled)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Reset')
 									])),
 								A2(
 								$elm$html$Html$button,

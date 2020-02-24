@@ -32,7 +32,7 @@ type alias Model =
 
 initialModel _ =
     ( { count = 0
-      , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nHLT"
+      , code = "MOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nMOV [232], ' '\nMOV [233], ' '\nMOV [234], ' '\nMOV [235], ' '\nMOV [236], ' '\nMOV [237], ' '\nMOV [238], ' '\nMOV [239], ' '\nMOV [240], ' '\nMOV [241], ' '\nMOV [242], ' '\nMOV [232], 'h'\nMOV [233], 'e'\nMOV [234], 'l'\nMOV [235], 'l'\nMOV [236], 'o'\nMOV [237], ' '\nMOV [238], 'w'\nMOV [239], 'o'\nMOV [240], 'r'\nMOV [241], 'l'\nMOV [242], 'd'\nMOV [232], ' '\nMOV [233], ' '\nMOV [234], ' '\nMOV [235], ' '\nMOV [236], ' '\nMOV [237], ' '\nMOV [238], ' '\nMOV [239], ' '\nMOV [240], ' '\nMOV [241], ' '\nMOV [242], ' '\nMOV [242], 'd'\nMOV [241], 'l'\nMOV [240], 'r'\nMOV [239], 'o'\nMOV [238], 'w'\nMOV [237], ' '\nMOV [236], 'o'\nMOV [235], 'l'\nMOV [234], 'l'\nMOV [233], 'e'\nMOV [232], 'h'\nHLT"
       , cpu = CPU.initalCPU
       , flash = ""
       , cpuDisplayHex = True
@@ -323,8 +323,8 @@ view model =
                     documentation
             , div [ style "order" "2" ]
                 [ h2 [] [ text "CPU" ]
+                , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
-                , button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ]
                 , button
                     [ onClick Play
                     , disabled <|
