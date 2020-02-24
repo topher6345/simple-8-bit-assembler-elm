@@ -38,7 +38,7 @@ initialModel _ =
       , cpuDisplayHex = True
       , showEditor = True
       , assembled = False
-      , clockRate = 1000
+      , clockRate = 200
       , running = False
       }
     , Cmd.none
@@ -325,13 +325,23 @@ view model =
                 [ h2 [] [ text "CPU" ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
                 , button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ]
-                , button [ onClick Play, disabled <| (not model.assembled || model.running) ] [ text "Play" ]
+                , button
+                    [ onClick Play
+                    , disabled <|
+                        (not model.assembled
+                            || model.running
+                            || nullInstructPointer model.cpu
+                        )
+                    ]
+                    [ text "Play" ]
                 , select [ onInput ChangeClockFrequency ]
-                    [ option [ value "1000" ] [ text "1000" ]
+                    [ option [ value "200" ] [ text "200" ]
+                    , option [ value "500" ] [ text "500" ]
+                    , option [ value "1000" ] [ text "1000" ]
                     , option [ value "2000" ] [ text "2000" ]
                     , option [ value "3000" ] [ text "3000" ]
                     ]
-                , button [ onClick Pause, disabled <| not model.running ] [ text "Stop" ]
+                , button [ onClick Pause, disabled <| not model.running || nullInstructPointer model.cpu ] [ text "Stop" ]
                 , h3 [] [ text "Output" ]
                 , div [] [ text model.flash ]
                 , div []
