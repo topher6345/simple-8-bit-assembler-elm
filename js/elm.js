@@ -7290,7 +7290,6 @@ var $author$project$Main$displayByte = F2(
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -7308,23 +7307,6 @@ var $elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var $elm$html$Html$li = _VirtualDom_node('li');
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
 var $elm$html$Html$q = _VirtualDom_node('q');
@@ -7334,26 +7316,8 @@ var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty(
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$ul = _VirtualDom_node('ul');
-var $author$project$Main$documentation = _List_fromArray(
+var $author$project$Documentation$documentation = _List_fromArray(
 	[
-		A2(
-		$elm$html$Html$h2,
-		_List_Nil,
-		_List_fromArray(
-			[
-				$elm$html$Html$text('Documentation')
-			])),
-		A2(
-		$elm$html$Html$button,
-		_List_fromArray(
-			[
-				$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor),
-				A2($elm$html$Html$Attributes$style, 'margin-bottom', '1em')
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text('Code')
-			])),
 		A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -7413,7 +7377,7 @@ var $author$project$Main$documentation = _List_fromArray(
 									[
 										$elm$html$Html$text('NASM')
 									])),
-								$elm$html$Html$text(') and is simulating a x86-like cpu. In depth documentation and introduction to assembler can be found on the following websites:'),
+								$elm$html$Html$text('\n                  ) and is simulating a x86-like cpu. \n                  In depth documentation and introduction to \n                  assembler can be found on the following websites:\n                  '),
 								A2(
 								$elm$html$Html$ul,
 								_List_Nil,
@@ -7490,7 +7454,7 @@ var $author$project$Main$documentation = _List_fromArray(
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Copies a value from src to dest. The MOV instruction is the only one able to directly modify the memory. SP can be used as operand with MOV.')
+						$elm$html$Html$text('\n          Copies a value from src to dest.\n          The MOV instruction is the only one able to \n          directly modify the memory. \n          SP can be used as operand with MOV.\n              ')
 					])),
 				A2(
 				$elm$html$Html$pre,
@@ -7539,6 +7503,47 @@ var $author$project$Main$documentation = _List_fromArray(
 					]))
 			]))
 	]);
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
+var $author$project$Main$documentationNavigation = _Utils_ap(
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$h2,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Documentation')
+				])),
+			A2(
+			$elm$html$Html$button,
+			_List_fromArray(
+				[
+					$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor),
+					A2($elm$html$Html$Attributes$style, 'margin-bottom', '1em')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Code')
+				]))
+		]),
+	$author$project$Documentation$documentation);
 var $author$project$Main$Assemble = {$: 'Assemble'};
 var $author$project$Main$CodeChange = function (a) {
 	return {$: 'CodeChange', a: a};
@@ -7676,7 +7681,7 @@ var $author$project$Main$editor = function (model) {
 				]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Assemble')
+					$elm$html$Html$text('AssembleAssemble')
 				])),
 			A2(
 			$elm$html$Html$textarea,
@@ -8103,7 +8108,7 @@ var $author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('8 Bit Assembler Simulator in Elm')
+								$elm$html$Html$text('8 Bit AssembleAssembler Simulator in Elm')
 							]))
 					])),
 				A2(
@@ -8124,7 +8129,7 @@ var $author$project$Main$view = function (model) {
 								A2($elm$html$Html$Attributes$style, 'max-width', '50%'),
 								A2($elm$html$Html$Attributes$style, 'padding', '10px')
 							]),
-						model.showEditor ? $author$project$Main$editor(model) : $author$project$Main$documentation),
+						model.showEditor ? $author$project$Main$editor(model) : $author$project$Main$documentationNavigation),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(

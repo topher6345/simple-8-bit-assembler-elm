@@ -7,6 +7,7 @@ import Browser.Dom as Dom
 import Byte exposing (..)
 import CPU exposing (CPU)
 import Char
+import Documentation
 import Hex
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -261,7 +262,7 @@ topBarStyles =
 editor model =
     [ h2 [] [ text "Code" ]
     , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Documentation" ]
-    , button [ onClick Assemble, style "margin-bottom" "1em", disabled model.assembled ] [ text "Assemble" ]
+    , button [ onClick Assemble, style "margin-bottom" "1em", disabled model.assembled ] [ text "AssembleAssemble" ]
     , textarea
         ([ id "code-editor"
          , value model.code
@@ -278,57 +279,24 @@ editor model =
     ]
 
 
-documentation =
+documentationNavigation =
     [ h2 [] [ text "Documentation" ]
     , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Code" ]
-    , div [ style "line-height" "1.6em" ]
-        [ h3 [] [ text "Introduction" ]
-        , p [] [ text "This is a tribute to ", a [ href "https://schweigi.github.io/assembler-simulator/index.html", target "_blank" ] [ text "Simple 8-bit Assembler Simulator" ], text " by Marco Schweighauser" ]
-        , p []
-            [ q [ style "padding" "1em" ]
-                [ text "This simulator provides a simplified assembler syntax (based on "
-                , a [ href "https://www.nasm.us/", target "_blank" ] [ text "NASM" ]
-                , text ") and is simulating a x86-like cpu. In depth documentation and introduction to assembler can be found on the following websites:"
-                , ul []
-                    [ li [] [ a [ href "http://en.wikipedia.org/wiki/Assembly_language" ] [ text "Assembly - Wikipedia" ] ]
-                    , li [] [ a [ href "http://cs.smith.edu/~thiebaut/ArtOfAssembly/artofasm.html" ] [ text "The Art of Assembly Language Programming" ] ]
-                    , li [] [ a [ href "http://www.nasm.us/xdoc/2.10.09/html/nasmdoc3.html" ] [ text "NASM Language Documentation" ] ]
-                    ]
-                , text """
-                    The simulator consists of a 8-bit cpu and 256 bytes of memory.
-                    All instructions (code) and variables (data) need to fit inside the memory.
-                    For simplicity, every instruction (and operand) is 1 byte.
-                    Therefore a MOV instruction will use 3 bytes of memory.
-                    The simulator provides a console output which is memory mapped from 0xE8 to 0xFF.
-                    Memory mapped means that every value written to this memory block is visible on the console.
-                    """
-                ]
-            ]
-        , h3 [] [ text "Instruction Set" ]
-        , h4 [] [ text "MOV - Copy a value" ]
-        , p [] [ text "Copies a value from src to dest. The MOV instruction is the only one able to directly modify the memory. SP can be used as operand with MOV." ]
-        , pre [] [ text "MOV reg, reg\nMOV reg, address\nMOV reg, constant\nMOV address, reg\nMOV address, constant" ]
-        , h4 [] [ text "HLT - Stops the processor. " ]
-        , p [] [ text "Stops operation of the processor. Hit Reset button to reset IP before restarting." ]
-        , pre [] [ text "HLT" ]
-        , p []
-            [ a [ href "https://schweigi.github.io/assembler-simulator/instruction-set.html", target "_blank" ] [ text "Original Documentation" ]
-            ]
-        ]
     ]
+        ++ Documentation.documentation
 
 
 view : Model -> Html Msg
 view model =
     div [ style "font-family" "Sans-serif" ]
-        [ div topBarStyles [ h1 [ style "margin" "0", style "padding" "0.2em" ] [ text "8 Bit Assembler Simulator in Elm" ] ]
+        [ div topBarStyles [ h1 [ style "margin" "0", style "padding" "0.2em" ] [ text "8 Bit AssembleAssembler Simulator in Elm" ] ]
         , div [ style "display" "flex", style "flex-direction" "row" ]
             [ div [ style "order" "1", style "min-width" "50%", style "max-width" "50%", style "padding" "10px" ] <|
                 if model.showEditor then
                     editor model
 
                 else
-                    documentation
+                    documentationNavigation
             , div [ style "order" "2" ]
                 [ h2 [] [ text "CPU" ]
                 , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
