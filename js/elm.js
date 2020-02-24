@@ -7149,6 +7149,7 @@ var $author$project$Main$Play = {$: 'Play'};
 var $author$project$Main$Reset = {$: 'Reset'};
 var $author$project$Main$Step = {$: 'Step'};
 var $author$project$Main$ToggleHexDisplay = {$: 'ToggleHexDisplay'};
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$bool = _Json_wrap;
 var $elm$html$Html$Attributes$boolProperty = F2(
@@ -7289,7 +7290,6 @@ var $author$project$Main$displayByte = F2(
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
-var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -7322,7 +7322,10 @@ var $author$project$Documentation$documentation = _List_fromArray(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'line-height', '1.6em')
+				A2($elm$html$Html$Attributes$style, 'line-height', '1.6em'),
+				A2($elm$html$Html$Attributes$style, 'width', '100%'),
+				A2($elm$html$Html$Attributes$style, 'overflow', 'scroll'),
+				A2($elm$html$Html$Attributes$style, 'max-height', 'calc(100vh - 275px)')
 			]),
 		_List_fromArray(
 			[
@@ -7377,7 +7380,7 @@ var $author$project$Documentation$documentation = _List_fromArray(
 									[
 										$elm$html$Html$text('NASM')
 									])),
-								$elm$html$Html$text('\n                  ) and is simulating a x86-like cpu. \n                  In depth documentation and introduction to \n                  assembler can be found on the following websites:\n                  '),
+								$elm$html$Html$text('\n                  ) and is simulating a x86-like cpu.\n                  In depth documentation and introduction to\n                  assembler can be found on the following websites:\n                  '),
 								A2(
 								$elm$html$Html$ul,
 								_List_Nil,
@@ -7454,7 +7457,7 @@ var $author$project$Documentation$documentation = _List_fromArray(
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('\n          Copies a value from src to dest.\n          The MOV instruction is the only one able to \n          directly modify the memory. \n          SP can be used as operand with MOV.\n              ')
+						$elm$html$Html$text('\n          Copies a value from src to dest.\n          The MOV instruction is the only one able to\n          directly modify the memory.\n          SP can be used as operand with MOV.\n              ')
 					])),
 				A2(
 				$elm$html$Html$pre,
@@ -7681,7 +7684,7 @@ var $author$project$Main$editor = function (model) {
 				]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text('AssembleAssemble')
+					$elm$html$Html$text('Assemble')
 				])),
 			A2(
 			$elm$html$Html$textarea,
@@ -7694,7 +7697,8 @@ var $author$project$Main$editor = function (model) {
 						$elm$html$Html$Attributes$spellcheck(false),
 						$elm$html$Html$Attributes$autofocus(true),
 						A2($elm$html$Html$Attributes$style, 'width', '100%'),
-						A2($elm$html$Html$Attributes$style, 'min-height', '80%'),
+						A2($elm$html$Html$Attributes$style, 'max-height', 'calc(100vh - 300px)'),
+						A2($elm$html$Html$Attributes$style, 'min-height', 'calc(100vh - 300px)'),
 						A2($elm$html$Html$Attributes$style, 'font-size', '1.5em')
 					]),
 				A2($author$project$Main$displaySelections, model.count, model.code)),
@@ -8074,6 +8078,7 @@ var $author$project$Main$showOutput = function (ram) {
 		$elm$core$Array$toList(
 			A3($elm$core$Array$slice, 233, 256, ram)));
 };
+var $elm$html$Html$small = _VirtualDom_node('small');
 var $elm$html$Html$table = _VirtualDom_node('table');
 var $elm$html$Html$tbody = _VirtualDom_node('tbody');
 var $elm$html$Html$th = _VirtualDom_node('th');
@@ -8082,7 +8087,8 @@ var $author$project$Main$topBarStyles = _List_fromArray(
 	[
 		A2($elm$html$Html$Attributes$style, 'display', 'block'),
 		A2($elm$html$Html$Attributes$style, 'width', '100%'),
-		A2($elm$html$Html$Attributes$style, 'background-color', 'lightgrey')
+		A2($elm$html$Html$Attributes$style, 'background-color', 'lightgrey'),
+		A2($elm$html$Html$Attributes$style, 'max-height', '50px')
 	]);
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $author$project$Main$view = function (model) {
@@ -8090,7 +8096,9 @@ var $author$project$Main$view = function (model) {
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'font-family', 'Sans-serif')
+				A2($elm$html$Html$Attributes$style, 'font-family', 'Sans-serif'),
+				A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+				A2($elm$html$Html$Attributes$style, 'flex-direction', 'column')
 			]),
 		_List_fromArray(
 			[
@@ -8108,7 +8116,24 @@ var $author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('8 Bit AssembleAssembler Simulator in Elm')
+								$elm$html$Html$text('8 Bit Assembler Simulator in Elm '),
+								A2(
+								$elm$html$Html$small,
+								_List_Nil,
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$a,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$href('https://github.com/topher6345/simple-8-bit-assembler-elm '),
+												A2($elm$html$Html$Attributes$style, 'text-decoration', 'none')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('source')
+											]))
+									]))
 							]))
 					])),
 				A2(
@@ -8116,7 +8141,7 @@ var $author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-						A2($elm$html$Html$Attributes$style, 'flex-direction', 'row')
+						A2($elm$html$Html$Attributes$style, 'min-height', 'calc(50px - 100vh)')
 					]),
 				_List_fromArray(
 					[
@@ -8127,14 +8152,15 @@ var $author$project$Main$view = function (model) {
 								A2($elm$html$Html$Attributes$style, 'order', '1'),
 								A2($elm$html$Html$Attributes$style, 'min-width', '50%'),
 								A2($elm$html$Html$Attributes$style, 'max-width', '50%'),
-								A2($elm$html$Html$Attributes$style, 'padding', '10px')
+								A2($elm$html$Html$Attributes$style, 'padding', '0 1em')
 							]),
 						model.showEditor ? $author$project$Main$editor(model) : $author$project$Main$documentationNavigation),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'order', '2')
+								A2($elm$html$Html$Attributes$style, 'order', '2'),
+								A2($elm$html$Html$Attributes$style, 'padding', '0 1em')
 							]),
 						_List_fromArray(
 							[
@@ -8185,6 +8211,13 @@ var $author$project$Main$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text('Play')
+									])),
+								A2(
+								$elm$html$Html$label,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('clock speed')
 									])),
 								A2(
 								$elm$html$Html$select,
@@ -8245,6 +8278,7 @@ var $author$project$Main$view = function (model) {
 												$elm$html$Html$text('3000')
 											]))
 									])),
+								$elm$html$Html$text('ms'),
 								A2(
 								$elm$html$Html$button,
 								_List_fromArray(

@@ -256,13 +256,14 @@ topBarStyles =
     [ style "display" "block"
     , style "width" "100%"
     , style "background-color" "lightgrey"
+    , style "max-height" "50px"
     ]
 
 
 editor model =
     [ h2 [] [ text "Code" ]
     , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Documentation" ]
-    , button [ onClick Assemble, style "margin-bottom" "1em", disabled model.assembled ] [ text "AssembleAssemble" ]
+    , button [ onClick Assemble, style "margin-bottom" "1em", disabled model.assembled ] [ text "Assemble" ]
     , textarea
         ([ id "code-editor"
          , value model.code
@@ -270,7 +271,8 @@ editor model =
          , spellcheck False
          , autofocus True
          , style "width" "100%"
-         , style "min-height" "80%"
+         , style "max-height" "calc(100vh - 300px)"
+         , style "min-height" "calc(100vh - 300px)"
          , style "font-size" "1.5em"
          ]
             ++ displaySelections model.count model.code
@@ -288,16 +290,24 @@ documentationNavigation =
 
 view : Model -> Html Msg
 view model =
-    div [ style "font-family" "Sans-serif" ]
-        [ div topBarStyles [ h1 [ style "margin" "0", style "padding" "0.2em" ] [ text "8 Bit AssembleAssembler Simulator in Elm" ] ]
-        , div [ style "display" "flex", style "flex-direction" "row" ]
-            [ div [ style "order" "1", style "min-width" "50%", style "max-width" "50%", style "padding" "10px" ] <|
+    div [ style "font-family" "Sans-serif", style "display" "flex", style "flex-direction" "column" ]
+        [ div topBarStyles
+            [ h1
+                [ style "margin" "0"
+                , style "padding" "0.2em"
+                ]
+                [ text "8 Bit Assembler Simulator in Elm "
+                , small [] [ a [ href "https://github.com/topher6345/simple-8-bit-assembler-elm ", style "text-decoration" "none" ] [ text "source" ] ]
+                ]
+            ]
+        , div [ style "display" "flex", style "min-height" "calc(50px - 100vh)" ]
+            [ div [ style "order" "1", style "min-width" "50%", style "max-width" "50%", style "padding" "0 1em" ] <|
                 if model.showEditor then
                     editor model
 
                 else
                     documentationNavigation
-            , div [ style "order" "2" ]
+            , div [ style "order" "2", style "padding" "0 1em" ]
                 [ h2 [] [ text "CPU" ]
                 , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
@@ -310,6 +320,7 @@ view model =
                         )
                     ]
                     [ text "Play" ]
+                , label [] [ text "clock speed" ]
                 , select [ onInput ChangeClockFrequency ]
                     [ option [ value "200" ] [ text "200" ]
                     , option [ value "500" ] [ text "500" ]
@@ -317,6 +328,7 @@ view model =
                     , option [ value "2000" ] [ text "2000" ]
                     , option [ value "3000" ] [ text "3000" ]
                     ]
+                , text "ms"
                 , button [ onClick Pause, disabled <| not model.running || nullInstructPointer model.cpu ] [ text "Stop" ]
                 , h3 [] [ text "Output" ]
                 , div [] [ text model.flash ]

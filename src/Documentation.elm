@@ -5,7 +5,12 @@ import Html.Attributes exposing (..)
 
 
 documentation =
-    [ div [ style "line-height" "1.6em" ]
+    [ div
+        [ style "line-height" "1.6em"
+        , style "width" "100%"
+        , style "overflow" "scroll"
+        , style "max-height" "calc(100vh - 275px)"
+        ]
         [ h3 [] [ text "Introduction" ]
         , p []
             [ text "This is a tribute to "
@@ -21,8 +26,8 @@ documentation =
                 [ text "This simulator provides a simplified assembler syntax (based on "
                 , a [ href "https://www.nasm.us/", target "_blank" ] [ text "NASM" ]
                 , text """
-                  ) and is simulating a x86-like cpu. 
-                  In depth documentation and introduction to 
+                  ) and is simulating a x86-like cpu.
+                  In depth documentation and introduction to
                   assembler can be found on the following websites:
                   """
                 , ul []
@@ -44,8 +49,8 @@ documentation =
         , h4 [] [ text "MOV - Copy a value" ]
         , p [] [ text """
           Copies a value from src to dest.
-          The MOV instruction is the only one able to 
-          directly modify the memory. 
+          The MOV instruction is the only one able to
+          directly modify the memory.
           SP can be used as operand with MOV.
               """ ]
         , pre [] [ text "MOV reg, reg\nMOV reg, address\nMOV reg, constant\nMOV address, reg\nMOV address, constant" ]
