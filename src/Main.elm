@@ -58,6 +58,7 @@ type Msg
     | Tick
     | Play
     | ChangeClockFrequency String
+    | Pause
 
 
 focus =
@@ -151,25 +152,26 @@ update msg model =
             )
 
         Tick ->
-            let
-                cpu =
-                    if model.assembled && model.running then
-                        CPU.tick model.cpu
+            if model.assembled && model.running then
+                ( { model
+                    | cpu = CPU.tick model.cpu
+                    , count = model.count + 1
+                  }
+                , focus
+                )
 
-                    else
-                        model.cpu
-            in
-            ( { model
-                | cpu = cpu
-              }
-            , Cmd.none
-            )
+            else
+                ( model, Cmd.none )
 
         Play ->
             ( { model
                 | running = True
-                , count = model.count + 1
               }
+            , Cmd.none
+            )
+
+        Pause ->
+            ( { model | running = False }
             , Cmd.none
             )
 
@@ -323,12 +325,13 @@ view model =
                 [ h2 [] [ text "CPU" ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
                 , button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ]
-                , button [ onClick Play, disabled <| not model.assembled ] [ text "Play" ]
+                , button [ onClick Play, disabled <| (not model.assembled || model.running) ] [ text "Play" ]
                 , select [ onInput ChangeClockFrequency ]
                     [ option [ value "1000" ] [ text "1000" ]
                     , option [ value "2000" ] [ text "2000" ]
                     , option [ value "3000" ] [ text "3000" ]
                     ]
+                , button [ onClick Pause, disabled <| not model.running ] [ text "Stop" ]
                 , h3 [] [ text "Output" ]
                 , div [] [ text model.flash ]
                 , div []
