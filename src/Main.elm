@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, update, view)
+port module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, update, view)
 
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
@@ -47,6 +47,24 @@ initialModel _ =
     )
 
 
+port sendMessage : String -> Cmd msg
+
+
+port messageReceiver : (String -> msg) -> Sub msg
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    messageReceiver Recv
+
+
+type alias Artifacts =
+    { code : Array String
+    , mapping : String
+    , label : Array String
+    }
+
+
 type Msg
     = Increment
     | Decrement
@@ -61,6 +79,7 @@ type Msg
     | Play
     | ChangeClockFrequency String
     | Pause
+    | Recv String
 
 
 focus =
@@ -85,24 +104,27 @@ update msg model =
             )
 
         Assemble ->
-            let
-                cpu =
-                    model.cpu
+            --let
+            --    cpu =
+            --        model.cpu
+            --    mem =
+            --        { cpu
+            --            | ram =
+            --                assembleCode model.code
+            --                    |> Array.fromList
+            --                    |> CPU.loadRam
+            --        }
+            --in
+            --( { model
+            --    | cpu = mem
+            --    , assembled = True
+            --  }
+            --, focus
+            --)
+            ( model, sendMessage model.code )
 
-                mem =
-                    { cpu
-                        | ram =
-                            assembleCode model.code
-                                |> Array.fromList
-                                |> CPU.loadRam
-                    }
-            in
-            ( { model
-                | cpu = mem
-                , assembled = True
-              }
-            , focus
-            )
+        Recv _ ->
+            ( model, Cmd.none )
 
         Reset ->
             let
@@ -355,8 +377,8 @@ view model =
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerB ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]
-                            , td [ style "width" "2em", style "background-color" "orange" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
-                            , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
+                            , td [ style "width" "2em", style "background-color" "lightblue" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
+                            , td [ style "width" "2em", style "background-color" "orange" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
                             , td [ style "width" "2em" ] [ text <| displayBool model.cpu.zeroFlag ]
                             , td [ style "width" "2em" ] [ text <| displayBool model.cpu.carryFlag ]
                             , td [ style "width" "2em" ] [ text "F" ]
@@ -475,6 +497,9 @@ cpuByteTd index ip string =
     let
         color =
             if index == ip then
+                "lightblue"
+
+            else if index == 232 then
                 "orange"
 
             else if index > 232 then
@@ -501,6 +526,7 @@ main =
         }
 
 
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Time.every model.clockRate (\_ -> Tick)
+
+--subscriptions : Model -> Sub Msg
+--subscriptions model =
+--    Time.every model.clockRate (\_ -> Tick)

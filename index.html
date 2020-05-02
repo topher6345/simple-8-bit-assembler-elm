@@ -11,13 +11,20 @@
       }
     </style>
   </head>
-
   <body>
     <div id="root"></div>
-  </body>
+ 
+    <script type="text/javascript" src="src/asm.js"></script>
 
-  <script type="text/javascript">
-    var node = document.getElementById('root');
-    Elm.Main.init({node});
-  </script>
+    <script type="text/javascript">
+      var node = document.getElementById('root');
+      var app = Elm.Main.init({node});
+      app.ports.sendMessage.subscribe(function(fromElm){      
+        var assembled = parse(fromElm)
+        var toElm = JSON.stringify(assembled)
+        console.log(toElm)
+        app.ports.messageReceiver.send(toElm);
+      })
+    </script>
+   </body>
 </html>
