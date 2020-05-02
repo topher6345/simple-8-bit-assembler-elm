@@ -56,7 +56,7 @@ port messageReceiver : (String -> msg) -> Sub msg
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    messageReceiver Recv
+    messageReceiver Receive
 
 
 type alias Artifacts =
@@ -80,7 +80,7 @@ type Msg
     | Play
     | ChangeClockFrequency String
     | Pause
-    | Recv String
+    | Receive String
 
 
 focus =
@@ -105,26 +105,9 @@ update msg model =
             )
 
         Assemble ->
-            --let
-            --    cpu =
-            --        model.cpu
-            --    mem =
-            --        { cpu
-            --            | ram =
-            --                assembleCode model.code
-            --                    |> Array.fromList
-            --                    |> CPU.loadRam
-            --        }
-            --in
-            --( { model
-            --    | cpu = mem
-            --    , assembled = True
-            --  }
-            --, focus
-            --)
             ( model, sendMessage model.code )
 
-        Recv mes ->
+        Receive mes ->
             let
                 cpu =
                     model.cpu

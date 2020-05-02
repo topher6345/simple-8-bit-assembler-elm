@@ -5274,13 +5274,13 @@ var $author$project$Main$initialModel = function (_v0) {
 		{assembled: false, clockRate: 200, code: $author$project$Init$program, count: 0, cpu: $author$project$CPU$initalCPU, cpuDisplayHex: true, flash: '', running: false, showEditor: true},
 		$elm$core$Platform$Cmd$none);
 };
-var $author$project$Main$Recv = function (a) {
-	return {$: 'Recv', a: a};
+var $author$project$Main$Receive = function (a) {
+	return {$: 'Receive', a: a};
 };
 var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Main$messageReceiver = _Platform_incomingPort('messageReceiver', $elm$json$Json$Decode$string);
 var $author$project$Main$subscriptions = function (_v0) {
-	return $author$project$Main$messageReceiver($author$project$Main$Recv);
+	return $author$project$Main$messageReceiver($author$project$Main$Receive);
 };
 var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$json$Json$Decode$field = _Json_decodeField;
@@ -5619,7 +5619,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					model,
 					$author$project$Main$sendMessage(model.code));
-			case 'Recv':
+			case 'Receive':
 				var mes = msg.a;
 				var cpu = model.cpu;
 				var mem = _Utils_update(
