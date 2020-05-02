@@ -5286,11 +5286,11 @@ var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $elm$json$Json$Decode$list = _Json_decodeList;
-var $author$project$Main$listDecoder = $elm$json$Json$Decode$list($elm$json$Json$Decode$int);
 var $author$project$Main$codeDecoder = function (string) {
+	var listDecoder = $elm$json$Json$Decode$list($elm$json$Json$Decode$int);
 	var _v0 = A2(
 		$elm$json$Json$Decode$decodeString,
-		A2($elm$json$Json$Decode$field, 'code', $author$project$Main$listDecoder),
+		A2($elm$json$Json$Decode$field, 'code', listDecoder),
 		string);
 	if (_v0.$ === 'Ok') {
 		var res = _v0.a;

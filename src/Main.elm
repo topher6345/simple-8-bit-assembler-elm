@@ -312,11 +312,11 @@ documentationNavigation =
         ++ Documentation.documentation
 
 
-listDecoder =
-    Json.Decode.list Json.Decode.int
-
-
 codeDecoder string =
+    let
+        listDecoder =
+            Json.Decode.list Json.Decode.int
+    in
     case decodeString (field "code" listDecoder) string of
         Ok res ->
             res
