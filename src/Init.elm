@@ -2,60 +2,33 @@ module Init exposing (program)
 
 
 program =
-    """MOV [232], 'h'
-MOV [233], 'e'
-MOV [234], 'l'
-MOV [235], 'l'
-MOV [236], 'o'
-MOV [237], ' '
-MOV [238], 'w'
-MOV [239], 'o'
-MOV [240], 'r'
-MOV [241], 'l'
-MOV [242], 'd'
-MOV [232], ' '
-MOV [233], ' '
-MOV [234], ' '
-MOV [235], ' '
-MOV [236], ' '
-MOV [237], ' '
-MOV [238], ' '
-MOV [239], ' '
-MOV [240], ' '
-MOV [241], ' '
-MOV [242], ' '
-MOV [232], 'h'
-MOV [233], 'e'
-MOV [234], 'l'
-MOV [235], 'l'
-MOV [236], 'o'
-MOV [237], ' '
-MOV [238], 'w'
-MOV [239], 'o'
-MOV [240], 'r'
-MOV [241], 'l'
-MOV [242], 'd'
-MOV [232], ' '
-MOV [233], ' '
-MOV [234], ' '
-MOV [235], ' '
-MOV [236], ' '
-MOV [237], ' '
-MOV [238], ' '
-MOV [239], ' '
-MOV [240], ' '
-MOV [241], ' '
-MOV [242], ' '
-MOV [242], 'd'
-MOV [241], 'l'
-MOV [240], 'r'
-MOV [239], 'o'
-MOV [238], 'w'
-MOV [237], ' '
-MOV [236], 'o'
-MOV [235], 'l'
-MOV [234], 'l'
-MOV [233], 'e'
-MOV [232], 'h'
-HLT
+    """; from https://schweigi.github.io/assembler-simulator/
+; Simple example
+; Writes Hello World to the output
+
+  JMP start
+hello: DB "Hello World!" ; Variable
+       DB 0 ; String terminator
+
+start:
+  MOV C, hello    ; Point to var 
+  MOV D, 232  ; Point to output
+  CALL print
+        HLT             ; Stop execution
+
+print:      ; print(C:*from, D:*to)
+  PUSH A
+  PUSH B
+  MOV B, 0
+.loop:
+  MOV A, [C]  ; Get char from var
+  MOV [D], A  ; Write to output
+  INC C
+  INC D  
+  CMP B, [C]  ; Check if end
+  JNZ .loop ; jump if not
+
+  POP B
+  POP A
+  RET
 """
