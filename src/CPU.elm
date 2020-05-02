@@ -75,6 +75,7 @@ type Msg
     | IncrReg Byte
     | MovConstCharToConstAddress Byte Byte
     | Hlt
+    | Jump Byte
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -136,6 +137,9 @@ fetchInstruction cpu (Byte instructionByte) =
         18 ->
             IncrReg x
 
+        31 ->
+            Jump x
+
         _ ->
             Hlt
 
@@ -180,6 +184,11 @@ update opcode cpu =
             { cpu
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
                 , ram = updateAddress cpu destinationAddress char
+            }
+
+        Jump byte ->
+            { cpu
+                | instructionPointer = byte
             }
 
         Hlt ->

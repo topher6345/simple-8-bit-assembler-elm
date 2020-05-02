@@ -5587,6 +5587,9 @@ var $author$project$CPU$Hlt = {$: 'Hlt'};
 var $author$project$CPU$IncrReg = function (a) {
 	return {$: 'IncrReg', a: a};
 };
+var $author$project$CPU$Jump = function (a) {
+	return {$: 'Jump', a: a};
+};
 var $author$project$CPU$MovConstCharToConstAddress = F2(
 	function (a, b) {
 		return {$: 'MovConstCharToConstAddress', a: a, b: b};
@@ -5620,6 +5623,8 @@ var $author$project$CPU$fetchInstruction = F2(
 				return A2($author$project$CPU$MovConstCharToConstAddress, x, y);
 			case 18:
 				return $author$project$CPU$IncrReg(x);
+			case 31:
+				return $author$project$CPU$Jump(x);
 			default:
 				return $author$project$CPU$Hlt;
 		}
@@ -5745,6 +5750,11 @@ var $author$project$CPU$update = F2(
 							$author$project$Byte$Byte(3)),
 						ram: A3($author$project$CPU$updateAddress, cpu, destinationAddress, _char)
 					});
+			case 'Jump':
+				var _byte = opcode.a;
+				return _Utils_update(
+					cpu,
+					{instructionPointer: _byte});
 			default:
 				return cpu;
 		}
