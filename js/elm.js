@@ -5181,6 +5181,129 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
+var $elm$core$Dict$Black = {$: 'Black'};
+var $elm$core$Dict$RBNode_elm_builtin = F5(
+	function (a, b, c, d, e) {
+		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
+	});
+var $elm$core$Dict$Red = {$: 'Red'};
+var $elm$core$Dict$balance = F5(
+	function (color, key, value, left, right) {
+		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
+			var _v1 = right.a;
+			var rK = right.b;
+			var rV = right.c;
+			var rLeft = right.d;
+			var rRight = right.e;
+			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+				var _v3 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var lLeft = left.d;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Red,
+					key,
+					value,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					rK,
+					rV,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
+					rRight);
+			}
+		} else {
+			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
+				var _v5 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var _v6 = left.d;
+				var _v7 = _v6.a;
+				var llK = _v6.b;
+				var llV = _v6.c;
+				var llLeft = _v6.d;
+				var llRight = _v6.e;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Red,
+					lK,
+					lV,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
+			} else {
+				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
+			}
+		}
+	});
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$insertHelp = F3(
+	function (key, value, dict) {
+		if (dict.$ === 'RBEmpty_elm_builtin') {
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		} else {
+			var nColor = dict.a;
+			var nKey = dict.b;
+			var nValue = dict.c;
+			var nLeft = dict.d;
+			var nRight = dict.e;
+			var _v1 = A2($elm$core$Basics$compare, key, nKey);
+			switch (_v1.$) {
+				case 'LT':
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						A3($elm$core$Dict$insertHelp, key, value, nLeft),
+						nRight);
+				case 'EQ':
+					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
+				default:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						nLeft,
+						A3($elm$core$Dict$insertHelp, key, value, nRight));
+			}
+		}
+	});
+var $elm$core$Dict$insert = F3(
+	function (key, value, dict) {
+		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
+		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -5271,7 +5394,19 @@ var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Init$program = '; from https://schweigi.github.io/assembler-simulator/\n; Simple example\n; Writes Hello World to the output\n\n  JMP start\nhello: DB "Hello World!" ; Variable\n       DB 0 ; String terminator\n\nstart:\n  MOV C, hello    ; Point to var \n  MOV D, 232  ; Point to output\n  CALL print\n        HLT             ; Stop execution\n\nprint:      ; print(C:*from, D:*to)\n  PUSH A\n  PUSH B\n  MOV B, 0\n.loop:\n  MOV A, [C]  ; Get char from var\n  MOV [D], A  ; Write to output\n  INC C\n  INC D  \n  CMP B, [C]  ; Check if end\n  JNZ .loop ; jump if not\n\n  POP B\n  POP A\n  RET\n';
 var $author$project$Main$initialModel = function (_v0) {
 	return _Utils_Tuple2(
-		{assembled: false, clockRate: 200, code: $author$project$Init$program, count: 0, cpu: $author$project$CPU$initalCPU, cpuDisplayHex: true, flash: '', running: false, showEditor: true},
+		{
+			assembled: false,
+			clockRate: 200,
+			code: $author$project$Init$program,
+			count: 0,
+			cpu: $author$project$CPU$initalCPU,
+			cpuDisplayHex: true,
+			flash: '',
+			labels: $elm$core$Dict$fromList(_List_Nil),
+			mapping: $elm$core$Dict$fromList(_List_Nil),
+			running: false,
+			showEditor: true
+		},
 		$elm$core$Platform$Cmd$none);
 };
 var $author$project$Main$Receive = function (a) {
@@ -5416,6 +5551,26 @@ var $author$project$CPU$loadRam = function (cpu) {
 			A2($elm$core$Array$get, x, cpu));
 	};
 	return A2($elm$core$Array$initialize, 256, constructor);
+};
+var $elm$json$Json$Decode$keyValuePairs = _Json_decodeKeyValuePairs;
+var $elm$json$Json$Decode$dict = function (decoder) {
+	return A2(
+		$elm$json$Json$Decode$map,
+		$elm$core$Dict$fromList,
+		$elm$json$Json$Decode$keyValuePairs(decoder));
+};
+var $author$project$Main$mappingDecoder = function (string) {
+	var listDecoder = $elm$json$Json$Decode$dict($elm$json$Json$Decode$int);
+	var _v0 = A2(
+		$elm$json$Json$Decode$decodeString,
+		A2($elm$json$Json$Decode$field, 'mapping', listDecoder),
+		string);
+	if (_v0.$ === 'Ok') {
+		var res = _v0.a;
+		return res;
+	} else {
+		return $elm$core$Dict$fromList(_List_Nil);
+	}
 };
 var $elm$core$Basics$not = _Basics_not;
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -5635,7 +5790,11 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{assembled: true, cpu: mem}),
+						{
+							assembled: true,
+							cpu: mem,
+							mapping: $author$project$Main$mappingDecoder(mes)
+						}),
 					$author$project$Main$focus);
 			case 'Reset':
 				var cpu = model.cpu;
@@ -6143,6 +6302,37 @@ var $author$project$Main$findSelections = function (code) {
 		tail);
 	return A3($elm$core$List$map2, $elm$core$Tuple$pair, starts, ends);
 };
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
 var $elm$core$Tuple$mapBoth = F3(
 	function (funcA, funcB, _v0) {
 		var x = _v0.a;
@@ -6172,8 +6362,17 @@ var $author$project$Main$selectionStart = function (position) {
 		'selectionStart',
 		$elm$json$Json$Encode$int(position));
 };
-var $author$project$Main$displaySelections = F2(
-	function (index, code) {
+var $author$project$Main$displaySelections = F3(
+	function (index, code, mapping) {
+		var mapper = function (i) {
+			return A2(
+				$elm$core$Maybe$withDefault,
+				1,
+				A2(
+					$elm$core$Dict$get,
+					$elm$core$String$fromInt(index),
+					mapping));
+		};
 		var _v0 = A3(
 			$elm$core$Tuple$mapBoth,
 			$author$project$Main$selectionStart,
@@ -6183,7 +6382,7 @@ var $author$project$Main$displaySelections = F2(
 				_Utils_Tuple2(0, 0),
 				A2(
 					$elm$core$Array$get,
-					index,
+					mapper(index),
 					$elm$core$Array$fromList(
 						$author$project$Main$findSelections(code)))));
 		var a = _v0.a;
@@ -6274,7 +6473,11 @@ var $author$project$Main$editor = function (model) {
 						A2($elm$html$Html$Attributes$style, 'min-height', 'calc(100vh - 300px)'),
 						A2($elm$html$Html$Attributes$style, 'font-size', '1.5em')
 					]),
-				A2($author$project$Main$displaySelections, model.count, model.code)),
+				A3(
+					$author$project$Main$displaySelections,
+					$author$project$Byte$toInt(model.cpu.instructionPointer),
+					model.code,
+					model.mapping)),
 			_List_Nil)
 		]);
 };

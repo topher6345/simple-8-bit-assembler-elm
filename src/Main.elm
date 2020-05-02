@@ -7,6 +7,7 @@ import Browser.Dom as Dom
 import Byte exposing (..)
 import CPU exposing (CPU)
 import Char
+import Dict exposing (Dict)
 import Documentation
 import Hex
 import Html exposing (..)
@@ -30,6 +31,8 @@ type alias Model =
     , assembled : Bool
     , clockRate : Float
     , running : Bool
+    , mapping : Dict String Int
+    , labels : Dict String Int
     }
 
 
@@ -43,6 +46,8 @@ initialModel _ =
       , assembled = False
       , clockRate = 200
       , running = False
+      , mapping = Dict.fromList []
+      , labels = Dict.fromList []
       }
     , Cmd.none
     )
@@ -124,6 +129,7 @@ update msg model =
             ( { model
                 | cpu = mem
                 , assembled = True
+                , mapping = mappingDecoder mes
               }
             , focus
             )
@@ -299,7 +305,7 @@ editor model =
          , style "min-height" "calc(100vh - 300px)"
          , style "font-size" "1.5em"
          ]
-            ++ displaySelections model.count model.code
+            ++ displaySelections (Byte.toInt model.cpu.instructionPointer) model.code model.mapping
         )
         []
     ]
@@ -323,6 +329,19 @@ codeDecoder string =
 
         Err _ ->
             []
+
+
+mappingDecoder string =
+    let
+        listDecoder =
+            Json.Decode.dict Json.Decode.int
+    in
+    case decodeString (field "mapping" listDecoder) string of
+        Ok res ->
+            res
+
+        Err _ ->
+            Dict.fromList []
 
 
 view : Model -> Html Msg
@@ -411,13 +430,16 @@ view model =
         ]
 
 
-displaySelections index code =
+displaySelections index code mapping =
     let
+        mapper i =
+            Maybe.withDefault 1 <| Dict.get (String.fromInt index) mapping
+
         ( a, b ) =
             code
                 |> findSelections
                 |> Array.fromList
-                |> Array.get index
+                |> Array.get (mapper index)
                 |> Maybe.withDefault ( 0, 0 )
                 |> Tuple.mapBoth selectionStart selectionEnd
     in
