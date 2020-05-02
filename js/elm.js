@@ -5282,6 +5282,23 @@ var $author$project$Main$messageReceiver = _Platform_incomingPort('messageReceiv
 var $author$project$Main$subscriptions = function (_v0) {
 	return $author$project$Main$messageReceiver($author$project$Main$Recv);
 };
+var $elm$json$Json$Decode$decodeString = _Json_runOnString;
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $elm$json$Json$Decode$list = _Json_decodeList;
+var $author$project$Main$listDecoder = $elm$json$Json$Decode$list($elm$json$Json$Decode$int);
+var $author$project$Main$codeDecoder = function (string) {
+	var _v0 = A2(
+		$elm$json$Json$Decode$decodeString,
+		A2($elm$json$Json$Decode$field, 'code', $author$project$Main$listDecoder),
+		string);
+	if (_v0.$ === 'Ok') {
+		var res = _v0.a;
+		return res;
+	} else {
+		return _List_Nil;
+	}
+};
 var $author$project$Main$FocusResult = function (a) {
 	return {$: 'FocusResult', a: a};
 };
@@ -5314,9 +5331,41 @@ var $author$project$Main$focus = A2(
 	$elm$core$Task$attempt,
 	$author$project$Main$FocusResult,
 	$elm$browser$Browser$Dom$focus('code-editor'));
-var $elm$core$Basics$not = _Basics_not;
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$Main$sendMessage = _Platform_outgoingPort('sendMessage', $elm$json$Json$Encode$string);
+var $elm$core$Array$fromListHelp = F3(
+	function (list, nodeList, nodeListSize) {
+		fromListHelp:
+		while (true) {
+			var _v0 = A2($elm$core$Elm$JsArray$initializeFromList, $elm$core$Array$branchFactor, list);
+			var jsArray = _v0.a;
+			var remainingItems = _v0.b;
+			if (_Utils_cmp(
+				$elm$core$Elm$JsArray$length(jsArray),
+				$elm$core$Array$branchFactor) < 0) {
+				return A2(
+					$elm$core$Array$builderToArray,
+					true,
+					{nodeList: nodeList, nodeListSize: nodeListSize, tail: jsArray});
+			} else {
+				var $temp$list = remainingItems,
+					$temp$nodeList = A2(
+					$elm$core$List$cons,
+					$elm$core$Array$Leaf(jsArray),
+					nodeList),
+					$temp$nodeListSize = nodeListSize + 1;
+				list = $temp$list;
+				nodeList = $temp$nodeList;
+				nodeListSize = $temp$nodeListSize;
+				continue fromListHelp;
+			}
+		}
+	});
+var $elm$core$Array$fromList = function (list) {
+	if (!list.b) {
+		return $elm$core$Array$empty;
+	} else {
+		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
+	}
+};
 var $elm$core$Array$getHelp = F3(
 	function (shift, index, tree) {
 		getHelp:
@@ -5359,6 +5408,18 @@ var $elm$core$Maybe$withDefault = F2(
 			return _default;
 		}
 	});
+var $author$project$CPU$loadRam = function (cpu) {
+	var constructor = function (x) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			$author$project$Byte$mkByte(0),
+			A2($elm$core$Array$get, x, cpu));
+	};
+	return A2($elm$core$Array$initialize, 256, constructor);
+};
+var $elm$core$Basics$not = _Basics_not;
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $author$project$Main$sendMessage = _Platform_outgoingPort('sendMessage', $elm$json$Json$Encode$string);
 var $author$project$CPU$fetch = F2(
 	function (cpu, _v0) {
 		var index = _v0.a;
@@ -5559,7 +5620,23 @@ var $author$project$Main$update = F2(
 					model,
 					$author$project$Main$sendMessage(model.code));
 			case 'Recv':
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				var mes = msg.a;
+				var cpu = model.cpu;
+				var mem = _Utils_update(
+					cpu,
+					{
+						ram: $author$project$CPU$loadRam(
+							$elm$core$Array$fromList(
+								A2(
+									$elm$core$List$map,
+									$author$project$Byte$mkByte,
+									$author$project$Main$codeDecoder(mes))))
+					});
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{assembled: true, cpu: mem}),
+					$author$project$Main$focus);
 			case 'Reset':
 				var cpu = model.cpu;
 				var mem = _Utils_update(
@@ -6066,41 +6143,6 @@ var $author$project$Main$findSelections = function (code) {
 		tail);
 	return A3($elm$core$List$map2, $elm$core$Tuple$pair, starts, ends);
 };
-var $elm$core$Array$fromListHelp = F3(
-	function (list, nodeList, nodeListSize) {
-		fromListHelp:
-		while (true) {
-			var _v0 = A2($elm$core$Elm$JsArray$initializeFromList, $elm$core$Array$branchFactor, list);
-			var jsArray = _v0.a;
-			var remainingItems = _v0.b;
-			if (_Utils_cmp(
-				$elm$core$Elm$JsArray$length(jsArray),
-				$elm$core$Array$branchFactor) < 0) {
-				return A2(
-					$elm$core$Array$builderToArray,
-					true,
-					{nodeList: nodeList, nodeListSize: nodeListSize, tail: jsArray});
-			} else {
-				var $temp$list = remainingItems,
-					$temp$nodeList = A2(
-					$elm$core$List$cons,
-					$elm$core$Array$Leaf(jsArray),
-					nodeList),
-					$temp$nodeListSize = nodeListSize + 1;
-				list = $temp$list;
-				nodeList = $temp$nodeList;
-				nodeListSize = $temp$nodeListSize;
-				continue fromListHelp;
-			}
-		}
-	});
-var $elm$core$Array$fromList = function (list) {
-	if (!list.b) {
-		return $elm$core$Array$empty;
-	} else {
-		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
-	}
-};
 var $elm$core$Tuple$mapBoth = F3(
 	function (funcA, funcB, _v0) {
 		var x = _v0.a;
@@ -6163,7 +6205,6 @@ var $elm$html$Html$Events$stopPropagationOn = F2(
 			event,
 			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
 	});
-var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
 		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);

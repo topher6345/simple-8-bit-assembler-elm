@@ -13,6 +13,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Init
+import Json.Decode exposing (Decoder, decodeString, field, int, list, string)
 import Json.Encode as Encode
 import Regex
 import Task
@@ -123,8 +124,26 @@ update msg model =
             --)
             ( model, sendMessage model.code )
 
-        Recv _ ->
-            ( model, Cmd.none )
+        Recv mes ->
+            let
+                cpu =
+                    model.cpu
+
+                mem =
+                    { cpu
+                        | ram =
+                            codeDecoder mes
+                                |> List.map mkByte
+                                |> Array.fromList
+                                |> CPU.loadRam
+                    }
+            in
+            ( { model
+                | cpu = mem
+                , assembled = True
+              }
+            , focus
+            )
 
         Reset ->
             let
@@ -308,6 +327,19 @@ documentationNavigation =
     , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Code" ]
     ]
         ++ Documentation.documentation
+
+
+listDecoder =
+    Json.Decode.list Json.Decode.int
+
+
+codeDecoder string =
+    case decodeString (field "code" listDecoder) string of
+        Ok res ->
+            res
+
+        Err _ ->
+            []
 
 
 view : Model -> Html Msg
