@@ -7613,10 +7613,7 @@ var $author$project$Main$view = function (model) {
 									])),
 								A2(
 								$elm$html$Html$table,
-								_List_fromArray(
-									[
-										A2($elm$html$Html$Attributes$style, 'border', '1px solid black')
-									]),
+								_List_Nil,
 								_List_fromArray(
 									[
 										A2(
@@ -7690,11 +7687,7 @@ var $author$project$Main$view = function (model) {
 											])),
 										A2(
 										$elm$html$Html$tbody,
-										_List_fromArray(
-											[
-												A2($elm$html$Html$Attributes$style, 'font-family', 'Monospace'),
-												A2($elm$html$Html$Attributes$style, 'text-align', 'center')
-											]),
+										_List_Nil,
 										_List_fromArray(
 											[
 												A2(
@@ -7704,10 +7697,7 @@ var $author$project$Main$view = function (model) {
 													[
 														A2(
 														$elm$html$Html$td,
-														_List_fromArray(
-															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em')
-															]),
+														_List_Nil,
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
@@ -7715,10 +7705,7 @@ var $author$project$Main$view = function (model) {
 															])),
 														A2(
 														$elm$html$Html$td,
-														_List_fromArray(
-															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em')
-															]),
+														_List_Nil,
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
@@ -7726,10 +7713,7 @@ var $author$project$Main$view = function (model) {
 															])),
 														A2(
 														$elm$html$Html$td,
-														_List_fromArray(
-															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em')
-															]),
+														_List_Nil,
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
@@ -7737,10 +7721,7 @@ var $author$project$Main$view = function (model) {
 															])),
 														A2(
 														$elm$html$Html$td,
-														_List_fromArray(
-															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em')
-															]),
+														_List_Nil,
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
@@ -7750,7 +7731,6 @@ var $author$project$Main$view = function (model) {
 														$elm$html$Html$td,
 														_List_fromArray(
 															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em'),
 																A2($elm$html$Html$Attributes$style, 'background-color', 'lightblue')
 															]),
 														_List_fromArray(
@@ -7762,7 +7742,6 @@ var $author$project$Main$view = function (model) {
 														$elm$html$Html$td,
 														_List_fromArray(
 															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em'),
 																A2($elm$html$Html$Attributes$style, 'background-color', 'coral')
 															]),
 														_List_fromArray(
@@ -7772,10 +7751,7 @@ var $author$project$Main$view = function (model) {
 															])),
 														A2(
 														$elm$html$Html$td,
-														_List_fromArray(
-															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em')
-															]),
+														_List_Nil,
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
@@ -7783,10 +7759,7 @@ var $author$project$Main$view = function (model) {
 															])),
 														A2(
 														$elm$html$Html$td,
-														_List_fromArray(
-															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em')
-															]),
+														_List_Nil,
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
@@ -7794,10 +7767,7 @@ var $author$project$Main$view = function (model) {
 															])),
 														A2(
 														$elm$html$Html$td,
-														_List_fromArray(
-															[
-																A2($elm$html$Html$Attributes$style, 'width', '2em')
-															]),
+														_List_Nil,
 														_List_fromArray(
 															[
 																$elm$html$Html$text('F')
