@@ -18,7 +18,13 @@
       var node = document.getElementById('root');
       var app = Elm.Main.init({node});
       app.ports.sendMessage.subscribe(function(fromElm){      
-        var assembled = parse(fromElm)
+        var assembled;
+        try {  
+          assembled = parse(fromElm)
+        } catch(e) {
+          console.log(`${e.error} line: ${e.line}`)
+          assembled = { code: [], mapping: {}, labels: {}};
+        }
         var toElm = JSON.stringify(assembled)
         console.log(toElm)
         app.ports.messageReceiver.send(toElm);

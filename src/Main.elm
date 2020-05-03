@@ -60,8 +60,17 @@ port messageReceiver : (String -> msg) -> Sub msg
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
-    messageReceiver Receive
+subscriptions model =
+    Sub.batch
+        [ messageReceiver Receive
+        , Time.every model.clockRate (\_ -> Tick)
+        ]
+
+
+
+--subscriptions : Model -> Sub Msg
+--subscriptions model =
+--
 
 
 type alias Artifacts =
@@ -576,9 +585,3 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
-
-
-
---subscriptions : Model -> Sub Msg
---subscriptions model =
---    Time.every model.clockRate (\_ -> Tick)
