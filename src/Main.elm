@@ -372,7 +372,7 @@ view model =
                 else
                     documentationNavigation
             , div
-                []
+                [ class "cpu" ]
                 [ h2 [] [ text "CPU" ]
                 , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]

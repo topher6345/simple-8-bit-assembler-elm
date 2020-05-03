@@ -6450,6 +6450,14 @@ var $author$project$Main$Step = {$: 'Step'};
 var $author$project$Main$ToggleHexDisplay = {$: 'ToggleHexDisplay'};
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$button = _VirtualDom_node('button');
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$json$Json$Encode$bool = _Json_wrap;
 var $elm$html$Html$Attributes$boolProperty = F2(
 	function (key, bool) {
@@ -6594,13 +6602,6 @@ var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$h4 = _VirtualDom_node('h4');
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -6839,8 +6840,7 @@ var $author$project$Main$documentationNavigation = _Utils_ap(
 			$elm$html$Html$button,
 			_List_fromArray(
 				[
-					$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor),
-					A2($elm$html$Html$Attributes$style, 'margin-bottom', '1em')
+					$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor)
 				]),
 			_List_fromArray(
 				[
@@ -6975,8 +6975,7 @@ var $author$project$Main$editor = function (model) {
 			$elm$html$Html$button,
 			_List_fromArray(
 				[
-					$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor),
-					A2($elm$html$Html$Attributes$style, 'margin-bottom', '1em')
+					$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor)
 				]),
 			_List_fromArray(
 				[
@@ -6987,7 +6986,6 @@ var $author$project$Main$editor = function (model) {
 			_List_fromArray(
 				[
 					$elm$html$Html$Events$onClick($author$project$Main$Assemble),
-					A2($elm$html$Html$Attributes$style, 'margin-bottom', '1em'),
 					$elm$html$Html$Attributes$disabled(model.assembled)
 				]),
 			_List_fromArray(
@@ -7448,7 +7446,10 @@ var $author$project$Main$view = function (model) {
 						model.showEditor ? $author$project$Main$editor(model) : $author$project$Main$documentationNavigation),
 						A2(
 						$elm$html$Html$div,
-						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('cpu')
+							]),
 						_List_fromArray(
 							[
 								A2(
