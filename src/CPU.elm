@@ -77,6 +77,7 @@ type Msg
     | Hlt
     | Jump Byte
     | MovConstToRegister Byte Byte
+    | Call Byte
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -144,6 +145,9 @@ fetchInstruction cpu (Byte instructionByte) =
         6 ->
             MovConstToRegister x y
 
+        56 ->
+            Call x
+
         _ ->
             Hlt
 
@@ -202,6 +206,12 @@ update opcode cpu =
             in
             { foo
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
+            }
+
+        Call byte ->
+            { cpu
+                | instructionPointer = byte
+                , stackPointer = byteSub cpu.stackPointer (Byte 1)
             }
 
         Hlt ->

@@ -5583,6 +5583,9 @@ var $author$project$CPU$fetch = F2(
 			$author$project$Byte$Byte(0),
 			A2($elm$core$Array$get, index, cpu.ram));
 	});
+var $author$project$CPU$Call = function (a) {
+	return {$: 'Call', a: a};
+};
 var $author$project$CPU$Hlt = {$: 'Hlt'};
 var $author$project$CPU$IncrReg = function (a) {
 	return {$: 'IncrReg', a: a};
@@ -5631,9 +5634,17 @@ var $author$project$CPU$fetchInstruction = F2(
 				return $author$project$CPU$Jump(x);
 			case 6:
 				return A2($author$project$CPU$MovConstToRegister, x, y);
+			case 56:
+				return $author$project$CPU$Call(x);
 			default:
 				return $author$project$CPU$Hlt;
 		}
+	});
+var $author$project$Byte$byteSub = F2(
+	function (_v0, _v1) {
+		var a = _v0.a;
+		var b = _v1.a;
+		return $author$project$Byte$mkByte(a - b);
 	});
 var $author$project$Byte$carryAdd = F2(
 	function (_v0, _v1) {
@@ -5772,6 +5783,17 @@ var $author$project$CPU$update = F2(
 							$author$project$Byte$byteAdd,
 							cpu.instructionPointer,
 							$author$project$Byte$Byte(3))
+					});
+			case 'Call':
+				var _byte = opcode.a;
+				return _Utils_update(
+					cpu,
+					{
+						instructionPointer: _byte,
+						stackPointer: A2(
+							$author$project$Byte$byteSub,
+							cpu.stackPointer,
+							$author$project$Byte$Byte(1))
 					});
 			default:
 				return cpu;
