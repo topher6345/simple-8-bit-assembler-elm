@@ -230,6 +230,10 @@ displayBool bool =
         "false"
 
 
+stdOutOffset =
+    232
+
+
 replaceControlCharacters int =
     if (int > 32) && (int < 127) then
         int
@@ -277,7 +281,7 @@ showOutput ram =
             pre stdoutStyles
                 [ formatByte byte |> text ]
     in
-    Array.slice 232 256 ram
+    Array.slice stdOutOffset 256 ram
         |> Array.toList
         |> List.map viewByte
 
@@ -555,10 +559,10 @@ cpuByteTd index ip sp string =
             else if index == sp then
                 "coral"
 
-            else if sp < 232 && index > sp && index < 232 then
+            else if sp < stdOutOffset && index > sp && index < stdOutOffset then
                 "orange"
 
-            else if index > 231 then
+            else if index >= stdOutOffset then
                 "lightgrey"
 
             else

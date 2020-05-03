@@ -7022,10 +7022,11 @@ var $author$project$Main$editor = function (model) {
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$input = _VirtualDom_node('input');
 var $elm$html$Html$label = _VirtualDom_node('label');
+var $author$project$Main$stdOutOffset = 232;
 var $elm$html$Html$td = _VirtualDom_node('td');
 var $author$project$Main$cpuByteTd = F4(
 	function (index, ip, sp, string) {
-		var color = _Utils_eq(index, ip) ? 'lightblue' : (_Utils_eq(index, sp) ? 'coral' : (((sp < 232) && ((_Utils_cmp(index, sp) > 0) && (index < 232))) ? 'orange' : ((index > 231) ? 'lightgrey' : 'seashell')));
+		var color = _Utils_eq(index, ip) ? 'lightblue' : (_Utils_eq(index, sp) ? 'coral' : (((_Utils_cmp(sp, $author$project$Main$stdOutOffset) < 0) && ((_Utils_cmp(index, sp) > 0) && (_Utils_cmp(index, $author$project$Main$stdOutOffset) < 0))) ? 'orange' : ((_Utils_cmp(index, $author$project$Main$stdOutOffset) > -1) ? 'lightgrey' : 'seashell')));
 		return A2(
 			$elm$html$Html$td,
 			_List_fromArray(
@@ -7392,7 +7393,7 @@ var $author$project$Main$showOutput = function (ram) {
 		$elm$core$List$map,
 		viewByte,
 		$elm$core$Array$toList(
-			A3($elm$core$Array$slice, 232, 256, ram)));
+			A3($elm$core$Array$slice, $author$project$Main$stdOutOffset, 256, ram)));
 };
 var $elm$html$Html$small = _VirtualDom_node('small');
 var $elm$html$Html$table = _VirtualDom_node('table');
