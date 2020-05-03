@@ -5823,11 +5823,19 @@ var $author$project$CPU$update = F2(
 					$author$project$Byte$byteSub,
 					cpu.stackPointer,
 					$author$project$Byte$Byte(1));
+				var osp = cpu.stackPointer;
 				return _Utils_update(
 					cpu,
 					{
 						instructionPointer: _byte,
-						ram: A3($author$project$CPU$updateAddress, cpu, cpu.stackPointer, _byte),
+						ram: A3(
+							$author$project$CPU$updateAddress,
+							cpu,
+							osp,
+							A2(
+								$author$project$Byte$byteSub,
+								_byte,
+								$author$project$Byte$Byte(1))),
 						stackPointer: sp
 					});
 			case 'PushRegister':

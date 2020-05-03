@@ -243,7 +243,7 @@ update opcode cpu =
             { cpu
                 | instructionPointer = byte
                 , stackPointer = sp
-                , ram = updateAddress cpu osp byte
+                , ram = updateAddress cpu osp (byteSub byte (Byte 1))
             }
 
         PushRegister registerByte ->
