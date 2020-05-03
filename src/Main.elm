@@ -287,14 +287,6 @@ nullInstructPointer cpu =
     CPU.fetch cpu cpu.instructionPointer == Byte 0
 
 
-topBarStyles =
-    [ style "display" "block"
-    , style "width" "100%"
-    , style "background-color" "lightgrey"
-    , style "max-height" "50px"
-    ]
-
-
 editor model =
     [ h2 [] [ text "Code" ]
     , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Documentation" ]
@@ -306,11 +298,6 @@ editor model =
              , onInput CodeChange
              , spellcheck False
              , autofocus True
-             , style "min-width" "calc(100% - 0.5em)"
-             , style "max-height" "calc(100vh - 300px)"
-             , style "min-height" "calc(100vh - 300px)"
-             , style "font-size" "1.5em"
-             , style "padding" "0.5em"
              ]
                 ++ (if model.editing then
                         [ property "selectionStart"
@@ -378,9 +365,7 @@ view model =
                 ]
             ]
         , div
-            [ style "display" "flex"
-            , style "min-height" "calc(50px - 100vh)"
-            ]
+            []
             [ div
                 [ style "order" "1"
                 , style "min-width" "50%"

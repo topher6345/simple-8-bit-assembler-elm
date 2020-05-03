@@ -7011,12 +7011,7 @@ var $author$project$Main$editor = function (model) {
 								$elm$html$Html$Attributes$value(model.code),
 								$elm$html$Html$Events$onInput($author$project$Main$CodeChange),
 								$elm$html$Html$Attributes$spellcheck(false),
-								$elm$html$Html$Attributes$autofocus(true),
-								A2($elm$html$Html$Attributes$style, 'min-width', 'calc(100% - 0.5em)'),
-								A2($elm$html$Html$Attributes$style, 'max-height', 'calc(100vh - 300px)'),
-								A2($elm$html$Html$Attributes$style, 'min-height', 'calc(100vh - 300px)'),
-								A2($elm$html$Html$Attributes$style, 'font-size', '1.5em'),
-								A2($elm$html$Html$Attributes$style, 'padding', '0.5em')
+								$elm$html$Html$Attributes$autofocus(true)
 							]),
 						model.editing ? _List_fromArray(
 							[
@@ -7435,8 +7430,7 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('https://github.com/topher6345/simple-8-bit-assembler-elm '),
-												A2($elm$html$Html$Attributes$style, 'text-decoration', 'none')
+												$elm$html$Html$Attributes$href('https://github.com/topher6345/simple-8-bit-assembler-elm ')
 											]),
 										_List_fromArray(
 											[
@@ -7447,11 +7441,7 @@ var $author$project$Main$view = function (model) {
 					])),
 				A2(
 				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-						A2($elm$html$Html$Attributes$style, 'min-height', 'calc(50px - 100vh)')
-					]),
+				_List_Nil,
 				_List_fromArray(
 					[
 						A2(
