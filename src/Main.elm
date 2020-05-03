@@ -264,6 +264,7 @@ stdoutStyles =
     , style "background-color" "black"
     , style "margin" "1px"
     , style "font-size" "2em"
+    , style "text-align" "center"
     ]
 
 

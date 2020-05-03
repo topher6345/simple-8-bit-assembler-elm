@@ -7374,7 +7374,8 @@ var $author$project$Main$stdoutStyles = _List_fromArray(
 		A2($elm$html$Html$Attributes$style, 'color', 'lightgreen'),
 		A2($elm$html$Html$Attributes$style, 'background-color', 'black'),
 		A2($elm$html$Html$Attributes$style, 'margin', '1px'),
-		A2($elm$html$Html$Attributes$style, 'font-size', '2em')
+		A2($elm$html$Html$Attributes$style, 'font-size', '2em'),
+		A2($elm$html$Html$Attributes$style, 'text-align', 'center')
 	]);
 var $author$project$Main$showOutput = function (ram) {
 	var viewByte = function (_byte) {
