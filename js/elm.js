@@ -5616,6 +5616,9 @@ var $author$project$CPU$MovRegisterValueToRegisterAddress = F2(
 	function (a, b) {
 		return {$: 'MovRegisterValueToRegisterAddress', a: a, b: b};
 	});
+var $author$project$CPU$PopToRegister = function (a) {
+	return {$: 'PopToRegister', a: a};
+};
 var $author$project$CPU$PushRegister = function (a) {
 	return {$: 'PushRegister', a: a};
 };
@@ -5664,6 +5667,8 @@ var $author$project$CPU$fetchInstruction = F2(
 				return A2($author$project$CPU$CompareRegisterToRegisterAddress, x, y);
 			case 39:
 				return $author$project$CPU$JumpIfNotZeroFlag(x);
+			case 54:
+				return $author$project$CPU$PopToRegister(x);
 			default:
 				return $author$project$CPU$Hlt;
 		}
@@ -5911,6 +5916,22 @@ var $author$project$CPU$update = F2(
 				return _Utils_update(
 					cpu,
 					{instructionPointer: ip});
+			case 'PopToRegister':
+				var register = opcode.a;
+				var value = A2($author$project$CPU$fetch, cpu, cpu.instructionPointer);
+				var foo = A3($author$project$CPU$updateRegister, cpu, register, value);
+				return _Utils_update(
+					foo,
+					{
+						instructionPointer: A2(
+							$author$project$Byte$byteAdd,
+							cpu.instructionPointer,
+							$author$project$Byte$Byte(2)),
+						stackPointer: A2(
+							$author$project$Byte$byteSub,
+							cpu.instructionPointer,
+							$author$project$Byte$Byte(1))
+					});
 			default:
 				return cpu;
 		}
@@ -5968,7 +5989,8 @@ var $author$project$Main$update = F2(
 					cpu,
 					{
 						instructionPointer: $author$project$Byte$mkByte(0),
-						ram: $author$project$CPU$blankRam
+						ram: $author$project$CPU$blankRam,
+						stackPointer: $author$project$Byte$mkByte(232)
 					});
 				return _Utils_Tuple2(
 					_Utils_update(
