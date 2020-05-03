@@ -6997,26 +6997,36 @@ var $author$project$Main$editor = function (model) {
 					$elm$html$Html$text('Assemble')
 				])),
 			A2(
-			$elm$html$Html$textarea,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$id('code-editor'),
-						$elm$html$Html$Attributes$value(model.code),
-						$elm$html$Html$Events$onInput($author$project$Main$CodeChange),
-						$elm$html$Html$Attributes$spellcheck(false),
-						$elm$html$Html$Attributes$autofocus(true),
-						A2($elm$html$Html$Attributes$style, 'width', '100%'),
-						A2($elm$html$Html$Attributes$style, 'max-height', 'calc(100vh - 300px)'),
-						A2($elm$html$Html$Attributes$style, 'min-height', 'calc(100vh - 300px)'),
-						A2($elm$html$Html$Attributes$style, 'font-size', '1.5em')
-					]),
-				A3(
-					$author$project$Main$displaySelections,
-					$author$project$Byte$toInt(model.cpu.instructionPointer),
-					model.code,
-					model.mapping)),
-			_List_Nil)
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'width', '100%')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$textarea,
+					_Utils_ap(
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$id('code-editor'),
+								$elm$html$Html$Attributes$value(model.code),
+								$elm$html$Html$Events$onInput($author$project$Main$CodeChange),
+								$elm$html$Html$Attributes$spellcheck(false),
+								$elm$html$Html$Attributes$autofocus(true),
+								A2($elm$html$Html$Attributes$style, 'min-width', 'calc(100% - 0.5em)'),
+								A2($elm$html$Html$Attributes$style, 'max-height', 'calc(100vh - 300px)'),
+								A2($elm$html$Html$Attributes$style, 'min-height', 'calc(100vh - 300px)'),
+								A2($elm$html$Html$Attributes$style, 'font-size', '1.5em'),
+								A2($elm$html$Html$Attributes$style, 'padding', '0.5em')
+							]),
+						A3(
+							$author$project$Main$displaySelections,
+							$author$project$Byte$toInt(model.cpu.instructionPointer),
+							model.code,
+							model.mapping)),
+					_List_Nil)
+				]))
 		]);
 };
 var $elm$html$Html$h1 = _VirtualDom_node('h1');

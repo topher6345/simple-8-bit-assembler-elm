@@ -302,20 +302,23 @@ editor model =
     [ h2 [] [ text "Code" ]
     , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Documentation" ]
     , button [ onClick Assemble, style "margin-bottom" "1em", disabled model.assembled ] [ text "Assemble" ]
-    , textarea
-        ([ id "code-editor"
-         , value model.code
-         , onInput CodeChange
-         , spellcheck False
-         , autofocus True
-         , style "width" "100%"
-         , style "max-height" "calc(100vh - 300px)"
-         , style "min-height" "calc(100vh - 300px)"
-         , style "font-size" "1.5em"
-         ]
-            ++ displaySelections (Byte.toInt model.cpu.instructionPointer) model.code model.mapping
-        )
-        []
+    , div [ style "width" "100%" ]
+        [ textarea
+            ([ id "code-editor"
+             , value model.code
+             , onInput CodeChange
+             , spellcheck False
+             , autofocus True
+             , style "min-width" "calc(100% - 0.5em)"
+             , style "max-height" "calc(100vh - 300px)"
+             , style "min-height" "calc(100vh - 300px)"
+             , style "font-size" "1.5em"
+             , style "padding" "0.5em"
+             ]
+                ++ displaySelections (Byte.toInt model.cpu.instructionPointer) model.code model.mapping
+            )
+            []
+        ]
     ]
 
 
