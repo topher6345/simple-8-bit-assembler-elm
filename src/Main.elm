@@ -264,17 +264,6 @@ replaceWhitespaceWithHtmlEntities string =
         string
 
 
-stdoutStyles =
-    [ style "display" "inline-block"
-    , style "min-width" "1em"
-    , style "color" "lightgreen"
-    , style "background-color" "black"
-    , style "margin" "1px"
-    , style "font-size" "2em"
-    , style "text-align" "center"
-    ]
-
-
 formatByte byte =
     byte
         |> Byte.toInt
@@ -287,8 +276,7 @@ formatByte byte =
 showOutput ram =
     let
         viewByte byte =
-            pre stdoutStyles
-                [ formatByte byte |> text ]
+            pre [] [ text <| formatByte byte ]
     in
     Array.slice stdOutOffset 256 ram
         |> Array.toList
@@ -462,10 +450,7 @@ view model =
                         ]
                         [ tr
                             []
-                            [ td
-                                [ style "width" "2em"
-                                ]
-                                [ text <| displayByte model.cpuDisplayHex model.cpu.registerA ]
+                            [ td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerA ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerB ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]

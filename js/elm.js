@@ -7386,21 +7386,11 @@ var $author$project$Main$formatByte = function (_byte) {
 				$author$project$Main$replaceControlCharacters(
 					$author$project$Byte$toInt(_byte)))));
 };
-var $author$project$Main$stdoutStyles = _List_fromArray(
-	[
-		A2($elm$html$Html$Attributes$style, 'display', 'inline-block'),
-		A2($elm$html$Html$Attributes$style, 'min-width', '1em'),
-		A2($elm$html$Html$Attributes$style, 'color', 'lightgreen'),
-		A2($elm$html$Html$Attributes$style, 'background-color', 'black'),
-		A2($elm$html$Html$Attributes$style, 'margin', '1px'),
-		A2($elm$html$Html$Attributes$style, 'font-size', '2em'),
-		A2($elm$html$Html$Attributes$style, 'text-align', 'center')
-	]);
 var $author$project$Main$showOutput = function (ram) {
 	var viewByte = function (_byte) {
 		return A2(
 			$elm$html$Html$pre,
-			$author$project$Main$stdoutStyles,
+			_List_Nil,
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
@@ -7451,7 +7441,7 @@ var $author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('8 Bit Assembler Simulator'),
+								$elm$html$Html$text('8 Bit Assembler Simulator '),
 								A2(
 								$elm$html$Html$small,
 								_List_Nil,
