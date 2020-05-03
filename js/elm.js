@@ -5381,7 +5381,7 @@ var $author$project$CPU$initalCPU = {
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Init$program = '; from https://schweigi.github.io/assembler-simulator/\n; Simple example\n; Writes Hello World to the output\n\n  JMP start\nhello: DB "Hello World!" ; Variable\n       DB 0 ; String terminator\n\nstart:\n  MOV C, hello    ; Point to var \n  MOV D, 232  ; Point to output\n  CALL print\n        HLT             ; Stop execution\n\nprint:      ; print(C:*from, D:*to)\n  PUSH A\n  PUSH B\n  MOV B, 0\n.loop:\n  MOV A, [C]  ; Get char from var\n  MOV [D], A  ; Write to output\n  INC C\n  INC D  \n  CMP B, [C]  ; Check if end\n  JNZ .loop ; jump if not\n\n  POP B\n  POP A\n  RET\n';
+var $author$project$Init$program = '; from https://schweigi.github.io/assembler-simulator/\n; Simple example\n; Writes Hello World to the output\n\n  JMP start\nhello: DB "Hello World!" ; Variable\n       DB 0              ; String terminator\n\nstart:\n  MOV C, hello           ; Point to var \n  MOV D, 232             ; Point to output\n  CALL print\n        HLT              ; Stop execution\n\nprint:                   ; print(C:*from, D:*to)\n  PUSH A\n  PUSH B\n  MOV B, 0\n.loop:\n  MOV A, [C]             ; Get char from var\n  MOV [D], A             ; Write to output\n  INC C\n  INC D  \n  CMP B, [C]             ; Check if end\n  JNZ .loop              ; jump if not\n\n  POP B\n  POP A\n  RET\n';
 var $author$project$Main$initialModel = function (_v0) {
 	return _Utils_Tuple2(
 		{
@@ -5392,7 +5392,7 @@ var $author$project$Main$initialModel = function (_v0) {
 			cpu: $author$project$CPU$initalCPU,
 			cpuDisplayHex: true,
 			editing: true,
-			flash: '',
+			flash: 'Welcome to 8-bit Assembler Simulator',
 			labels: $elm$core$Dict$fromList(_List_Nil),
 			mapping: $elm$core$Dict$fromList(_List_Nil),
 			running: false,
@@ -7585,13 +7585,6 @@ var $author$project$Main$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text('Output')
-									])),
-								A2(
-								$elm$html$Html$div,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text(model.flash)
 									])),
 								A2(
 								$elm$html$Html$div,

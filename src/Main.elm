@@ -42,7 +42,7 @@ initialModel _ =
     ( { count = 0
       , code = Init.program
       , cpu = CPU.initalCPU
-      , flash = ""
+      , flash = "Welcome to 8-bit Assembler Simulator"
       , cpuDisplayHex = True
       , showEditor = True
       , assembled = False
@@ -409,7 +409,6 @@ view model =
                 , text "ms"
                 , button [ onClick Pause, disabled <| not model.running || nullInstructPointer model.cpu ] [ text "Stop" ]
                 , h3 [] [ text "Output" ]
-                , div [] [ text model.flash ]
                 , div []
                     [ div [] <| showOutput model.cpu.ram
                     ]
