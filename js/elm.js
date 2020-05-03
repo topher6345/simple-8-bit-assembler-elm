@@ -7446,21 +7446,11 @@ var $author$project$Main$view = function (model) {
 					[
 						A2(
 						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								A2($elm$html$Html$Attributes$style, 'order', '1'),
-								A2($elm$html$Html$Attributes$style, 'min-width', '50%'),
-								A2($elm$html$Html$Attributes$style, 'max-width', '50%'),
-								A2($elm$html$Html$Attributes$style, 'padding', '0 1em')
-							]),
+						_List_Nil,
 						model.showEditor ? $author$project$Main$editor(model) : $author$project$Main$documentationNavigation),
 						A2(
 						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								A2($elm$html$Html$Attributes$style, 'order', '2'),
-								A2($elm$html$Html$Attributes$style, 'padding', '0 1em')
-							]),
+						_List_Nil,
 						_List_fromArray(
 							[
 								A2(

@@ -364,24 +364,15 @@ view model =
                     ]
                 ]
             ]
-        , div
-            []
-            [ div
-                [ style "order" "1"
-                , style "min-width" "50%"
-                , style "max-width" "50%"
-                , style "padding" "0 1em"
-                ]
-              <|
+        , div []
+            [ div [] <|
                 if model.showEditor then
                     editor model
 
                 else
                     documentationNavigation
             , div
-                [ style "order" "2"
-                , style "padding" "0 1em"
-                ]
+                []
                 [ h2 [] [ text "CPU" ]
                 , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
