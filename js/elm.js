@@ -5601,6 +5601,10 @@ var $author$project$CPU$MovConstToRegister = F2(
 	function (a, b) {
 		return {$: 'MovConstToRegister', a: a, b: b};
 	});
+var $author$project$CPU$MovRegisterAddressToRegister = F2(
+	function (a, b) {
+		return {$: 'MovRegisterAddressToRegister', a: a, b: b};
+	});
 var $author$project$CPU$PushRegister = function (a) {
 	return {$: 'PushRegister', a: a};
 };
@@ -5641,6 +5645,8 @@ var $author$project$CPU$fetchInstruction = F2(
 				return $author$project$CPU$Call(x);
 			case 50:
 				return $author$project$CPU$PushRegister(x);
+			case 3:
+				return A2($author$project$CPU$MovRegisterAddressToRegister, x, y);
 			default:
 				return $author$project$CPU$Hlt;
 		}
@@ -5826,6 +5832,25 @@ var $author$project$CPU$update = F2(
 							$author$project$Byte$byteSub,
 							cpu.stackPointer,
 							$author$project$Byte$Byte(1))
+					});
+			case 'MovRegisterAddressToRegister':
+				var registerAddress = opcode.a;
+				var destinationRegister = opcode.b;
+				var foo = A3(
+					$author$project$CPU$updateRegister,
+					cpu,
+					registerAddress,
+					A2(
+						$author$project$CPU$fetch,
+						cpu,
+						A2($author$project$CPU$lookupRegister, cpu, destinationRegister)));
+				return _Utils_update(
+					foo,
+					{
+						instructionPointer: A2(
+							$author$project$Byte$byteAdd,
+							cpu.instructionPointer,
+							$author$project$Byte$Byte(3))
 					});
 			default:
 				return cpu;

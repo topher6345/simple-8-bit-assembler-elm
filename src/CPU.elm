@@ -79,6 +79,7 @@ type Msg
     | MovConstToRegister Byte Byte
     | Call Byte
     | PushRegister Byte
+    | MovRegisterAddressToRegister Byte Byte
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -152,6 +153,9 @@ fetchInstruction cpu (Byte instructionByte) =
         50 ->
             PushRegister x
 
+        3 ->
+            MovRegisterAddressToRegister x y
+
         _ ->
             Hlt
 
@@ -224,6 +228,15 @@ update opcode cpu =
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 2)
                 , stackPointer = byteSub cpu.stackPointer (Byte 1)
                 , ram = updateAddress cpu cpu.stackPointer (lookupRegister cpu registerByte)
+            }
+
+        MovRegisterAddressToRegister registerAddress destinationRegister ->
+            let
+                foo =
+                    updateRegister cpu registerAddress (fetch cpu (lookupRegister cpu destinationRegister))
+            in
+            { foo
+                | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
             }
 
         Hlt ->
