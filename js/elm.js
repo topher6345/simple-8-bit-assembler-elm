@@ -5586,6 +5586,10 @@ var $author$project$CPU$fetch = F2(
 var $author$project$CPU$Call = function (a) {
 	return {$: 'Call', a: a};
 };
+var $author$project$CPU$CompareRegisterToRegisterAddress = F2(
+	function (a, b) {
+		return {$: 'CompareRegisterToRegisterAddress', a: a, b: b};
+	});
 var $author$project$CPU$Hlt = {$: 'Hlt'};
 var $author$project$CPU$IncrReg = function (a) {
 	return {$: 'IncrReg', a: a};
@@ -5653,6 +5657,8 @@ var $author$project$CPU$fetchInstruction = F2(
 				return A2($author$project$CPU$MovRegisterAddressToRegister, x, y);
 			case 5:
 				return A2($author$project$CPU$MovRegisterValueToRegisterAddress, x, y);
+			case 21:
+				return A2($author$project$CPU$CompareRegisterToRegisterAddress, x, y);
 			default:
 				return $author$project$CPU$Hlt;
 		}
@@ -5873,6 +5879,23 @@ var $author$project$CPU$update = F2(
 							cpu,
 							A2($author$project$CPU$lookupRegister, cpu, destinationRegisterAddress),
 							A2($author$project$CPU$lookupRegister, cpu, registerValue))
+					});
+			case 'CompareRegisterToRegisterAddress':
+				var register = opcode.a;
+				var registerAddress = opcode.b;
+				return _Utils_update(
+					cpu,
+					{
+						instructionPointer: A2(
+							$author$project$Byte$byteAdd,
+							cpu.instructionPointer,
+							$author$project$Byte$Byte(3)),
+						zeroFlag: _Utils_eq(
+							A2($author$project$CPU$lookupRegister, cpu, register),
+							A2(
+								$author$project$CPU$fetch,
+								cpu,
+								A2($author$project$CPU$lookupRegister, cpu, registerAddress)))
 					});
 			default:
 				return cpu;
