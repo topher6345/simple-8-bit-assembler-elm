@@ -376,24 +376,46 @@ mappingDecoder string =
 
 view : Model -> Html Msg
 view model =
-    div [ style "font-family" "Sans-serif", style "display" "flex", style "flex-direction" "column" ]
+    div
+        [ style "font-family" "Sans-serif"
+        , style "display" "flex"
+        , style "flex-direction" "column"
+        ]
         [ div topBarStyles
             [ h1
                 [ style "margin" "0"
                 , style "padding" "0.2em"
                 ]
-                [ text "8 Bit Assembler Simulator"
-                , small [] [ a [ href "https://github.com/topher6345/simple-8-bit-assembler-elm ", style "text-decoration" "none" ] [ text "source" ] ]
+                [ text "8 Bit Assembler Simulator "
+                , small []
+                    [ a
+                        [ href "https://github.com/topher6345/simple-8-bit-assembler-elm "
+                        , style "text-decoration" "none"
+                        ]
+                        [ text "source" ]
+                    ]
                 ]
             ]
-        , div [ style "display" "flex", style "min-height" "calc(50px - 100vh)" ]
-            [ div [ style "order" "1", style "min-width" "50%", style "max-width" "50%", style "padding" "0 1em" ] <|
+        , div
+            [ style "display" "flex"
+            , style "min-height" "calc(50px - 100vh)"
+            ]
+            [ div
+                [ style "order" "1"
+                , style "min-width" "50%"
+                , style "max-width" "50%"
+                , style "padding" "0 1em"
+                ]
+              <|
                 if model.showEditor then
                     editor model
 
                 else
                     documentationNavigation
-            , div [ style "order" "2", style "padding" "0 1em" ]
+            , div
+                [ style "order" "2"
+                , style "padding" "0 1em"
+                ]
                 [ h2 [] [ text "CPU" ]
                 , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
@@ -434,10 +456,16 @@ view model =
                         , th [] [ text "C" ]
                         , th [] [ text "F" ]
                         ]
-                    , tbody [ style "font-family" "Monospace", style "text-align" "center" ]
+                    , tbody
+                        [ style "font-family" "Monospace"
+                        , style "text-align" "center"
+                        ]
                         [ tr
                             []
-                            [ td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerA ]
+                            [ td
+                                [ style "width" "2em"
+                                ]
+                                [ text <| displayByte model.cpuDisplayHex model.cpu.registerA ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerB ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]
@@ -452,7 +480,11 @@ view model =
                 , h3 [] [ text "RAM" ]
                 , label [] [ text "Decimal display" ]
                 , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
-                , table [ style "border" "1px solid black", style "font-family" "Monospace" ] <|
+                , table
+                    [ style "border" "1px solid black"
+                    , style "font-family" "Monospace"
+                    ]
+                  <|
                     memoryRows model.cpu.ram
                         model.cpuDisplayHex
                         (toInt model.cpu.instructionPointer)
