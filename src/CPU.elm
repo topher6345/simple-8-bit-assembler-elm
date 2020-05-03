@@ -78,6 +78,7 @@ type Msg
     | Jump Byte
     | MovConstToRegister Byte Byte
     | Call Byte
+    | PushRegister Byte
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -148,6 +149,9 @@ fetchInstruction cpu (Byte instructionByte) =
         56 ->
             Call x
 
+        50 ->
+            PushRegister x
+
         _ ->
             Hlt
 
@@ -212,6 +216,14 @@ update opcode cpu =
             { cpu
                 | instructionPointer = byte
                 , stackPointer = byteSub cpu.stackPointer (Byte 1)
+                , ram = updateAddress cpu cpu.stackPointer (byteSub byte (Byte 1))
+            }
+
+        PushRegister registerByte ->
+            { cpu
+                | instructionPointer = byteAdd cpu.instructionPointer (Byte 2)
+                , stackPointer = byteSub cpu.stackPointer (Byte 1)
+                , ram = updateAddress cpu cpu.stackPointer (lookupRegister cpu registerByte)
             }
 
         Hlt ->
