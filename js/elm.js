@@ -5918,8 +5918,11 @@ var $author$project$CPU$update = F2(
 					{instructionPointer: ip});
 			case 'PopToRegister':
 				var register = opcode.a;
-				var value = A2($author$project$CPU$fetch, cpu, cpu.instructionPointer);
-				var foo = A3($author$project$CPU$updateRegister, cpu, register, value);
+				var foo = A3(
+					$author$project$CPU$updateRegister,
+					cpu,
+					register,
+					A2($author$project$CPU$fetch, cpu, cpu.stackPointer));
 				return _Utils_update(
 					foo,
 					{
@@ -5928,8 +5931,8 @@ var $author$project$CPU$update = F2(
 							cpu.instructionPointer,
 							$author$project$Byte$Byte(2)),
 						stackPointer: A2(
-							$author$project$Byte$byteSub,
-							cpu.instructionPointer,
+							$author$project$Byte$byteAdd,
+							cpu.stackPointer,
 							$author$project$Byte$Byte(1))
 					});
 			default:

@@ -282,15 +282,13 @@ update opcode cpu =
 
         PopToRegister register ->
             let
-                value =
-                    fetch cpu cpu.instructionPointer
-
                 foo =
-                    updateRegister cpu register value
+                    fetch cpu cpu.stackPointer
+                        |> updateRegister cpu register
             in
             { foo
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 2)
-                , stackPointer = byteSub cpu.stackPointer (Byte 1)
+                , stackPointer = byteAdd cpu.stackPointer (Byte 1)
             }
 
         Hlt ->
