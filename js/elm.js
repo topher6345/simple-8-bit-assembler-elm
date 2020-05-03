@@ -7044,8 +7044,6 @@ var $author$project$Main$cpuByteTd = F4(
 			$elm$html$Html$td,
 			_List_fromArray(
 				[
-					A2($elm$html$Html$Attributes$style, 'width', '2em'),
-					A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
 					A2($elm$html$Html$Attributes$style, 'background-color', color)
 				]),
 			_List_fromArray(
@@ -7799,17 +7797,19 @@ var $author$project$Main$view = function (model) {
 								_List_Nil),
 								A2(
 								$elm$html$Html$table,
+								_List_Nil,
 								_List_fromArray(
 									[
-										A2($elm$html$Html$Attributes$style, 'border', '1px solid black'),
-										A2($elm$html$Html$Attributes$style, 'font-family', 'Monospace')
-									]),
-								A4(
-									$author$project$Main$memoryRows,
-									model.cpu.ram,
-									model.cpuDisplayHex,
-									$author$project$Byte$toInt(model.cpu.instructionPointer),
-									$author$project$Byte$toInt(model.cpu.stackPointer)))
+										A2(
+										$elm$html$Html$tbody,
+										_List_Nil,
+										A4(
+											$author$project$Main$memoryRows,
+											model.cpu.ram,
+											model.cpuDisplayHex,
+											$author$project$Byte$toInt(model.cpu.instructionPointer),
+											$author$project$Byte$toInt(model.cpu.stackPointer)))
+									]))
 							]))
 					]))
 			]));

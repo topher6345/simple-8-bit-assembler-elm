@@ -432,14 +432,13 @@ view model =
                 , label [] [ text "Decimal display" ]
                 , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
                 , table
-                    [ style "border" "1px solid black"
-                    , style "font-family" "Monospace"
+                    []
+                    [ tbody [] <|
+                        memoryRows model.cpu.ram
+                            model.cpuDisplayHex
+                            (toInt model.cpu.instructionPointer)
+                            (toInt model.cpu.stackPointer)
                     ]
-                  <|
-                    memoryRows model.cpu.ram
-                        model.cpuDisplayHex
-                        (toInt model.cpu.instructionPointer)
-                        (toInt model.cpu.stackPointer)
                 ]
             ]
         ]
@@ -574,11 +573,7 @@ cpuByteTd index ip sp string =
             else
                 "seashell"
     in
-    td
-        [ style "width" "2em"
-        , style "text-align" "center"
-        , style "background-color" color
-        ]
+    td [ style "background-color" color ]
         [ text string ]
 
 
