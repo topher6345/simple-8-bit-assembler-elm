@@ -67,12 +67,6 @@ subscriptions model =
         ]
 
 
-
---subscriptions : Model -> Sub Msg
---subscriptions model =
---
-
-
 type alias Artifacts =
     { code : Array String
     , mapping : String
