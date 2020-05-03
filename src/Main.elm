@@ -372,9 +372,7 @@ view model =
                 [ text "8 Bit Assembler Simulator "
                 , small []
                     [ a
-                        [ href "https://github.com/topher6345/simple-8-bit-assembler-elm "
-                        , style "text-decoration" "none"
-                        ]
+                        [ href "https://github.com/topher6345/simple-8-bit-assembler-elm " ]
                         [ text "source" ]
                     ]
                 ]
