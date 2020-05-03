@@ -53,10 +53,21 @@
         padding: 0px 1em;
       }
 
+      body > div > div:nth-child(2) > div:first-child > div {
+        line-height: 1.6em;
+        width: 1  00%;
+        overflow: scroll;
+        max-height: calc(-275px + 100vh);
+      }
+
+      body > div > div:nth-child(2) > div:first-child > div > pre {
+        text-align: left;
+      }
+
       textarea {
         min-width: calc(100% - 0.5em);
         max-height: calc(100vh - 300px);
-        min-height: calc(100vh - 300px);
+        min-height: calc(100vh - 200px);
         font-size: 1.5em;
         padding: 0.5em;
         line-height: 1.1em;
@@ -93,6 +104,25 @@
 
       button {
         margin-bottom: 1em;
+      }
+
+      .instruction-pointer {
+        background-color: lightblue;
+      }
+      .stack-pointer {
+        background-color: coral;
+      }
+      .stack {
+        background-color: orange;
+      }
+      .standard-out {
+        background-color: lightgrey;
+      }
+      .null-byte {
+        background-color: #ece7e7;
+      }
+      .base {
+        background-color: seashell;
       }
     </style>
   </head>

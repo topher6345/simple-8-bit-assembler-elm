@@ -5,12 +5,7 @@ import Html.Attributes exposing (..)
 
 
 documentation =
-    [ div
-        [ style "line-height" "1.6em"
-        , style "width" "100%"
-        , style "overflow" "scroll"
-        , style "max-height" "calc(100vh - 275px)"
-        ]
+    [ div []
         [ h3 [] [ text "Introduction" ]
         , p []
             [ text "This is a tribute to "

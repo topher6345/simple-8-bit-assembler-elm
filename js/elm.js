@@ -6622,13 +6622,7 @@ var $author$project$Documentation$documentation = _List_fromArray(
 	[
 		A2(
 		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'line-height', '1.6em'),
-				A2($elm$html$Html$Attributes$style, 'width', '100%'),
-				A2($elm$html$Html$Attributes$style, 'overflow', 'scroll'),
-				A2($elm$html$Html$Attributes$style, 'max-height', 'calc(100vh - 275px)')
-			]),
+		_List_Nil,
 		_List_fromArray(
 			[
 				A2(
@@ -7037,12 +7031,12 @@ var $author$project$Main$stdOutOffset = 232;
 var $elm$html$Html$td = _VirtualDom_node('td');
 var $author$project$Main$cpuByteTd = F4(
 	function (index, ip, sp, string) {
-		var color = _Utils_eq(index, ip) ? 'lightblue' : (_Utils_eq(index, sp) ? 'coral' : (((_Utils_cmp(sp, $author$project$Main$stdOutOffset) < 0) && ((_Utils_cmp(index, sp) > 0) && (_Utils_cmp(index, $author$project$Main$stdOutOffset) < 0))) ? 'orange' : ((_Utils_cmp(index, $author$project$Main$stdOutOffset) > -1) ? 'lightgrey' : 'seashell')));
+		var klass = _Utils_eq(index, ip) ? 'instruction-pointer' : (_Utils_eq(index, sp) ? 'stack-pointer' : (((_Utils_cmp(sp, $author$project$Main$stdOutOffset) < 0) && ((_Utils_cmp(index, sp) > 0) && (_Utils_cmp(index, $author$project$Main$stdOutOffset) < 0))) ? 'stack' : ((_Utils_cmp(index, $author$project$Main$stdOutOffset) > -1) ? 'standard-out' : (((string === '00') || (string === '000')) ? 'null-byte' : 'base'))));
 		return A2(
 			$elm$html$Html$td,
 			_List_fromArray(
 				[
-					A2($elm$html$Html$Attributes$style, 'background-color', color)
+					$elm$html$Html$Attributes$class(klass)
 				]),
 			_List_fromArray(
 				[
@@ -7515,6 +7509,16 @@ var $author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
+										A2(
+										$elm$html$Html$option,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$value('100')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('200')
+											])),
 										A2(
 										$elm$html$Html$option,
 										_List_fromArray(

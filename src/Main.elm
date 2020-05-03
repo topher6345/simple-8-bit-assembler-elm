@@ -400,7 +400,8 @@ view model =
                     [ text "Play" ]
                 , label [] [ text "clock speed" ]
                 , select [ onInput ChangeClockFrequency ]
-                    [ option [ value "200" ] [ text "200" ]
+                    [ option [ value "100" ] [ text "200" ]
+                    , option [ value "200" ] [ text "200" ]
                     , option [ value "500" ] [ text "500" ]
                     , option [ value "1000" ] [ text "1000" ]
                     , option [ value "2000" ] [ text "2000" ]
@@ -575,24 +576,26 @@ cpuByteTd :
     -> Html msg
 cpuByteTd index ip sp string =
     let
-        color =
+        klass =
             if index == ip then
-                "lightblue"
+                "instruction-pointer"
 
             else if index == sp then
-                "coral"
+                "stack-pointer"
 
             else if sp < stdOutOffset && index > sp && index < stdOutOffset then
-                "orange"
+                "stack"
 
             else if index >= stdOutOffset then
-                "lightgrey"
+                "standard-out"
+
+            else if string == "00" || string == "000" then
+                "null-byte"
 
             else
-                "seashell"
+                "base"
     in
-    td [ style "background-color" color ]
-        [ text string ]
+    td [ class klass ] [ text string ]
 
 
 main : Program () Model Msg
