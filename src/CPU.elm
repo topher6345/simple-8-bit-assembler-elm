@@ -290,7 +290,7 @@ update opcode cpu =
             in
             { foo
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 2)
-                , stackPointer = byteSub cpu.instructionPointer (Byte 1)
+                , stackPointer = byteSub cpu.stackPointer (Byte 1)
             }
 
         Hlt ->
