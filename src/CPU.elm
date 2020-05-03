@@ -52,7 +52,7 @@ blankRam =
 
 
 initialRam =
-    Array.set 232 (mkByte 80) blankRam
+    blankRam
 
 
 initalCPU =

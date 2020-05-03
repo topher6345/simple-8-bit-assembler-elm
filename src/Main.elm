@@ -1,4 +1,4 @@
-port module Main exposing (Model, Msg(..), displayBool, displaySelections, findSelections, initialModel, main, memoryRows, update, view)
+port module Main exposing (Model, Msg(..))
 
 import Array exposing (Array)
 import Assembler exposing (assembleCode)
@@ -33,6 +33,7 @@ type alias Model =
     , running : Bool
     , mapping : Dict String Int
     , labels : Dict String Int
+    , editing : Bool
     }
 
 
@@ -48,6 +49,7 @@ initialModel _ =
       , running = False
       , mapping = Dict.fromList []
       , labels = Dict.fromList []
+      , editing = True
       }
     , Cmd.none
     )
@@ -157,6 +159,7 @@ update msg model =
             ( { model
                 | code = string
                 , assembled = False
+                , editing = True
               }
             , Cmd.none
             )
@@ -165,6 +168,7 @@ update msg model =
             ( { model
                 | cpu = CPU.tick model.cpu
                 , count = model.count + 1
+                , editing = False
               }
             , focus
             )
@@ -201,6 +205,7 @@ update msg model =
         Play ->
             ( { model
                 | running = True
+                , editing = False
               }
             , Cmd.none
             )
@@ -315,7 +320,17 @@ editor model =
              , style "font-size" "1.5em"
              , style "padding" "0.5em"
              ]
-                ++ displaySelections (Byte.toInt model.cpu.instructionPointer) model.code model.mapping
+                ++ (if model.editing then
+                        [ property "selectionStart"
+                            (Encode.int 0)
+                        , property
+                            "selectionEnd"
+                            (Encode.int 0)
+                        ]
+
+                    else
+                        displaySelections (Byte.toInt model.cpu.instructionPointer) model.code model.mapping
+                   )
             )
             []
         ]
@@ -443,6 +458,7 @@ view model =
         ]
 
 
+displaySelections : Int -> String -> Dict String Int -> List (Attribute msg)
 displaySelections index code mapping =
     let
         mapper i =
