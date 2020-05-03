@@ -5622,6 +5622,7 @@ var $author$project$CPU$PopToRegister = function (a) {
 var $author$project$CPU$PushRegister = function (a) {
 	return {$: 'PushRegister', a: a};
 };
+var $author$project$CPU$Return = {$: 'Return'};
 var $author$project$Byte$byteAdd = F2(
 	function (_v0, _v1) {
 		var a = _v0.a;
@@ -5669,6 +5670,8 @@ var $author$project$CPU$fetchInstruction = F2(
 				return $author$project$CPU$JumpIfNotZeroFlag(x);
 			case 54:
 				return $author$project$CPU$PopToRegister(x);
+			case 57:
+				return $author$project$CPU$Return;
 			default:
 				return $author$project$CPU$Hlt;
 		}
@@ -5932,6 +5935,22 @@ var $author$project$CPU$update = F2(
 							$author$project$Byte$byteAdd,
 							cpu.instructionPointer,
 							$author$project$Byte$Byte(2)),
+						stackPointer: A2(
+							$author$project$Byte$byteAdd,
+							cpu.stackPointer,
+							$author$project$Byte$Byte(1))
+					});
+			case 'Return':
+				return _Utils_update(
+					cpu,
+					{
+						instructionPointer: A2(
+							$author$project$CPU$fetch,
+							cpu,
+							A2(
+								$author$project$Byte$byteAdd,
+								cpu.stackPointer,
+								$author$project$Byte$Byte(1))),
 						stackPointer: A2(
 							$author$project$Byte$byteAdd,
 							cpu.stackPointer,

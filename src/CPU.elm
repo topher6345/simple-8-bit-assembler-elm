@@ -84,6 +84,7 @@ type Msg
     | CompareRegisterToRegisterAddress Byte Byte
     | JumpIfNotZeroFlag Byte
     | PopToRegister Byte
+    | Return
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -171,6 +172,9 @@ fetchInstruction cpu (Byte instructionByte) =
 
         54 ->
             PopToRegister x
+
+        57 ->
+            Return
 
         _ ->
             Hlt
@@ -296,6 +300,12 @@ update opcode cpu =
             { foo
                 | instructionPointer = byteAdd cpu.instructionPointer (Byte 2)
                 , stackPointer = byteAdd cpu.stackPointer (Byte 1)
+            }
+
+        Return ->
+            { cpu
+                | stackPointer = byteAdd cpu.stackPointer (Byte 1)
+                , instructionPointer = fetch cpu (byteAdd cpu.stackPointer (Byte 1))
             }
 
         Hlt ->
