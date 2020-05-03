@@ -289,8 +289,8 @@ nullInstructPointer cpu =
 
 editor model =
     [ h2 [] [ text "Code" ]
-    , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Documentation" ]
-    , button [ onClick Assemble, style "margin-bottom" "1em", disabled model.assembled ] [ text "Assemble" ]
+    , button [ onClick ToggleEditor ] [ text "Documentation" ]
+    , button [ onClick Assemble, disabled model.assembled ] [ text "Assemble" ]
     , div [ style "width" "100%" ]
         [ textarea
             ([ id "code-editor"
@@ -318,7 +318,7 @@ editor model =
 
 documentationNavigation =
     [ h2 [] [ text "Documentation" ]
-    , button [ onClick ToggleEditor, style "margin-bottom" "1em" ] [ text "Code" ]
+    , button [ onClick ToggleEditor ] [ text "Code" ]
     ]
         ++ Documentation.documentation
 
