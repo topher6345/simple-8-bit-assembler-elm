@@ -5594,6 +5594,10 @@ var $author$project$CPU$MovConstCharToConstAddress = F2(
 	function (a, b) {
 		return {$: 'MovConstCharToConstAddress', a: a, b: b};
 	});
+var $author$project$CPU$MovConstToRegister = F2(
+	function (a, b) {
+		return {$: 'MovConstToRegister', a: a, b: b};
+	});
 var $author$project$Byte$byteAdd = F2(
 	function (_v0, _v1) {
 		var a = _v0.a;
@@ -5625,6 +5629,8 @@ var $author$project$CPU$fetchInstruction = F2(
 				return $author$project$CPU$IncrReg(x);
 			case 31:
 				return $author$project$CPU$Jump(x);
+			case 6:
+				return A2($author$project$CPU$MovConstToRegister, x, y);
 			default:
 				return $author$project$CPU$Hlt;
 		}
@@ -5755,6 +5761,18 @@ var $author$project$CPU$update = F2(
 				return _Utils_update(
 					cpu,
 					{instructionPointer: _byte});
+			case 'MovConstToRegister':
+				var registerNumber = opcode.a;
+				var constant = opcode.b;
+				var foo = A3($author$project$CPU$updateRegister, cpu, registerNumber, constant);
+				return _Utils_update(
+					foo,
+					{
+						instructionPointer: A2(
+							$author$project$Byte$byteAdd,
+							cpu.instructionPointer,
+							$author$project$Byte$Byte(3))
+					});
 			default:
 				return cpu;
 		}

@@ -76,6 +76,7 @@ type Msg
     | MovConstCharToConstAddress Byte Byte
     | Hlt
     | Jump Byte
+    | MovConstToRegister Byte Byte
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -140,6 +141,9 @@ fetchInstruction cpu (Byte instructionByte) =
         31 ->
             Jump x
 
+        6 ->
+            MovConstToRegister x y
+
         _ ->
             Hlt
 
@@ -189,6 +193,15 @@ update opcode cpu =
         Jump byte ->
             { cpu
                 | instructionPointer = byte
+            }
+
+        MovConstToRegister registerNumber constant ->
+            let
+                foo =
+                    updateRegister cpu registerNumber constant
+            in
+            { foo
+                | instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
             }
 
         Hlt ->
