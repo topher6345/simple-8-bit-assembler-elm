@@ -5597,6 +5597,9 @@ var $author$project$CPU$IncrReg = function (a) {
 var $author$project$CPU$Jump = function (a) {
 	return {$: 'Jump', a: a};
 };
+var $author$project$CPU$JumpIfNotZeroFlag = function (a) {
+	return {$: 'JumpIfNotZeroFlag', a: a};
+};
 var $author$project$CPU$MovConstCharToConstAddress = F2(
 	function (a, b) {
 		return {$: 'MovConstCharToConstAddress', a: a, b: b};
@@ -5659,6 +5662,8 @@ var $author$project$CPU$fetchInstruction = F2(
 				return A2($author$project$CPU$MovRegisterValueToRegisterAddress, x, y);
 			case 21:
 				return A2($author$project$CPU$CompareRegisterToRegisterAddress, x, y);
+			case 39:
+				return $author$project$CPU$JumpIfNotZeroFlag(x);
 			default:
 				return $author$project$CPU$Hlt;
 		}
@@ -5897,6 +5902,15 @@ var $author$project$CPU$update = F2(
 								cpu,
 								A2($author$project$CPU$lookupRegister, cpu, registerAddress)))
 					});
+			case 'JumpIfNotZeroFlag':
+				var _byte = opcode.a;
+				var ip = cpu.zeroFlag ? A2(
+					$author$project$Byte$byteAdd,
+					cpu.instructionPointer,
+					$author$project$Byte$Byte(2)) : _byte;
+				return _Utils_update(
+					cpu,
+					{instructionPointer: ip});
 			default:
 				return cpu;
 		}

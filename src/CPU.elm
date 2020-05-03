@@ -82,6 +82,7 @@ type Msg
     | MovRegisterAddressToRegister Byte Byte
     | MovRegisterValueToRegisterAddress Byte Byte
     | CompareRegisterToRegisterAddress Byte Byte
+    | JumpIfNotZeroFlag Byte
 
 
 updateRegister cpu (Byte registerByte) value =
@@ -163,6 +164,9 @@ fetchInstruction cpu (Byte instructionByte) =
 
         21 ->
             CompareRegisterToRegisterAddress x y
+
+        39 ->
+            JumpIfNotZeroFlag x
 
         _ ->
             Hlt
@@ -257,6 +261,19 @@ update opcode cpu =
             { cpu
                 | zeroFlag = lookupRegister cpu register == fetch cpu (lookupRegister cpu registerAddress)
                 , instructionPointer = byteAdd cpu.instructionPointer (Byte 3)
+            }
+
+        JumpIfNotZeroFlag byte ->
+            let
+                ip =
+                    if cpu.zeroFlag then
+                        byteAdd cpu.instructionPointer (Byte 2)
+
+                    else
+                        byte
+            in
+            { cpu
+                | instructionPointer = ip
             }
 
         Hlt ->
