@@ -145,7 +145,11 @@ update msg model =
                     model.cpu
 
                 mem =
-                    { cpu | ram = CPU.blankRam, instructionPointer = mkByte 0, stackPointer = mkByte 231 }
+                    { cpu
+                        | ram = CPU.blankRam
+                        , instructionPointer = mkByte 0
+                        , stackPointer = mkByte 231
+                    }
             in
             ( { model
                 | cpu = mem
@@ -378,7 +382,7 @@ view model =
                 [ style "margin" "0"
                 , style "padding" "0.2em"
                 ]
-                [ text "8 Bit Assembler Simulator in Elm "
+                [ text "8 Bit Assembler Simulator"
                 , small [] [ a [ href "https://github.com/topher6345/simple-8-bit-assembler-elm ", style "text-decoration" "none" ] [ text "source" ] ]
                 ]
             ]
