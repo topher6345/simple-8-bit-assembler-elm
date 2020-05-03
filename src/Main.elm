@@ -37,6 +37,7 @@ type alias Model =
     }
 
 
+initialModel : () -> ( Model, Cmd Msg )
 initialModel _ =
     ( { count = 0
       , code = Init.program
@@ -93,6 +94,7 @@ type Msg
     | Receive String
 
 
+focus : Cmd Msg
 focus =
     Task.attempt FocusResult (Dom.focus "code-editor")
 
@@ -231,6 +233,7 @@ update msg model =
             )
 
 
+displayBool : Bool -> String
 displayBool bool =
     if bool then
         "true"
@@ -239,10 +242,12 @@ displayBool bool =
         "false"
 
 
+stdOutOffset : Int
 stdOutOffset =
     232
 
 
+replaceControlCharacters : Int -> Int
 replaceControlCharacters int =
     if (int > 32) && (int < 127) then
         int
@@ -251,11 +256,13 @@ replaceControlCharacters int =
         32
 
 
+noBreakSpace : String
 noBreakSpace =
     String.fromChar
         '\u{00A0}'
 
 
+replaceWhitespaceWithHtmlEntities : String -> String
 replaceWhitespaceWithHtmlEntities string =
     if string == " " then
         noBreakSpace
@@ -264,6 +271,7 @@ replaceWhitespaceWithHtmlEntities string =
         string
 
 
+formatByte : Byte -> String
 formatByte byte =
     byte
         |> Byte.toInt
@@ -273,6 +281,7 @@ formatByte byte =
         |> replaceWhitespaceWithHtmlEntities
 
 
+showOutput : Array Byte -> List (Html msg)
 showOutput ram =
     let
         viewByte byte =
@@ -283,10 +292,12 @@ showOutput ram =
         |> List.map viewByte
 
 
+nullInstructPointer : CPU -> Bool
 nullInstructPointer cpu =
     CPU.fetch cpu cpu.instructionPointer == Byte 0
 
 
+editor : Model -> List (Html Msg)
 editor model =
     [ h2 [] [ text "Code" ]
     , button [ onClick ToggleEditor ] [ text "Documentation" ]
@@ -323,6 +334,7 @@ documentationNavigation =
         ++ Documentation.documentation
 
 
+codeDecoder : String -> List Int
 codeDecoder string =
     let
         listDecoder =
@@ -336,6 +348,7 @@ codeDecoder string =
             []
 
 
+mappingDecoder : String -> Dict String Int
 mappingDecoder string =
     let
         listDecoder =
@@ -444,7 +457,11 @@ view model =
         ]
 
 
-displaySelections : Int -> String -> Dict String Int -> List (Attribute msg)
+displaySelections :
+    Int
+    -> String
+    -> Dict String Int
+    -> List (Attribute msg)
 displaySelections index code mapping =
     let
         mapper i =
@@ -461,6 +478,7 @@ displaySelections index code mapping =
     [ a, b ]
 
 
+findSelections : String -> List ( Int, Int )
 findSelections code =
     let
         ends =
@@ -535,6 +553,7 @@ displayByte displayHex byte =
         byteToDecimal byte
 
 
+byteToDecimal : Byte -> String
 byteToDecimal byte =
     toInt byte
         |> String.fromInt
