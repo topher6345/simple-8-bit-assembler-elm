@@ -6535,9 +6535,9 @@ var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$input = _VirtualDom_node('input');
 var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$td = _VirtualDom_node('td');
-var $author$project$Main$cpuByteTd = F3(
-	function (index, ip, string) {
-		var color = _Utils_eq(index, ip) ? 'lightblue' : ((index === 232) ? 'orange' : ((index > 232) ? 'lightgrey' : 'seashell'));
+var $author$project$Main$cpuByteTd = F4(
+	function (index, ip, sp, string) {
+		var color = _Utils_eq(index, ip) ? 'lightblue' : (_Utils_eq(index, sp) ? 'coral' : (((sp < 232) && ((_Utils_cmp(index, sp) > 0) && (index < 232))) ? 'orange' : ((index > 232) ? 'lightgrey' : 'seashell')));
 		return A2(
 			$elm$html$Html$td,
 			_List_fromArray(
@@ -6813,14 +6813,15 @@ var $elm$core$Array$slice = F3(
 			A2($elm$core$Array$sliceRight, correctTo, array));
 	});
 var $elm$html$Html$tr = _VirtualDom_node('tr');
-var $author$project$Main$memoryRows = F3(
-	function (array, bool, ip) {
+var $author$project$Main$memoryRows = F4(
+	function (array, bool, ip, sp) {
 		var field = F2(
 			function (index, elem) {
-				return A3(
+				return A4(
 					$author$project$Main$cpuByteTd,
 					index,
 					ip,
+					sp,
 					A2($author$project$Main$displayByte, bool, elem));
 			});
 		var row = F2(
@@ -7300,7 +7301,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																A2($elm$html$Html$Attributes$style, 'width', '2em'),
-																A2($elm$html$Html$Attributes$style, 'background-color', 'orange')
+																A2($elm$html$Html$Attributes$style, 'background-color', 'coral')
 															]),
 														_List_fromArray(
 															[
@@ -7371,11 +7372,12 @@ var $author$project$Main$view = function (model) {
 										A2($elm$html$Html$Attributes$style, 'border', '1px solid black'),
 										A2($elm$html$Html$Attributes$style, 'font-family', 'Monospace')
 									]),
-								A3(
+								A4(
 									$author$project$Main$memoryRows,
 									model.cpu.ram,
 									model.cpuDisplayHex,
-									$author$project$Byte$toInt(model.cpu.instructionPointer)))
+									$author$project$Byte$toInt(model.cpu.instructionPointer),
+									$author$project$Byte$toInt(model.cpu.stackPointer)))
 							]))
 					]))
 			]));

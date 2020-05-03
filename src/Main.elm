@@ -412,7 +412,7 @@ view model =
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
                             , td [ style "width" "2em" ] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]
                             , td [ style "width" "2em", style "background-color" "lightblue" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
-                            , td [ style "width" "2em", style "background-color" "orange" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
+                            , td [ style "width" "2em", style "background-color" "coral" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
                             , td [ style "width" "2em" ] [ text <| displayBool model.cpu.zeroFlag ]
                             , td [ style "width" "2em" ] [ text <| displayBool model.cpu.carryFlag ]
                             , td [ style "width" "2em" ] [ text "F" ]
@@ -423,8 +423,10 @@ view model =
                 , label [] [ text "Decimal display" ]
                 , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
                 , table [ style "border" "1px solid black", style "font-family" "Monospace" ] <|
-                    memoryRows model.cpu.ram model.cpuDisplayHex <|
-                        toInt model.cpu.instructionPointer
+                    memoryRows model.cpu.ram
+                        model.cpuDisplayHex
+                        (toInt model.cpu.instructionPointer)
+                        (toInt model.cpu.stackPointer)
                 ]
             ]
         ]
@@ -473,12 +475,17 @@ selectionEnd position =
     property "selectionEnd" (Encode.int position)
 
 
-memoryRows : Array Byte -> Bool -> Int -> List (Html msg)
-memoryRows array bool ip =
+memoryRows :
+    Array Byte
+    -> Bool
+    -> Int
+    -> Int
+    -> List (Html msg)
+memoryRows array bool ip sp =
     let
         field index elem =
             displayByte bool elem
-                |> cpuByteTd index ip
+                |> cpuByteTd index ip sp
 
         row x y =
             array
@@ -529,14 +536,22 @@ byteToHex byte =
         |> String.toUpper
 
 
-cpuByteTd : Int -> Int -> String -> Html msg
-cpuByteTd index ip string =
+cpuByteTd :
+    Int
+    -> Int
+    -> Int
+    -> String
+    -> Html msg
+cpuByteTd index ip sp string =
     let
         color =
             if index == ip then
                 "lightblue"
 
-            else if index == 232 then
+            else if index == sp then
+                "coral"
+
+            else if sp < 232 && index > sp && index < 232 then
                 "orange"
 
             else if index > 232 then
