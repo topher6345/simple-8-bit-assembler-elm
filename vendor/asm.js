@@ -1,3 +1,7 @@
+// Modified from
+// https://raw.githubusercontent.com/Schweigi/assembler-simulator/1b549c25dceadbee8193320fc334493cbf50538a/src/assembler/asm.js
+// by Marco Schweighauser
+
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
