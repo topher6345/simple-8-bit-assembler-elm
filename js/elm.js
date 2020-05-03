@@ -5708,7 +5708,7 @@ var $author$project$CPU$lookupRegister = F2(
 var $author$project$CPU$updateAddress = F3(
 	function (cpu, _v0, value) {
 		var address = _v0.a;
-		return A3($elm$core$Array$set, address + 1, value, cpu.ram);
+		return A3($elm$core$Array$set, address, value, cpu.ram);
 	});
 var $author$project$CPU$updateRegister = F3(
 	function (cpu, _v0, value) {
@@ -5819,22 +5819,16 @@ var $author$project$CPU$update = F2(
 					});
 			case 'Call':
 				var _byte = opcode.a;
+				var sp = A2(
+					$author$project$Byte$byteSub,
+					cpu.stackPointer,
+					$author$project$Byte$Byte(1));
 				return _Utils_update(
 					cpu,
 					{
 						instructionPointer: _byte,
-						ram: A3(
-							$author$project$CPU$updateAddress,
-							cpu,
-							cpu.stackPointer,
-							A2(
-								$author$project$Byte$byteSub,
-								_byte,
-								$author$project$Byte$Byte(1))),
-						stackPointer: A2(
-							$author$project$Byte$byteSub,
-							cpu.stackPointer,
-							$author$project$Byte$Byte(1))
+						ram: A3($author$project$CPU$updateAddress, cpu, cpu.stackPointer, _byte),
+						stackPointer: sp
 					});
 			case 'PushRegister':
 				var registerByte = opcode.a;
@@ -5993,7 +5987,7 @@ var $author$project$Main$update = F2(
 					{
 						instructionPointer: $author$project$Byte$mkByte(0),
 						ram: $author$project$CPU$blankRam,
-						stackPointer: $author$project$Byte$mkByte(232)
+						stackPointer: $author$project$Byte$mkByte(231)
 					});
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -6678,7 +6672,7 @@ var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$td = _VirtualDom_node('td');
 var $author$project$Main$cpuByteTd = F4(
 	function (index, ip, sp, string) {
-		var color = _Utils_eq(index, ip) ? 'lightblue' : (_Utils_eq(index, sp) ? 'coral' : (((sp < 232) && ((_Utils_cmp(index, sp) > 0) && (index < 232))) ? 'orange' : ((index > 232) ? 'lightgrey' : 'seashell')));
+		var color = _Utils_eq(index, ip) ? 'lightblue' : (_Utils_eq(index, sp) ? 'coral' : (((sp < 232) && ((_Utils_cmp(index, sp) > 0) && (index < 232))) ? 'orange' : ((index > 231) ? 'lightgrey' : 'seashell')));
 		return A2(
 			$elm$html$Html$td,
 			_List_fromArray(
@@ -7044,7 +7038,7 @@ var $author$project$Main$showOutput = function (ram) {
 		$elm$core$List$map,
 		viewByte,
 		$elm$core$Array$toList(
-			A3($elm$core$Array$slice, 233, 256, ram)));
+			A3($elm$core$Array$slice, 232, 256, ram)));
 };
 var $elm$html$Html$small = _VirtualDom_node('small');
 var $elm$html$Html$table = _VirtualDom_node('table');

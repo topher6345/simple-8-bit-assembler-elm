@@ -140,7 +140,7 @@ update msg model =
                     model.cpu
 
                 mem =
-                    { cpu | ram = CPU.blankRam, instructionPointer = mkByte 0, stackPointer = mkByte 232 }
+                    { cpu | ram = CPU.blankRam, instructionPointer = mkByte 0, stackPointer = mkByte 231 }
             in
             ( { model
                 | cpu = mem
@@ -273,7 +273,7 @@ showOutput ram =
             pre stdoutStyles
                 [ formatByte byte |> text ]
     in
-    Array.slice 233 256 ram
+    Array.slice 232 256 ram
         |> Array.toList
         |> List.map viewByte
 
@@ -554,7 +554,7 @@ cpuByteTd index ip sp string =
             else if sp < 232 && index > sp && index < 232 then
                 "orange"
 
-            else if index > 232 then
+            else if index > 231 then
                 "lightgrey"
 
             else

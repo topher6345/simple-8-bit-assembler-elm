@@ -105,7 +105,7 @@ updateRegister cpu (Byte registerByte) value =
 
 
 updateAddress cpu (Byte address) value =
-    Array.set (address + 1) value cpu.ram
+    Array.set address value cpu.ram
 
 
 tick : CPU -> CPU
@@ -233,10 +233,17 @@ update opcode cpu =
             }
 
         Call byte ->
+            let
+                osp =
+                    cpu.stackPointer
+
+                sp =
+                    byteSub cpu.stackPointer (Byte 1)
+            in
             { cpu
                 | instructionPointer = byte
-                , stackPointer = byteSub cpu.stackPointer (Byte 1)
-                , ram = updateAddress cpu cpu.stackPointer (byteSub byte (Byte 1))
+                , stackPointer = sp
+                , ram = updateAddress cpu osp byte
             }
 
         PushRegister registerByte ->
