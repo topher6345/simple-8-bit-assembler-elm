@@ -365,15 +365,10 @@ mappingDecoder string =
 view : Model -> Html Msg
 view model =
     div
-        [ style "font-family" "Sans-serif"
-        , style "display" "flex"
-        , style "flex-direction" "column"
-        ]
-        [ div topBarStyles
+        []
+        [ div []
             [ h1
-                [ style "margin" "0"
-                , style "padding" "0.2em"
-                ]
+                []
                 [ text "8 Bit Assembler Simulator "
                 , small []
                     [ a

@@ -7408,37 +7408,21 @@ var $elm$html$Html$table = _VirtualDom_node('table');
 var $elm$html$Html$tbody = _VirtualDom_node('tbody');
 var $elm$html$Html$th = _VirtualDom_node('th');
 var $elm$html$Html$thead = _VirtualDom_node('thead');
-var $author$project$Main$topBarStyles = _List_fromArray(
-	[
-		A2($elm$html$Html$Attributes$style, 'display', 'block'),
-		A2($elm$html$Html$Attributes$style, 'width', '100%'),
-		A2($elm$html$Html$Attributes$style, 'background-color', 'lightgrey'),
-		A2($elm$html$Html$Attributes$style, 'max-height', '50px')
-	]);
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'font-family', 'Sans-serif'),
-				A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-				A2($elm$html$Html$Attributes$style, 'flex-direction', 'column')
-			]),
+		_List_Nil,
 		_List_fromArray(
 			[
 				A2(
 				$elm$html$Html$div,
-				$author$project$Main$topBarStyles,
+				_List_Nil,
 				_List_fromArray(
 					[
 						A2(
 						$elm$html$Html$h1,
-						_List_fromArray(
-							[
-								A2($elm$html$Html$Attributes$style, 'margin', '0'),
-								A2($elm$html$Html$Attributes$style, 'padding', '0.2em')
-							]),
+						_List_Nil,
 						_List_fromArray(
 							[
 								$elm$html$Html$text('8 Bit Assembler Simulator '),
