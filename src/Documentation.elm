@@ -5,7 +5,7 @@ import Html.Attributes exposing (..)
 
 
 documentation =
-    [ div []
+    [ article []
         [ h3 [] [ text "Introduction" ]
         , p []
             [ text "This is a tribute to "

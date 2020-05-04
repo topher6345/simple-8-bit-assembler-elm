@@ -383,7 +383,7 @@ view model =
 
                 else
                     documentationNavigation
-            , div
+            , Html.main_
                 [ class "cpu" ]
                 [ h2 [] [ text "CPU" ]
                 , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
@@ -432,8 +432,8 @@ view model =
                             , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.registerB ]
                             , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.registerC ]
                             , td [] [ text <| displayByte model.cpuDisplayHex model.cpu.registerD ]
-                            , td [ style "background-color" "lightblue" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
-                            , td [ style "background-color" "coral" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
+                            , td [ class "instruction-pointer" ] [ text <| displayByte model.cpuDisplayHex model.cpu.instructionPointer ]
+                            , td [ class "stack-pointer" ] [ text <| displayByte model.cpuDisplayHex model.cpu.stackPointer ]
                             , td [] [ text <| displayBool model.cpu.zeroFlag ]
                             , td [] [ text <| displayBool model.cpu.carryFlag ]
                             , td [] [ text "F" ]
