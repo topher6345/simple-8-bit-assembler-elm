@@ -1,7 +1,6 @@
 port module Main exposing (Model, Msg(..))
 
 import Array exposing (Array)
-import Assembler exposing (assembleCode)
 import Browser
 import Browser.Dom as Dom
 import Byte exposing (..)
