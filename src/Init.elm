@@ -1,6 +1,7 @@
 module Init exposing (program)
 
 
+program : String
 program =
     """; from https://schweigi.github.io/assembler-simulator/
 ; Simple example
