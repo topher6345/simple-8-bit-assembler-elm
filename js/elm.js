@@ -77,7 +77,7 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
   return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.1/optimize for better performance and smaller assets.');
+
 
 
 // EQUALITY
@@ -113,7 +113,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 		return true;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x.$ === 'Set_elm_builtin')
 	{
 		x = $elm$core$Set$toList(x);
@@ -126,7 +126,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (x.$ < 0)
 	{
 		x = $elm$core$Dict$toList(x);
@@ -161,7 +161,7 @@ function _Utils_cmp(x, y, ord)
 		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x instanceof String)
 	{
 		var a = x.valueOf();
@@ -170,10 +170,10 @@ function _Utils_cmp(x, y, ord)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (typeof x.$ === 'undefined')
 	//*/
-	/**/
+	/**_UNUSED/
 	if (x.$[0] === '#')
 	//*/
 	{
@@ -203,17 +203,17 @@ var _Utils_compare = F2(function(x, y)
 
 // COMMON VALUES
 
-var _Utils_Tuple0_UNUSED = 0;
-var _Utils_Tuple0 = { $: '#0' };
+var _Utils_Tuple0 = 0;
+var _Utils_Tuple0_UNUSED = { $: '#0' };
 
-function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
-function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2_UNUSED(a, b) { return { $: '#2', a: a, b: b }; }
 
-function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
-function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3_UNUSED(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
 
-function _Utils_chr_UNUSED(c) { return c; }
-function _Utils_chr(c) { return new String(c); }
+function _Utils_chr(c) { return c; }
+function _Utils_chr_UNUSED(c) { return new String(c); }
 
 
 // RECORDS
@@ -264,11 +264,11 @@ function _Utils_ap(xs, ys)
 
 
 
-var _List_Nil_UNUSED = { $: 0 };
-var _List_Nil = { $: '[]' };
+var _List_Nil = { $: 0 };
+var _List_Nil_UNUSED = { $: '[]' };
 
-function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
-function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
+function _List_Cons(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons_UNUSED(hd, tl) { return { $: '::', a: hd, b: tl }; }
 
 
 var _List_cons = F2(_List_Cons);
@@ -499,12 +499,12 @@ var _JsArray_appendN = F3(function(n, dest, source)
 
 // LOG
 
-var _Debug_log_UNUSED = F2(function(tag, value)
+var _Debug_log = F2(function(tag, value)
 {
 	return value;
 });
 
-var _Debug_log = F2(function(tag, value)
+var _Debug_log_UNUSED = F2(function(tag, value)
 {
 	console.log(tag + ': ' + _Debug_toString(value));
 	return value;
@@ -530,12 +530,12 @@ function _Debug_todoCase(moduleName, region, value)
 
 // TO STRING
 
-function _Debug_toString_UNUSED(value)
+function _Debug_toString(value)
 {
 	return '<internals>';
 }
 
-function _Debug_toString(value)
+function _Debug_toString_UNUSED(value)
 {
 	return _Debug_toAnsiString(false, value);
 }
@@ -720,13 +720,13 @@ function _Debug_toHexDigit(n)
 // CRASH
 
 
-function _Debug_crash_UNUSED(identifier)
+function _Debug_crash(identifier)
 {
 	throw new Error('https://github.com/elm/core/blob/1.0.0/hints/' + identifier + '.md');
 }
 
 
-function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
+function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 {
 	switch(identifier)
 	{
@@ -784,11 +784,11 @@ function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.start.line === region.end.line)
+	if (region.as.U === region.aE.U)
 	{
-		return 'on line ' + region.start.line;
+		return 'on line ' + region.as.U;
 	}
-	return 'on lines ' + region.start.line + ' through ' + region.end.line;
+	return 'on lines ' + region.as.U + ' through ' + region.aE.U;
 }
 
 
@@ -1212,7 +1212,7 @@ function _Char_toLocaleLower(char)
 
 
 
-/**/
+/**_UNUSED/
 function _Json_errorToString(error)
 {
 	return $elm$json$Json$Decode$errorToString(error);
@@ -1616,11 +1616,11 @@ var _Json_encode = F2(function(indentLevel, value)
 	return JSON.stringify(_Json_unwrap(value), null, indentLevel) + '';
 });
 
-function _Json_wrap(value) { return { $: 0, a: value }; }
-function _Json_unwrap(value) { return value.a; }
+function _Json_wrap_UNUSED(value) { return { $: 0, a: value }; }
+function _Json_unwrap_UNUSED(value) { return value.a; }
 
-function _Json_wrap_UNUSED(value) { return value; }
-function _Json_unwrap_UNUSED(value) { return value; }
+function _Json_wrap(value) { return value; }
+function _Json_unwrap(value) { return value; }
 
 function _Json_emptyArray() { return []; }
 function _Json_emptyObject() { return {}; }
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.bH,
+		impl.b6,
+		impl.b2,
 		function() { return function() {} }
 	);
 });
@@ -1872,7 +1872,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 function _Platform_initialize(flagDecoder, args, init, update, subscriptions, stepperBuilder)
 {
 	var result = A2(_Json_run, flagDecoder, _Json_wrap(args ? args['flags'] : undefined));
-	$elm$core$Result$isOk(result) || _Debug_crash(2 /**/, _Json_errorToString(result.a) /**/);
+	$elm$core$Result$isOk(result) || _Debug_crash(2 /**_UNUSED/, _Json_errorToString(result.a) /**/);
 	var managers = {};
 	result = init(result.a);
 	var model = result.a;
@@ -2316,7 +2316,7 @@ function _Platform_setupIncomingPort(name, sendToApp)
 //
 
 
-function _Platform_export_UNUSED(exports)
+function _Platform_export(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsProd(scope['Elm'], exports)
@@ -2337,7 +2337,7 @@ function _Platform_mergeExportsProd(obj, exports)
 }
 
 
-function _Platform_export(exports)
+function _Platform_export_UNUSED(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsDebug('Elm', scope['Elm'], exports)
@@ -2377,10 +2377,10 @@ var _VirtualDom_init = F4(function(virtualNode, flagDecoder, debugMetadata, args
 {
 	// NOTE: this function needs _Platform_export available to work
 
-	/**_UNUSED/
+	/**/
 	var node = args['node'];
 	//*/
-	/**/
+	/**_UNUSED/
 	var node = args && args['node'] ? args['node'] : _Debug_crash(0);
 	//*/
 
@@ -2635,24 +2635,24 @@ function _VirtualDom_noInnerHtmlOrFormAction(key)
 	return key == 'innerHTML' || key == 'formAction' ? 'data-' + key : key;
 }
 
-function _VirtualDom_noJavaScriptUri_UNUSED(value)
+function _VirtualDom_noJavaScriptUri(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,'')) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptUri(value)
+function _VirtualDom_noJavaScriptUri_UNUSED(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,''))
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
 		: value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
+function _VirtualDom_noJavaScriptOrHtmlUri(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri(value)
+function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value)
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
@@ -2704,9 +2704,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		message: func(record.message),
-		stopPropagation: record.stopPropagation,
-		preventDefault: record.preventDefault
+		G: func(record.G),
+		at: record.at,
+		aq: record.aq
 	}
 });
 
@@ -2974,11 +2974,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.message;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.stopPropagation;
+		var message = !tag ? value : tag < 3 ? value.a : value.G;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.at;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.preventDefault) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.aq) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3928,15 +3928,15 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.bH,
+		impl.b6,
+		impl.b2,
 		function(sendToApp, initialModel) {
-			var view = impl.view;
-			/**_UNUSED/
+			var view = impl.b7;
+			/**/
 			var domNode = args['node'];
 			//*/
-			/**/
+			/**_UNUSED/
 			var domNode = args && args['node'] ? args['node'] : _Debug_crash(0);
 			//*/
 			var currNode = _VirtualDom_virtualize(domNode);
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.bH,
+		impl.b6,
+		impl.b2,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.setup && impl.setup(sendToApp)
-			var view = impl.view;
+			var divertHrefToApp = impl.ar && impl.ar(sendToApp)
+			var view = impl.b7;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.body);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bq);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.title) && (_VirtualDom_doc.title = title = doc.title);
+				(title !== doc.b5) && (_VirtualDom_doc.title = title = doc.b5);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.onUrlChange;
-	var onUrlRequest = impl.onUrlRequest;
+	var onUrlChange = impl.bX;
+	var onUrlRequest = impl.bY;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		setup: function(sendToApp)
+		ar: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.protocol === next.protocol
-							&& curr.host === next.host
-							&& curr.port_.a === next.port_.a
+							&& curr.a2 === next.a2
+							&& curr.aO === next.aO
+							&& curr.a_.a === next.a_.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		init: function(flags)
+		bH: function(flags)
 		{
-			return A3(impl.init, flags, _Browser_getUrl(), key);
+			return A3(impl.bH, flags, _Browser_getUrl(), key);
 		},
-		view: impl.view,
-		update: impl.update,
-		subscriptions: impl.subscriptions
+		b7: impl.b7,
+		b6: impl.b6,
+		b2: impl.b2
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { hidden: 'hidden', change: 'visibilitychange' }
+		? { bE: 'hidden', bt: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { hidden: 'mozHidden', change: 'mozvisibilitychange' }
+		? { bE: 'mozHidden', bt: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { hidden: 'msHidden', change: 'msvisibilitychange' }
+		? { bE: 'msHidden', bt: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { hidden: 'webkitHidden', change: 'webkitvisibilitychange' }
-		: { hidden: 'hidden', change: 'visibilitychange' };
+		? { bE: 'webkitHidden', bt: 'webkitvisibilitychange' }
+		: { bE: 'hidden', bt: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		scene: _Browser_getScene(),
-		viewport: {
-			x: _Browser_window.pageXOffset,
-			y: _Browser_window.pageYOffset,
-			width: _Browser_doc.documentElement.clientWidth,
-			height: _Browser_doc.documentElement.clientHeight
+		ba: _Browser_getScene(),
+		bj: {
+			bl: _Browser_window.pageXOffset,
+			bm: _Browser_window.pageYOffset,
+			bk: _Browser_doc.documentElement.clientWidth,
+			aM: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		width: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		height: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		bk: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		aM: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			scene: {
-				width: node.scrollWidth,
-				height: node.scrollHeight
+			ba: {
+				bk: node.scrollWidth,
+				aM: node.scrollHeight
 			},
-			viewport: {
-				x: node.scrollLeft,
-				y: node.scrollTop,
-				width: node.clientWidth,
-				height: node.clientHeight
+			bj: {
+				bl: node.scrollLeft,
+				bm: node.scrollTop,
+				bk: node.clientWidth,
+				aM: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			scene: _Browser_getScene(),
-			viewport: {
-				x: x,
-				y: y,
-				width: _Browser_doc.documentElement.clientWidth,
-				height: _Browser_doc.documentElement.clientHeight
+			ba: _Browser_getScene(),
+			bj: {
+				bl: x,
+				bm: y,
+				bk: _Browser_doc.documentElement.clientWidth,
+				aM: _Browser_doc.documentElement.clientHeight
 			},
-			element: {
-				x: x + rect.left,
-				y: y + rect.top,
-				width: rect.width,
-				height: rect.height
+			by: {
+				bl: x + rect.left,
+				bm: y + rect.top,
+				bk: rect.width,
+				aM: rect.height
 			}
 		};
 	});
@@ -4438,15 +4438,15 @@ var _Bitwise_shiftRightZfBy = F2(function(offset, a)
 {
 	return a >>> offset;
 });
-var $elm$core$Basics$EQ = {$: 'EQ'};
-var $elm$core$Basics$GT = {$: 'GT'};
-var $elm$core$Basics$LT = {$: 'LT'};
+var $elm$core$Basics$EQ = 1;
+var $elm$core$Basics$GT = 2;
+var $elm$core$Basics$LT = 0;
 var $elm$core$List$cons = _List_cons;
 var $elm$core$Dict$foldr = F3(
 	function (func, acc, t) {
 		foldr:
 		while (true) {
-			if (t.$ === 'RBEmpty_elm_builtin') {
+			if (t.$ === -2) {
 				return acc;
 			} else {
 				var key = t.b;
@@ -4491,7 +4491,7 @@ var $elm$core$Dict$keys = function (dict) {
 		dict);
 };
 var $elm$core$Set$toList = function (_v0) {
-	var dict = _v0.a;
+	var dict = _v0;
 	return $elm$core$Dict$keys(dict);
 };
 var $elm$core$Elm$JsArray$foldr = _JsArray_foldr;
@@ -4501,7 +4501,7 @@ var $elm$core$Array$foldr = F3(
 		var tail = _v0.d;
 		var helper = F2(
 			function (node, acc) {
-				if (node.$ === 'SubTree') {
+				if (!node.$) {
 					var subTree = node.a;
 					return A3($elm$core$Elm$JsArray$foldr, helper, acc, subTree);
 				} else {
@@ -4519,32 +4519,32 @@ var $elm$core$Array$toList = function (array) {
 	return A3($elm$core$Array$foldr, $elm$core$List$cons, _List_Nil, array);
 };
 var $elm$core$Result$Err = function (a) {
-	return {$: 'Err', a: a};
+	return {$: 1, a: a};
 };
 var $elm$json$Json$Decode$Failure = F2(
 	function (a, b) {
-		return {$: 'Failure', a: a, b: b};
+		return {$: 3, a: a, b: b};
 	});
 var $elm$json$Json$Decode$Field = F2(
 	function (a, b) {
-		return {$: 'Field', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var $elm$json$Json$Decode$Index = F2(
 	function (a, b) {
-		return {$: 'Index', a: a, b: b};
+		return {$: 1, a: a, b: b};
 	});
 var $elm$core$Result$Ok = function (a) {
-	return {$: 'Ok', a: a};
+	return {$: 0, a: a};
 };
 var $elm$json$Json$Decode$OneOf = function (a) {
-	return {$: 'OneOf', a: a};
+	return {$: 2, a: a};
 };
-var $elm$core$Basics$False = {$: 'False'};
+var $elm$core$Basics$False = 1;
 var $elm$core$Basics$add = _Basics_add;
 var $elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
+	return {$: 0, a: a};
 };
-var $elm$core$Maybe$Nothing = {$: 'Nothing'};
+var $elm$core$Maybe$Nothing = {$: 1};
 var $elm$core$String$all = _String_all;
 var $elm$core$Basics$and = _Basics_and;
 var $elm$core$Basics$append = _Utils_append;
@@ -4669,12 +4669,12 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 		errorToStringHelp:
 		while (true) {
 			switch (error.$) {
-				case 'Field':
+				case 0:
 					var f = error.a;
 					var err = error.b;
 					var isSimple = function () {
 						var _v1 = $elm$core$String$uncons(f);
-						if (_v1.$ === 'Nothing') {
+						if (_v1.$ === 1) {
 							return false;
 						} else {
 							var _v2 = _v1.a;
@@ -4689,7 +4689,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'Index':
+				case 1:
 					var i = error.a;
 					var err = error.b;
 					var indexName = '[' + ($elm$core$String$fromInt(i) + ']');
@@ -4698,7 +4698,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'OneOf':
+				case 2:
 					var errors = error.a;
 					if (!errors.b) {
 						return 'Ran into a Json.Decode.oneOf with no possibilities' + function () {
@@ -4762,7 +4762,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 var $elm$core$Array$branchFactor = 32;
 var $elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
-		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
+		return {$: 0, a: a, b: b, c: c, d: d};
 	});
 var $elm$core$Elm$JsArray$empty = _JsArray_empty;
 var $elm$core$Basics$ceiling = _Basics_ceiling;
@@ -4777,7 +4777,7 @@ var $elm$core$Array$shiftStep = $elm$core$Basics$ceiling(
 var $elm$core$Array$empty = A4($elm$core$Array$Array_elm_builtin, 0, $elm$core$Array$shiftStep, $elm$core$Elm$JsArray$empty, $elm$core$Elm$JsArray$empty);
 var $elm$core$Elm$JsArray$initialize = _JsArray_initialize;
 var $elm$core$Array$Leaf = function (a) {
-	return {$: 'Leaf', a: a};
+	return {$: 1, a: a};
 };
 var $elm$core$Basics$apL = F2(
 	function (f, x) {
@@ -4797,7 +4797,7 @@ var $elm$core$Basics$max = F2(
 	});
 var $elm$core$Basics$mul = _Basics_mul;
 var $elm$core$Array$SubTree = function (a) {
-	return {$: 'SubTree', a: a};
+	return {$: 0, a: a};
 };
 var $elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
 var $elm$core$Array$compressNodes = F2(
@@ -4844,25 +4844,25 @@ var $elm$core$Array$treeFromBuilder = F2(
 	});
 var $elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.nodeListSize) {
+		if (!builder.h) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.tail),
+				$elm$core$Elm$JsArray$length(builder.j),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.tail);
+				builder.j);
 		} else {
-			var treeLen = builder.nodeListSize * $elm$core$Array$branchFactor;
+			var treeLen = builder.h * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
 				A2($elm$core$Basics$logBase, $elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.nodeList) : builder.nodeList;
-			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.nodeListSize);
+			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.k) : builder.k;
+			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.h);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.tail) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.j) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.tail);
+				builder.j);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4875,7 +4875,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{nodeList: nodeList, nodeListSize: (len / $elm$core$Array$branchFactor) | 0, tail: tail});
+					{k: nodeList, h: (len / $elm$core$Array$branchFactor) | 0, j: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -4905,9 +4905,9 @@ var $elm$core$Array$initialize = F2(
 			return A5($elm$core$Array$initializeHelp, fn, initialFromIndex, len, _List_Nil, tail);
 		}
 	});
-var $elm$core$Basics$True = {$: 'True'};
+var $elm$core$Basics$True = 0;
 var $elm$core$Result$isOk = function (result) {
-	if (result.$ === 'Ok') {
+	if (!result.$) {
 		return true;
 	} else {
 		return false;
@@ -4918,33 +4918,31 @@ var $elm$json$Json$Decode$map2 = _Json_map2;
 var $elm$json$Json$Decode$succeed = _Json_succeed;
 var $elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
-		case 'Normal':
+		case 0:
 			return 0;
-		case 'MayStopPropagation':
+		case 1:
 			return 1;
-		case 'MayPreventDefault':
+		case 2:
 			return 2;
 		default:
 			return 3;
 	}
 };
 var $elm$browser$Browser$External = function (a) {
-	return {$: 'External', a: a};
+	return {$: 1, a: a};
 };
 var $elm$browser$Browser$Internal = function (a) {
-	return {$: 'Internal', a: a};
+	return {$: 0, a: a};
 };
 var $elm$core$Basics$identity = function (x) {
 	return x;
 };
-var $elm$browser$Browser$Dom$NotFound = function (a) {
-	return {$: 'NotFound', a: a};
-};
-var $elm$url$Url$Http = {$: 'Http'};
-var $elm$url$Url$Https = {$: 'Https'};
+var $elm$browser$Browser$Dom$NotFound = $elm$core$Basics$identity;
+var $elm$url$Url$Http = 0;
+var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {fragment: fragment, host: host, path: path, port_: port_, protocol: protocol, query: query};
+		return {aJ: fragment, aO: host, aY: path, a_: port_, a2: protocol, a3: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -4980,7 +4978,7 @@ var $elm$url$Url$chompBeforePath = F5(
 					var i = _v0.a;
 					var _v1 = $elm$core$String$toInt(
 						A2($elm$core$String$dropLeft, i + 1, str));
-					if (_v1.$ === 'Nothing') {
+					if (_v1.$ === 1) {
 						return $elm$core$Maybe$Nothing;
 					} else {
 						var port_ = _v1;
@@ -5063,26 +5061,24 @@ var $elm$core$String$startsWith = _String_startsWith;
 var $elm$url$Url$fromString = function (str) {
 	return A2($elm$core$String$startsWith, 'http://', str) ? A2(
 		$elm$url$Url$chompAfterProtocol,
-		$elm$url$Url$Http,
+		0,
 		A2($elm$core$String$dropLeft, 7, str)) : (A2($elm$core$String$startsWith, 'https://', str) ? A2(
 		$elm$url$Url$chompAfterProtocol,
-		$elm$url$Url$Https,
+		1,
 		A2($elm$core$String$dropLeft, 8, str)) : $elm$core$Maybe$Nothing);
 };
 var $elm$core$Basics$never = function (_v0) {
 	never:
 	while (true) {
-		var nvr = _v0.a;
+		var nvr = _v0;
 		var $temp$_v0 = nvr;
 		_v0 = $temp$_v0;
 		continue never;
 	}
 };
-var $elm$core$Task$Perform = function (a) {
-	return {$: 'Perform', a: a};
-};
+var $elm$core$Task$Perform = $elm$core$Basics$identity;
 var $elm$core$Task$succeed = _Scheduler_succeed;
-var $elm$core$Task$init = $elm$core$Task$succeed(_Utils_Tuple0);
+var $elm$core$Task$init = $elm$core$Task$succeed(0);
 var $elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5188,7 +5184,7 @@ var $elm$core$Task$sequence = function (tasks) {
 var $elm$core$Platform$sendToApp = _Platform_sendToApp;
 var $elm$core$Task$spawnCmd = F2(
 	function (router, _v0) {
-		var task = _v0.a;
+		var task = _v0;
 		return _Scheduler_spawn(
 			A2(
 				$elm$core$Task$andThen,
@@ -5200,7 +5196,7 @@ var $elm$core$Task$onEffects = F3(
 		return A2(
 			$elm$core$Task$map,
 			function (_v0) {
-				return _Utils_Tuple0;
+				return 0;
 			},
 			$elm$core$Task$sequence(
 				A2(
@@ -5210,40 +5206,38 @@ var $elm$core$Task$onEffects = F3(
 	});
 var $elm$core$Task$onSelfMsg = F3(
 	function (_v0, _v1, _v2) {
-		return $elm$core$Task$succeed(_Utils_Tuple0);
+		return $elm$core$Task$succeed(0);
 	});
 var $elm$core$Task$cmdMap = F2(
 	function (tagger, _v0) {
-		var task = _v0.a;
-		return $elm$core$Task$Perform(
-			A2($elm$core$Task$map, tagger, task));
+		var task = _v0;
+		return A2($elm$core$Task$map, tagger, task);
 	});
 _Platform_effectManagers['Task'] = _Platform_createManager($elm$core$Task$init, $elm$core$Task$onEffects, $elm$core$Task$onSelfMsg, $elm$core$Task$cmdMap);
 var $elm$core$Task$command = _Platform_leaf('Task');
 var $elm$core$Task$perform = F2(
 	function (toMessage, task) {
 		return $elm$core$Task$command(
-			$elm$core$Task$Perform(
-				A2($elm$core$Task$map, toMessage, task)));
+			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $elm$core$Dict$Black = {$: 'Black'};
+var $elm$core$Dict$Black = 1;
 var $elm$core$Dict$RBNode_elm_builtin = F5(
 	function (a, b, c, d, e) {
-		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
+		return {$: -1, a: a, b: b, c: c, d: d, e: e};
 	});
-var $elm$core$Dict$Red = {$: 'Red'};
+var $elm$core$Dict$Red = 0;
 var $elm$core$Dict$balance = F5(
 	function (color, key, value, left, right) {
-		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
+		if ((right.$ === -1) && (!right.a)) {
 			var _v1 = right.a;
 			var rK = right.b;
 			var rV = right.c;
 			var rLeft = right.d;
 			var rRight = right.e;
-			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+			if ((left.$ === -1) && (!left.a)) {
 				var _v3 = left.a;
 				var lK = left.b;
 				var lV = left.c;
@@ -5251,22 +5245,22 @@ var $elm$core$Dict$balance = F5(
 				var lRight = left.e;
 				return A5(
 					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
+					0,
 					key,
 					value,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
 			} else {
 				return A5(
 					$elm$core$Dict$RBNode_elm_builtin,
 					color,
 					rK,
 					rV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
+					A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
 					rRight);
 			}
 		} else {
-			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
+			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
 				var _v5 = left.a;
 				var lK = left.b;
 				var lV = left.c;
@@ -5279,11 +5273,11 @@ var $elm$core$Dict$balance = F5(
 				var lRight = left.e;
 				return A5(
 					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
+					0,
 					lK,
 					lV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
 			} else {
 				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
 			}
@@ -5292,8 +5286,8 @@ var $elm$core$Dict$balance = F5(
 var $elm$core$Basics$compare = _Utils_compare;
 var $elm$core$Dict$insertHelp = F3(
 	function (key, value, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		if (dict.$ === -2) {
+			return A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
 		} else {
 			var nColor = dict.a;
 			var nKey = dict.b;
@@ -5301,8 +5295,8 @@ var $elm$core$Dict$insertHelp = F3(
 			var nLeft = dict.d;
 			var nRight = dict.e;
 			var _v1 = A2($elm$core$Basics$compare, key, nKey);
-			switch (_v1.$) {
-				case 'LT':
+			switch (_v1) {
+				case 0:
 					return A5(
 						$elm$core$Dict$balance,
 						nColor,
@@ -5310,7 +5304,7 @@ var $elm$core$Dict$insertHelp = F3(
 						nValue,
 						A3($elm$core$Dict$insertHelp, key, value, nLeft),
 						nRight);
-				case 'EQ':
+				case 1:
 					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
 				default:
 					return A5(
@@ -5326,13 +5320,13 @@ var $elm$core$Dict$insertHelp = F3(
 var $elm$core$Dict$insert = F3(
 	function (key, value, dict) {
 		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
-		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
+		if ((_v0.$ === -1) && (!_v0.a)) {
 			var _v1 = _v0.a;
 			var k = _v0.b;
 			var v = _v0.c;
 			var l = _v0.d;
 			var r = _v0.e;
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
+			return A5($elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
 		} else {
 			var x = _v0;
 			return x;
@@ -5354,13 +5348,10 @@ var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
 	});
-var $author$project$Byte$Byte = function (a) {
-	return {$: 'Byte', a: a};
-};
+var $author$project$Byte$Byte = $elm$core$Basics$identity;
 var $elm$core$Basics$modBy = _Basics_modBy;
 var $author$project$Byte$mkByte = function (_int) {
-	return $author$project$Byte$Byte(
-		A2($elm$core$Basics$modBy, 256, _int));
+	return A2($elm$core$Basics$modBy, 256, _int);
 };
 var $author$project$CPU$blankRam = A2(
 	$elm$core$Array$initialize,
@@ -5369,15 +5360,15 @@ var $author$project$CPU$blankRam = A2(
 		$author$project$Byte$mkByte(0)));
 var $author$project$CPU$initialRam = $author$project$CPU$blankRam;
 var $author$project$CPU$initalCPU = {
-	carryFlag: false,
-	instructionPointer: $author$project$Byte$mkByte(0),
-	ram: $author$project$CPU$initialRam,
-	registerA: $author$project$Byte$mkByte(0),
-	registerB: $author$project$Byte$mkByte(0),
-	registerC: $author$project$Byte$mkByte(0),
-	registerD: $author$project$Byte$mkByte(0),
-	stackPointer: $author$project$Byte$mkByte(231),
-	zeroFlag: false
+	al: false,
+	d: $author$project$Byte$mkByte(0),
+	D: $author$project$CPU$initialRam,
+	ag: $author$project$Byte$mkByte(0),
+	ah: $author$project$Byte$mkByte(0),
+	ai: $author$project$Byte$mkByte(0),
+	aj: $author$project$Byte$mkByte(0),
+	o: $author$project$Byte$mkByte(231),
+	ac: false
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
@@ -5385,33 +5376,33 @@ var $author$project$Init$program = '; from https://schweigi.github.io/assembler-
 var $author$project$Main$initialModel = function (_v0) {
 	return _Utils_Tuple2(
 		{
-			assembled: false,
-			clockRate: 200,
-			code: $author$project$Init$program,
-			count: 0,
-			cpu: $author$project$CPU$initalCPU,
-			cpuDisplayHex: true,
-			editing: true,
-			flash: 'Welcome to 8-bit Assembler Simulator',
-			labels: $elm$core$Dict$fromList(_List_Nil),
-			mapping: $elm$core$Dict$fromList(_List_Nil),
-			running: false,
-			showEditor: true
+			B: false,
+			ad: 200,
+			J: $author$project$Init$program,
+			w: 0,
+			e: $author$project$CPU$initalCPU,
+			x: true,
+			P: true,
+			aH: 'Welcome to 8-bit Assembler Simulator',
+			aU: $elm$core$Dict$fromList(_List_Nil),
+			V: $elm$core$Dict$fromList(_List_Nil),
+			N: false,
+			Y: true
 		},
 		$elm$core$Platform$Cmd$none);
 };
 var $author$project$Main$Receive = function (a) {
-	return {$: 'Receive', a: a};
+	return {$: 13, a: a};
 };
-var $author$project$Main$Tick = {$: 'Tick'};
+var $author$project$Main$Tick = {$: 9};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$time$Time$Every = F2(
 	function (a, b) {
-		return {$: 'Every', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var $elm$time$Time$State = F2(
 	function (taggers, processes) {
-		return {processes: processes, taggers: taggers};
+		return {a1: processes, bh: taggers};
 	});
 var $elm$time$Time$init = $elm$core$Task$succeed(
 	A2($elm$time$Time$State, $elm$core$Dict$empty, $elm$core$Dict$empty));
@@ -5419,7 +5410,7 @@ var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
 		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
+			if (dict.$ === -2) {
 				return $elm$core$Maybe$Nothing;
 			} else {
 				var key = dict.b;
@@ -5427,14 +5418,14 @@ var $elm$core$Dict$get = F2(
 				var left = dict.d;
 				var right = dict.e;
 				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
+				switch (_v1) {
+					case 0:
 						var $temp$targetKey = targetKey,
 							$temp$dict = left;
 						targetKey = $temp$targetKey;
 						dict = $temp$dict;
 						continue get;
-					case 'EQ':
+					case 1:
 						return $elm$core$Maybe$Just(value);
 					default:
 						var $temp$targetKey = targetKey,
@@ -5451,7 +5442,7 @@ var $elm$time$Time$addMySub = F2(
 		var interval = _v0.a;
 		var tagger = _v0.b;
 		var _v1 = A2($elm$core$Dict$get, interval, state);
-		if (_v1.$ === 'Nothing') {
+		if (_v1.$ === 1) {
 			return A3(
 				$elm$core$Dict$insert,
 				interval,
@@ -5472,7 +5463,7 @@ var $elm$core$Dict$foldl = F3(
 	function (func, acc, dict) {
 		foldl:
 		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
+			if (dict.$ === -2) {
 				return acc;
 			} else {
 				var key = dict.b;
@@ -5556,14 +5547,14 @@ var $elm$core$Dict$merge = F6(
 	});
 var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var $elm$time$Time$Name = function (a) {
-	return {$: 'Name', a: a};
+	return {$: 0, a: a};
 };
 var $elm$time$Time$Offset = function (a) {
-	return {$: 'Offset', a: a};
+	return {$: 1, a: a};
 };
 var $elm$time$Time$Zone = F2(
 	function (a, b) {
-		return {$: 'Zone', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var $elm$time$Time$customZone = $elm$time$Time$Zone;
 var $elm$time$Time$setInterval = _Time_setInterval;
@@ -5592,7 +5583,7 @@ var $elm$time$Time$spawnHelp = F3(
 	});
 var $elm$time$Time$onEffects = F3(
 	function (router, subs, _v0) {
-		var processes = _v0.processes;
+		var processes = _v0.a1;
 		var rightStep = F3(
 			function (_v6, id, _v7) {
 				var spawns = _v7.a;
@@ -5639,7 +5630,7 @@ var $elm$time$Time$onEffects = F3(
 			_Utils_Tuple3(
 				_List_Nil,
 				$elm$core$Dict$empty,
-				$elm$core$Task$succeed(_Utils_Tuple0)));
+				$elm$core$Task$succeed(0)));
 		var spawnList = _v1.a;
 		var existingDict = _v1.b;
 		var killTask = _v1.c;
@@ -5656,15 +5647,13 @@ var $elm$time$Time$onEffects = F3(
 				},
 				killTask));
 	});
-var $elm$time$Time$Posix = function (a) {
-	return {$: 'Posix', a: a};
-};
-var $elm$time$Time$millisToPosix = $elm$time$Time$Posix;
+var $elm$time$Time$Posix = $elm$core$Basics$identity;
+var $elm$time$Time$millisToPosix = $elm$core$Basics$identity;
 var $elm$time$Time$now = _Time_now($elm$time$Time$millisToPosix);
 var $elm$time$Time$onSelfMsg = F3(
 	function (router, interval, state) {
-		var _v0 = A2($elm$core$Dict$get, interval, state.taggers);
-		if (_v0.$ === 'Nothing') {
+		var _v0 = A2($elm$core$Dict$get, interval, state.bh);
+		if (_v0.$ === 1) {
 			return $elm$core$Task$succeed(state);
 		} else {
 			var taggers = _v0.a;
@@ -5718,7 +5707,7 @@ var $author$project$Main$subscriptions = function (model) {
 				$author$project$Main$messageReceiver($author$project$Main$Receive),
 				A2(
 				$elm$time$Time$every,
-				model.clockRate,
+				model.ad,
 				function (_v0) {
 					return $author$project$Main$Tick;
 				})
@@ -5734,7 +5723,7 @@ var $author$project$Main$codeDecoder = function (string) {
 		$elm$json$Json$Decode$decodeString,
 		A2($elm$json$Json$Decode$field, 'code', listDecoder),
 		string);
-	if (_v0.$ === 'Ok') {
+	if (!_v0.$) {
 		var res = _v0.a;
 		return res;
 	} else {
@@ -5742,26 +5731,25 @@ var $author$project$Main$codeDecoder = function (string) {
 	}
 };
 var $author$project$Main$FocusResult = function (a) {
-	return {$: 'FocusResult', a: a};
+	return {$: 7, a: a};
 };
 var $elm$core$Task$onError = _Scheduler_onError;
 var $elm$core$Task$attempt = F2(
 	function (resultToMessage, task) {
 		return $elm$core$Task$command(
-			$elm$core$Task$Perform(
+			A2(
+				$elm$core$Task$onError,
 				A2(
-					$elm$core$Task$onError,
+					$elm$core$Basics$composeL,
+					A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
+					$elm$core$Result$Err),
+				A2(
+					$elm$core$Task$andThen,
 					A2(
 						$elm$core$Basics$composeL,
 						A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
-						$elm$core$Result$Err),
-					A2(
-						$elm$core$Task$andThen,
-						A2(
-							$elm$core$Basics$composeL,
-							A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
-							$elm$core$Result$Ok),
-						task))));
+						$elm$core$Result$Ok),
+					task)));
 	});
 var $elm$browser$Browser$Dom$focus = _Browser_call('focus');
 var $author$project$Main$focus = A2(
@@ -5781,7 +5769,7 @@ var $elm$core$Array$fromListHelp = F3(
 				return A2(
 					$elm$core$Array$builderToArray,
 					true,
-					{nodeList: nodeList, nodeListSize: nodeListSize, tail: jsArray});
+					{k: nodeList, h: nodeListSize, j: jsArray});
 			} else {
 				var $temp$list = remainingItems,
 					$temp$nodeList = A2(
@@ -5814,7 +5802,7 @@ var $elm$core$Array$getHelp = F3(
 		while (true) {
 			var pos = $elm$core$Array$bitMask & (index >>> shift);
 			var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
-			if (_v0.$ === 'SubTree') {
+			if (!_v0.$) {
 				var subTree = _v0.a;
 				var $temp$shift = shift - $elm$core$Array$shiftStep,
 					$temp$index = index,
@@ -5847,7 +5835,7 @@ var $elm$core$Array$get = F2(
 	});
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
+		if (!maybe.$) {
 			var value = maybe.a;
 			return value;
 		} else {
@@ -5876,7 +5864,7 @@ var $author$project$Main$mappingDecoder = function (string) {
 		$elm$json$Json$Decode$decodeString,
 		A2($elm$json$Json$Decode$field, 'mapping', listDecoder),
 		string);
-	if (_v0.$ === 'Ok') {
+	if (!_v0.$) {
 		var res = _v0.a;
 		return res;
 	} else {
@@ -5888,76 +5876,70 @@ var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Main$sendMessage = _Platform_outgoingPort('sendMessage', $elm$json$Json$Encode$string);
 var $author$project$CPU$fetch = F2(
 	function (cpu, _v0) {
-		var index = _v0.a;
+		var index = _v0;
 		return A2(
 			$elm$core$Maybe$withDefault,
-			$author$project$Byte$Byte(0),
-			A2($elm$core$Array$get, index, cpu.ram));
+			0,
+			A2($elm$core$Array$get, index, cpu.D));
 	});
 var $author$project$CPU$Call = function (a) {
-	return {$: 'Call', a: a};
+	return {$: 7, a: a};
 };
 var $author$project$CPU$CompareRegisterToRegisterAddress = F2(
 	function (a, b) {
-		return {$: 'CompareRegisterToRegisterAddress', a: a, b: b};
+		return {$: 11, a: a, b: b};
 	});
-var $author$project$CPU$Hlt = {$: 'Hlt'};
+var $author$project$CPU$Hlt = {$: 4};
 var $author$project$CPU$IncrReg = function (a) {
-	return {$: 'IncrReg', a: a};
+	return {$: 2, a: a};
 };
 var $author$project$CPU$Jump = function (a) {
-	return {$: 'Jump', a: a};
+	return {$: 5, a: a};
 };
 var $author$project$CPU$JumpIfNotZeroFlag = function (a) {
-	return {$: 'JumpIfNotZeroFlag', a: a};
+	return {$: 12, a: a};
 };
 var $author$project$CPU$MovConstCharToConstAddress = F2(
 	function (a, b) {
-		return {$: 'MovConstCharToConstAddress', a: a, b: b};
+		return {$: 3, a: a, b: b};
 	});
 var $author$project$CPU$MovConstToRegister = F2(
 	function (a, b) {
-		return {$: 'MovConstToRegister', a: a, b: b};
+		return {$: 6, a: a, b: b};
 	});
 var $author$project$CPU$MovRegisterAddressToRegister = F2(
 	function (a, b) {
-		return {$: 'MovRegisterAddressToRegister', a: a, b: b};
+		return {$: 9, a: a, b: b};
 	});
 var $author$project$CPU$MovRegisterValueToRegisterAddress = F2(
 	function (a, b) {
-		return {$: 'MovRegisterValueToRegisterAddress', a: a, b: b};
+		return {$: 10, a: a, b: b};
 	});
 var $author$project$CPU$PopToRegister = function (a) {
-	return {$: 'PopToRegister', a: a};
+	return {$: 13, a: a};
 };
 var $author$project$CPU$PushRegister = function (a) {
-	return {$: 'PushRegister', a: a};
+	return {$: 8, a: a};
 };
-var $author$project$CPU$Return = {$: 'Return'};
+var $author$project$CPU$Return = {$: 14};
 var $author$project$Byte$byteAdd = F2(
 	function (_v0, _v1) {
-		var a = _v0.a;
-		var b = _v1.a;
+		var a = _v0;
+		var b = _v1;
 		return $author$project$Byte$mkByte(a + b);
 	});
 var $author$project$CPU$fetchInstruction = F2(
 	function (cpu, _v0) {
-		var instructionByte = _v0.a;
-		var ip = cpu.instructionPointer;
+		var instructionByte = _v0;
+		var ip = cpu.d;
 		var x = A2(
 			$author$project$CPU$fetch,
 			cpu,
-			A2(
-				$author$project$Byte$byteAdd,
-				ip,
-				$author$project$Byte$Byte(1)));
+			A2($author$project$Byte$byteAdd, ip, 1));
 		var y = A2(
 			$author$project$CPU$fetch,
 			cpu,
-			A2(
-				$author$project$Byte$byteAdd,
-				ip,
-				$author$project$Byte$Byte(2)));
+			A2($author$project$Byte$byteAdd, ip, 2));
 		switch (instructionByte) {
 			case 7:
 				return A2($author$project$CPU$MovConstCharToConstAddress, x, y);
@@ -5989,14 +5971,14 @@ var $author$project$CPU$fetchInstruction = F2(
 	});
 var $author$project$Byte$byteSub = F2(
 	function (_v0, _v1) {
-		var a = _v0.a;
-		var b = _v1.a;
+		var a = _v0;
+		var b = _v1;
 		return $author$project$Byte$mkByte(a - b);
 	});
 var $author$project$Byte$carryAdd = F2(
 	function (_v0, _v1) {
-		var a = _v0.a;
-		var b = _v1.a;
+		var a = _v0;
+		var b = _v1;
 		var sum = a + b;
 		return _Utils_Tuple3(
 			$author$project$Byte$mkByte(sum),
@@ -6005,16 +5987,16 @@ var $author$project$Byte$carryAdd = F2(
 	});
 var $author$project$CPU$lookupRegister = F2(
 	function (cpu, _v0) {
-		var _int = _v0.a;
+		var _int = _v0;
 		switch (_int) {
 			case 0:
-				return cpu.registerA;
+				return cpu.ag;
 			case 1:
-				return cpu.registerB;
+				return cpu.ah;
 			case 2:
-				return cpu.registerC;
+				return cpu.ai;
 			case 3:
-				return cpu.registerD;
+				return cpu.aj;
 			default:
 				return $author$project$Byte$mkByte(0);
 		}
@@ -6024,7 +6006,7 @@ var $elm$core$Array$setHelp = F4(
 	function (shift, index, value, tree) {
 		var pos = $elm$core$Array$bitMask & (index >>> shift);
 		var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
-		if (_v0.$ === 'SubTree') {
+		if (!_v0.$) {
 			var subTree = _v0.a;
 			var newSub = A4($elm$core$Array$setHelp, shift - $elm$core$Array$shiftStep, index, value, subTree);
 			return A3(
@@ -6064,29 +6046,29 @@ var $elm$core$Array$set = F3(
 	});
 var $author$project$CPU$updateAddress = F3(
 	function (cpu, _v0, value) {
-		var address = _v0.a;
-		return A3($elm$core$Array$set, address, value, cpu.ram);
+		var address = _v0;
+		return A3($elm$core$Array$set, address, value, cpu.D);
 	});
 var $author$project$CPU$updateRegister = F3(
 	function (cpu, _v0, value) {
-		var registerByte = _v0.a;
+		var registerByte = _v0;
 		switch (registerByte) {
 			case 0:
 				return _Utils_update(
 					cpu,
-					{registerA: value});
+					{ag: value});
 			case 1:
 				return _Utils_update(
 					cpu,
-					{registerB: value});
+					{ah: value});
 			case 2:
 				return _Utils_update(
 					cpu,
-					{registerC: value});
+					{ai: value});
 			case 3:
 				return _Utils_update(
 					cpu,
-					{registerD: value});
+					{aj: value});
 			default:
 				return cpu;
 		}
@@ -6094,12 +6076,12 @@ var $author$project$CPU$updateRegister = F3(
 var $author$project$CPU$update = F2(
 	function (opcode, cpu) {
 		switch (opcode.$) {
-			case 'IncrReg':
+			case 2:
 				var reg = opcode.a;
 				var _v1 = A2(
 					$author$project$Byte$carryAdd,
 					A2($author$project$CPU$lookupRegister, cpu, reg),
-					$author$project$Byte$Byte(1));
+					1);
 				var sum = _v1.a;
 				var carryFlag = _v1.b;
 				var zeroFlag = _v1.c;
@@ -6107,14 +6089,11 @@ var $author$project$CPU$update = F2(
 				return _Utils_update(
 					model,
 					{
-						carryFlag: carryFlag,
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(2)),
-						zeroFlag: zeroFlag
+						al: carryFlag,
+						d: A2($author$project$Byte$byteAdd, cpu.d, 2),
+						ac: zeroFlag
 					});
-			case 'MovRegByte':
+			case 0:
 				var sourceRegister = opcode.a;
 				var destinationRegister = opcode.b;
 				var model = A3(
@@ -6122,99 +6101,75 @@ var $author$project$CPU$update = F2(
 					cpu,
 					destinationRegister,
 					A2($author$project$CPU$lookupRegister, cpu, sourceRegister));
-				var ip = A2(
-					$author$project$Byte$byteAdd,
-					cpu.instructionPointer,
-					$author$project$Byte$Byte(3));
+				var ip = A2($author$project$Byte$byteAdd, cpu.d, 3);
 				return _Utils_update(
 					model,
-					{instructionPointer: ip});
-			case 'MovRegAddress':
+					{d: ip});
+			case 1:
 				var sourceRegister = opcode.a;
 				var destinationAddress = opcode.b;
 				return _Utils_update(
 					cpu,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(3)),
-						ram: A3(
+						d: A2($author$project$Byte$byteAdd, cpu.d, 3),
+						D: A3(
 							$author$project$CPU$updateAddress,
 							cpu,
 							destinationAddress,
 							A2($author$project$CPU$lookupRegister, cpu, sourceRegister))
 					});
-			case 'MovConstCharToConstAddress':
+			case 3:
 				var destinationAddress = opcode.a;
 				var _char = opcode.b;
 				return _Utils_update(
 					cpu,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(3)),
-						ram: A3($author$project$CPU$updateAddress, cpu, destinationAddress, _char)
+						d: A2($author$project$Byte$byteAdd, cpu.d, 3),
+						D: A3($author$project$CPU$updateAddress, cpu, destinationAddress, _char)
 					});
-			case 'Jump':
+			case 5:
 				var _byte = opcode.a;
 				return _Utils_update(
 					cpu,
-					{instructionPointer: _byte});
-			case 'MovConstToRegister':
+					{d: _byte});
+			case 6:
 				var registerNumber = opcode.a;
 				var constant = opcode.b;
 				var foo = A3($author$project$CPU$updateRegister, cpu, registerNumber, constant);
 				return _Utils_update(
 					foo,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(3))
+						d: A2($author$project$Byte$byteAdd, cpu.d, 3)
 					});
-			case 'Call':
+			case 7:
 				var _byte = opcode.a;
-				var sp = A2(
-					$author$project$Byte$byteSub,
-					cpu.stackPointer,
-					$author$project$Byte$Byte(1));
-				var osp = cpu.stackPointer;
+				var sp = A2($author$project$Byte$byteSub, cpu.o, 1);
+				var osp = cpu.o;
 				return _Utils_update(
 					cpu,
 					{
-						instructionPointer: _byte,
-						ram: A3(
+						d: _byte,
+						D: A3(
 							$author$project$CPU$updateAddress,
 							cpu,
 							osp,
-							A2(
-								$author$project$Byte$byteSub,
-								_byte,
-								$author$project$Byte$Byte(1))),
-						stackPointer: sp
+							A2($author$project$Byte$byteSub, _byte, 1)),
+						o: sp
 					});
-			case 'PushRegister':
+			case 8:
 				var registerByte = opcode.a;
 				return _Utils_update(
 					cpu,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(2)),
-						ram: A3(
+						d: A2($author$project$Byte$byteAdd, cpu.d, 2),
+						D: A3(
 							$author$project$CPU$updateAddress,
 							cpu,
-							cpu.stackPointer,
+							cpu.o,
 							A2($author$project$CPU$lookupRegister, cpu, registerByte)),
-						stackPointer: A2(
-							$author$project$Byte$byteSub,
-							cpu.stackPointer,
-							$author$project$Byte$Byte(1))
+						o: A2($author$project$Byte$byteSub, cpu.o, 1)
 					});
-			case 'MovRegisterAddressToRegister':
+			case 9:
 				var registerAddress = opcode.a;
 				var destinationRegister = opcode.b;
 				var foo = A3(
@@ -6228,94 +6183,70 @@ var $author$project$CPU$update = F2(
 				return _Utils_update(
 					foo,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(3))
+						d: A2($author$project$Byte$byteAdd, cpu.d, 3)
 					});
-			case 'MovRegisterValueToRegisterAddress':
+			case 10:
 				var destinationRegisterAddress = opcode.a;
 				var registerValue = opcode.b;
 				return _Utils_update(
 					cpu,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(3)),
-						ram: A3(
+						d: A2($author$project$Byte$byteAdd, cpu.d, 3),
+						D: A3(
 							$author$project$CPU$updateAddress,
 							cpu,
 							A2($author$project$CPU$lookupRegister, cpu, destinationRegisterAddress),
 							A2($author$project$CPU$lookupRegister, cpu, registerValue))
 					});
-			case 'CompareRegisterToRegisterAddress':
+			case 11:
 				var register = opcode.a;
 				var registerAddress = opcode.b;
 				return _Utils_update(
 					cpu,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(3)),
-						zeroFlag: _Utils_eq(
+						d: A2($author$project$Byte$byteAdd, cpu.d, 3),
+						ac: _Utils_eq(
 							A2($author$project$CPU$lookupRegister, cpu, register),
 							A2(
 								$author$project$CPU$fetch,
 								cpu,
 								A2($author$project$CPU$lookupRegister, cpu, registerAddress)))
 					});
-			case 'JumpIfNotZeroFlag':
+			case 12:
 				var _byte = opcode.a;
-				var ip = cpu.zeroFlag ? A2(
-					$author$project$Byte$byteAdd,
-					cpu.instructionPointer,
-					$author$project$Byte$Byte(2)) : _byte;
+				var ip = cpu.ac ? A2($author$project$Byte$byteAdd, cpu.d, 2) : _byte;
 				return _Utils_update(
 					cpu,
-					{instructionPointer: ip});
-			case 'PopToRegister':
+					{d: ip});
+			case 13:
 				var register = opcode.a;
 				var foo = A3(
 					$author$project$CPU$updateRegister,
 					cpu,
 					register,
-					A2($author$project$CPU$fetch, cpu, cpu.stackPointer));
+					A2($author$project$CPU$fetch, cpu, cpu.o));
 				return _Utils_update(
 					foo,
 					{
-						instructionPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.instructionPointer,
-							$author$project$Byte$Byte(2)),
-						stackPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.stackPointer,
-							$author$project$Byte$Byte(1))
+						d: A2($author$project$Byte$byteAdd, cpu.d, 2),
+						o: A2($author$project$Byte$byteAdd, cpu.o, 1)
 					});
-			case 'Return':
+			case 14:
 				return _Utils_update(
 					cpu,
 					{
-						instructionPointer: A2(
+						d: A2(
 							$author$project$CPU$fetch,
 							cpu,
-							A2(
-								$author$project$Byte$byteAdd,
-								cpu.stackPointer,
-								$author$project$Byte$Byte(1))),
-						stackPointer: A2(
-							$author$project$Byte$byteAdd,
-							cpu.stackPointer,
-							$author$project$Byte$Byte(1))
+							A2($author$project$Byte$byteAdd, cpu.o, 1)),
+						o: A2($author$project$Byte$byteAdd, cpu.o, 1)
 					});
 			default:
 				return cpu;
 		}
 	});
 var $author$project$CPU$tick = function (cpu) {
-	var ip = A2($author$project$CPU$fetch, cpu, cpu.instructionPointer);
+	var ip = A2($author$project$CPU$fetch, cpu, cpu.d);
 	var instruction = A2($author$project$CPU$fetchInstruction, cpu, ip);
 	return A2($author$project$CPU$update, instruction, cpu);
 };
@@ -6323,29 +6254,29 @@ var $elm$core$String$toFloat = _String_toFloat;
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'Increment':
+			case 0:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{count: model.count + 1}),
+						{w: model.w + 1}),
 					$elm$core$Platform$Cmd$none);
-			case 'Decrement':
+			case 1:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{count: model.count - 1}),
+						{w: model.w - 1}),
 					$elm$core$Platform$Cmd$none);
-			case 'Assemble':
+			case 2:
 				return _Utils_Tuple2(
 					model,
-					$author$project$Main$sendMessage(model.code));
-			case 'Receive':
+					$author$project$Main$sendMessage(model.J));
+			case 13:
 				var mes = msg.a;
-				var cpu = model.cpu;
+				var cpu = model.e;
 				var mem = _Utils_update(
 					cpu,
 					{
-						ram: $author$project$CPU$loadRam(
+						D: $author$project$CPU$loadRam(
 							$elm$core$Array$fromList(
 								A2(
 									$elm$core$List$map,
@@ -6356,76 +6287,76 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							assembled: true,
-							cpu: mem,
-							mapping: $author$project$Main$mappingDecoder(mes)
+							B: true,
+							e: mem,
+							V: $author$project$Main$mappingDecoder(mes)
 						}),
 					$author$project$Main$focus);
-			case 'Reset':
-				var cpu = model.cpu;
+			case 3:
+				var cpu = model.e;
 				var mem = _Utils_update(
 					cpu,
 					{
-						instructionPointer: $author$project$Byte$mkByte(0),
-						ram: $author$project$CPU$blankRam,
-						stackPointer: $author$project$Byte$mkByte(231)
+						d: $author$project$Byte$mkByte(0),
+						D: $author$project$CPU$blankRam,
+						o: $author$project$Byte$mkByte(231)
 					});
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{assembled: false, count: 0, cpu: mem}),
+						{B: false, w: 0, e: mem}),
 					$elm$core$Platform$Cmd$none);
-			case 'CodeChange':
+			case 4:
 				var string = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{assembled: false, code: string, editing: true}),
+						{B: false, J: string, P: true}),
 					$elm$core$Platform$Cmd$none);
-			case 'Step':
+			case 6:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							count: model.count + 1,
-							cpu: $author$project$CPU$tick(model.cpu),
-							editing: false
+							w: model.w + 1,
+							e: $author$project$CPU$tick(model.e),
+							P: false
 						}),
 					$author$project$Main$focus);
-			case 'ToggleHexDisplay':
+			case 5:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{cpuDisplayHex: !model.cpuDisplayHex}),
+						{x: !model.x}),
 					$elm$core$Platform$Cmd$none);
-			case 'FocusResult':
+			case 7:
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			case 'ToggleEditor':
+			case 8:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{showEditor: !model.showEditor}),
+						{Y: !model.Y}),
 					$elm$core$Platform$Cmd$none);
-			case 'Tick':
-				return (model.assembled && model.running) ? _Utils_Tuple2(
+			case 9:
+				return (model.B && model.N) ? _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							count: model.count + 1,
-							cpu: $author$project$CPU$tick(model.cpu)
+							w: model.w + 1,
+							e: $author$project$CPU$tick(model.e)
 						}),
 					$author$project$Main$focus) : _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			case 'Play':
+			case 10:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{editing: false, running: true}),
+						{P: false, N: true}),
 					$elm$core$Platform$Cmd$none);
-			case 'Pause':
+			case 12:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{running: false}),
+						{N: false}),
 					$elm$core$Platform$Cmd$none);
 			default:
 				var freq = msg.a;
@@ -6436,18 +6367,18 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{clockRate: clockRate}),
+						{ad: clockRate}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
 var $author$project$Main$ChangeClockFrequency = function (a) {
-	return {$: 'ChangeClockFrequency', a: a};
+	return {$: 11, a: a};
 };
-var $author$project$Main$Pause = {$: 'Pause'};
-var $author$project$Main$Play = {$: 'Play'};
-var $author$project$Main$Reset = {$: 'Reset'};
-var $author$project$Main$Step = {$: 'Step'};
-var $author$project$Main$ToggleHexDisplay = {$: 'ToggleHexDisplay'};
+var $author$project$Main$Pause = {$: 12};
+var $author$project$Main$Play = {$: 10};
+var $author$project$Main$Reset = {$: 3};
+var $author$project$Main$Step = {$: 6};
+var $author$project$Main$ToggleHexDisplay = {$: 5};
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -6497,14 +6428,14 @@ var $elm$core$String$padLeft = F3(
 			string);
 	});
 var $author$project$Byte$toInt = function (_v0) {
-	var _int = _v0.a;
+	var _int = _v0;
 	return _int;
 };
 var $author$project$Main$byteToDecimal = function (_byte) {
 	return A3(
 		$elm$core$String$padLeft,
 		3,
-		_Utils_chr('0'),
+		'0',
 		$elm$core$String$fromInt(
 			$author$project$Byte$toInt(_byte)));
 };
@@ -6517,37 +6448,37 @@ var $rtfeldman$elm_hex$Hex$unsafeToDigit = function (num) {
 	while (true) {
 		switch (num) {
 			case 0:
-				return _Utils_chr('0');
+				return '0';
 			case 1:
-				return _Utils_chr('1');
+				return '1';
 			case 2:
-				return _Utils_chr('2');
+				return '2';
 			case 3:
-				return _Utils_chr('3');
+				return '3';
 			case 4:
-				return _Utils_chr('4');
+				return '4';
 			case 5:
-				return _Utils_chr('5');
+				return '5';
 			case 6:
-				return _Utils_chr('6');
+				return '6';
 			case 7:
-				return _Utils_chr('7');
+				return '7';
 			case 8:
-				return _Utils_chr('8');
+				return '8';
 			case 9:
-				return _Utils_chr('9');
+				return '9';
 			case 10:
-				return _Utils_chr('a');
+				return 'a';
 			case 11:
-				return _Utils_chr('b');
+				return 'b';
 			case 12:
-				return _Utils_chr('c');
+				return 'c';
 			case 13:
-				return _Utils_chr('d');
+				return 'd';
 			case 14:
-				return _Utils_chr('e');
+				return 'e';
 			case 15:
-				return _Utils_chr('f');
+				return 'f';
 			default:
 				var $temp$num = num;
 				num = $temp$num;
@@ -6581,7 +6512,7 @@ var $rtfeldman$elm_hex$Hex$toString = function (num) {
 	return $elm$core$String$fromList(
 		(num < 0) ? A2(
 			$elm$core$List$cons,
-			_Utils_chr('-'),
+			'-',
 			A2($rtfeldman$elm_hex$Hex$unsafePositiveToDigits, _List_Nil, -num)) : A2($rtfeldman$elm_hex$Hex$unsafePositiveToDigits, _List_Nil, num));
 };
 var $elm$core$String$toUpper = _String_toUpper;
@@ -6590,7 +6521,7 @@ var $author$project$Main$byteToHex = function (_byte) {
 		A3(
 			$elm$core$String$padLeft,
 			2,
-			_Utils_chr('0'),
+			'0',
 			$rtfeldman$elm_hex$Hex$toString(
 				$author$project$Byte$toInt(_byte))));
 };
@@ -6599,7 +6530,7 @@ var $author$project$Main$displayByte = F2(
 		return displayHex ? $author$project$Main$byteToHex(_byte) : $author$project$Main$byteToDecimal(_byte);
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
+var $author$project$Main$ToggleEditor = {$: 8};
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$html$Html$Attributes$href = function (url) {
@@ -6804,7 +6735,7 @@ var $author$project$Documentation$documentation = _List_fromArray(
 	]);
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
+	return {$: 0, a: a};
 };
 var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var $elm$html$Html$Events$on = F2(
@@ -6842,9 +6773,9 @@ var $author$project$Main$documentationNavigation = _Utils_ap(
 				]))
 		]),
 	$author$project$Documentation$documentation);
-var $author$project$Main$Assemble = {$: 'Assemble'};
+var $author$project$Main$Assemble = {$: 2};
 var $author$project$Main$CodeChange = function (a) {
-	return {$: 'CodeChange', a: a};
+	return {$: 4, a: a};
 };
 var $elm$html$Html$Attributes$autofocus = $elm$html$Html$Attributes$boolProperty('autofocus');
 var $elm$core$Tuple$pair = F2(
@@ -6925,7 +6856,7 @@ var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
 var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
-	return {$: 'MayStopPropagation', a: a};
+	return {$: 1, a: a};
 };
 var $elm$html$Html$Events$stopPropagationOn = F2(
 	function (event, decoder) {
@@ -6980,7 +6911,7 @@ var $author$project$Main$editor = function (model) {
 			_List_fromArray(
 				[
 					$elm$html$Html$Events$onClick($author$project$Main$Assemble),
-					$elm$html$Html$Attributes$disabled(model.assembled)
+					$elm$html$Html$Attributes$disabled(model.B)
 				]),
 			_List_fromArray(
 				[
@@ -7000,12 +6931,12 @@ var $author$project$Main$editor = function (model) {
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$id('code-editor'),
-								$elm$html$Html$Attributes$value(model.code),
+								$elm$html$Html$Attributes$value(model.J),
 								$elm$html$Html$Events$onInput($author$project$Main$CodeChange),
 								$elm$html$Html$Attributes$spellcheck(false),
 								$elm$html$Html$Attributes$autofocus(true)
 							]),
-						model.editing ? _List_fromArray(
+						model.P ? _List_fromArray(
 							[
 								A2(
 								$elm$html$Html$Attributes$property,
@@ -7017,9 +6948,9 @@ var $author$project$Main$editor = function (model) {
 								$elm$json$Json$Encode$int(0))
 							]) : A3(
 							$author$project$Main$displaySelections,
-							$author$project$Byte$toInt(model.cpu.instructionPointer),
-							model.code,
-							model.mapping)),
+							$author$project$Byte$toInt(model.e.d),
+							model.J,
+							model.V)),
 					_List_Nil)
 				]))
 		]);
@@ -7051,9 +6982,9 @@ var $elm$core$Array$indexedMap = F2(
 		var tree = _v0.c;
 		var tail = _v0.d;
 		var initialBuilder = {
-			nodeList: _List_Nil,
-			nodeListSize: 0,
-			tail: A3(
+			k: _List_Nil,
+			h: 0,
+			j: A3(
 				$elm$core$Elm$JsArray$indexedMap,
 				func,
 				$elm$core$Array$tailIndex(len),
@@ -7061,18 +6992,18 @@ var $elm$core$Array$indexedMap = F2(
 		};
 		var helper = F2(
 			function (node, builder) {
-				if (node.$ === 'SubTree') {
+				if (!node.$) {
 					var subTree = node.a;
 					return A3($elm$core$Elm$JsArray$foldl, helper, builder, subTree);
 				} else {
 					var leaf = node.a;
-					var offset = builder.nodeListSize * $elm$core$Array$branchFactor;
+					var offset = builder.h * $elm$core$Array$branchFactor;
 					var mappedLeaf = $elm$core$Array$Leaf(
 						A3($elm$core$Elm$JsArray$indexedMap, func, offset, leaf));
 					return {
-						nodeList: A2($elm$core$List$cons, mappedLeaf, builder.nodeList),
-						nodeListSize: builder.nodeListSize + 1,
-						tail: builder.tail
+						k: A2($elm$core$List$cons, mappedLeaf, builder.k),
+						h: builder.h + 1,
+						j: builder.j
 					};
 				}
 			});
@@ -7086,23 +7017,23 @@ var $elm$core$Elm$JsArray$slice = _JsArray_slice;
 var $elm$core$Array$appendHelpBuilder = F2(
 	function (tail, builder) {
 		var tailLen = $elm$core$Elm$JsArray$length(tail);
-		var notAppended = ($elm$core$Array$branchFactor - $elm$core$Elm$JsArray$length(builder.tail)) - tailLen;
-		var appended = A3($elm$core$Elm$JsArray$appendN, $elm$core$Array$branchFactor, builder.tail, tail);
+		var notAppended = ($elm$core$Array$branchFactor - $elm$core$Elm$JsArray$length(builder.j)) - tailLen;
+		var appended = A3($elm$core$Elm$JsArray$appendN, $elm$core$Array$branchFactor, builder.j, tail);
 		return (notAppended < 0) ? {
-			nodeList: A2(
+			k: A2(
 				$elm$core$List$cons,
 				$elm$core$Array$Leaf(appended),
-				builder.nodeList),
-			nodeListSize: builder.nodeListSize + 1,
-			tail: A3($elm$core$Elm$JsArray$slice, notAppended, tailLen, tail)
+				builder.k),
+			h: builder.h + 1,
+			j: A3($elm$core$Elm$JsArray$slice, notAppended, tailLen, tail)
 		} : ((!notAppended) ? {
-			nodeList: A2(
+			k: A2(
 				$elm$core$List$cons,
 				$elm$core$Array$Leaf(appended),
-				builder.nodeList),
-			nodeListSize: builder.nodeListSize + 1,
-			tail: $elm$core$Elm$JsArray$empty
-		} : {nodeList: builder.nodeList, nodeListSize: builder.nodeListSize, tail: appended});
+				builder.k),
+			h: builder.h + 1,
+			j: $elm$core$Elm$JsArray$empty
+		} : {k: builder.k, h: builder.h, j: appended});
 	});
 var $elm$core$List$drop = F2(
 	function (n, list) {
@@ -7150,7 +7081,7 @@ var $elm$core$Array$sliceLeft = F2(
 				var skipNodes = (from / $elm$core$Array$branchFactor) | 0;
 				var helper = F2(
 					function (node, acc) {
-						if (node.$ === 'SubTree') {
+						if (!node.$) {
 							var subTree = node.a;
 							return A3($elm$core$Elm$JsArray$foldr, helper, acc, subTree);
 						} else {
@@ -7172,9 +7103,9 @@ var $elm$core$Array$sliceLeft = F2(
 					var rest = nodesToInsert.b;
 					var firstSlice = from - (skipNodes * $elm$core$Array$branchFactor);
 					var initialBuilder = {
-						nodeList: _List_Nil,
-						nodeListSize: 0,
-						tail: A3(
+						k: _List_Nil,
+						h: 0,
+						j: A3(
 							$elm$core$Elm$JsArray$slice,
 							firstSlice,
 							$elm$core$Elm$JsArray$length(head),
@@ -7194,7 +7125,7 @@ var $elm$core$Array$fetchNewTail = F4(
 		while (true) {
 			var pos = $elm$core$Array$bitMask & (treeEnd >>> shift);
 			var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
-			if (_v0.$ === 'SubTree') {
+			if (!_v0.$) {
 				var sub = _v0.a;
 				var $temp$shift = shift - $elm$core$Array$shiftStep,
 					$temp$end = end,
@@ -7219,7 +7150,7 @@ var $elm$core$Array$hoistTree = F3(
 				return tree;
 			} else {
 				var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, 0, tree);
-				if (_v0.$ === 'SubTree') {
+				if (!_v0.$) {
 					var sub = _v0.a;
 					var $temp$oldShift = oldShift - $elm$core$Array$shiftStep,
 						$temp$newShift = newShift,
@@ -7238,7 +7169,7 @@ var $elm$core$Array$sliceTree = F3(
 	function (shift, endIdx, tree) {
 		var lastPos = $elm$core$Array$bitMask & (endIdx >>> shift);
 		var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, lastPos, tree);
-		if (_v0.$ === 'SubTree') {
+		if (!_v0.$) {
 			var sub = _v0.a;
 			var newSub = A3($elm$core$Array$sliceTree, shift - $elm$core$Array$shiftStep, endIdx, sub);
 			return (!$elm$core$Elm$JsArray$length(newSub)) ? A3($elm$core$Elm$JsArray$slice, 0, lastPos, tree) : A3(
@@ -7349,9 +7280,7 @@ var $author$project$Main$memoryRows = F4(
 			]);
 	});
 var $author$project$Main$nullInstructPointer = function (cpu) {
-	return _Utils_eq(
-		A2($author$project$CPU$fetch, cpu, cpu.instructionPointer),
-		$author$project$Byte$Byte(0));
+	return !A2($author$project$CPU$fetch, cpu, cpu.d);
 };
 var $elm$html$Html$option = _VirtualDom_node('option');
 var $elm$html$Html$select = _VirtualDom_node('select');
@@ -7359,8 +7288,7 @@ var $elm$core$Char$fromCode = _Char_fromCode;
 var $author$project$Main$replaceControlCharacters = function (_int) {
 	return ((_int > 32) && (_int < 127)) ? _int : 32;
 };
-var $author$project$Main$noBreakSpace = $elm$core$String$fromChar(
-	_Utils_chr('\u00A0'));
+var $author$project$Main$noBreakSpace = $elm$core$String$fromChar('\u00A0');
 var $author$project$Main$replaceWhitespaceWithHtmlEntities = function (string) {
 	return (string === ' ') ? $author$project$Main$noBreakSpace : string;
 };
@@ -7437,7 +7365,7 @@ var $author$project$Main$view = function (model) {
 						A2(
 						$elm$html$Html$div,
 						_List_Nil,
-						model.showEditor ? $author$project$Main$editor(model) : $author$project$Main$documentationNavigation),
+						model.Y ? $author$project$Main$editor(model) : $author$project$Main$documentationNavigation),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
@@ -7463,7 +7391,7 @@ var $author$project$Main$view = function (model) {
 										_List_fromArray(
 											[
 												$elm$html$Html$Events$onClick($author$project$Main$Reset),
-												$elm$html$Html$Attributes$disabled(!model.assembled)
+												$elm$html$Html$Attributes$disabled(!model.B)
 											]),
 										_List_fromArray(
 											[
@@ -7476,7 +7404,7 @@ var $author$project$Main$view = function (model) {
 									[
 										$elm$html$Html$Events$onClick($author$project$Main$Step),
 										$elm$html$Html$Attributes$disabled(
-										$author$project$Main$nullInstructPointer(model.cpu))
+										$author$project$Main$nullInstructPointer(model.e))
 									]),
 								_List_fromArray(
 									[
@@ -7488,7 +7416,7 @@ var $author$project$Main$view = function (model) {
 									[
 										$elm$html$Html$Events$onClick($author$project$Main$Play),
 										$elm$html$Html$Attributes$disabled(
-										(!model.assembled) || (model.running || $author$project$Main$nullInstructPointer(model.cpu)))
+										(!model.B) || (model.N || $author$project$Main$nullInstructPointer(model.e)))
 									]),
 								_List_fromArray(
 									[
@@ -7577,7 +7505,7 @@ var $author$project$Main$view = function (model) {
 									[
 										$elm$html$Html$Events$onClick($author$project$Main$Pause),
 										$elm$html$Html$Attributes$disabled(
-										(!model.running) || $author$project$Main$nullInstructPointer(model.cpu))
+										(!model.N) || $author$project$Main$nullInstructPointer(model.e))
 									]),
 								_List_fromArray(
 									[
@@ -7598,7 +7526,7 @@ var $author$project$Main$view = function (model) {
 										A2(
 										$elm$html$Html$div,
 										_List_Nil,
-										$author$project$Main$showOutput(model.cpu.ram))
+										$author$project$Main$showOutput(model.e.D))
 									])),
 								A2(
 								$elm$html$Html$h3,
@@ -7697,7 +7625,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																A2($author$project$Main$displayByte, model.cpuDisplayHex, model.cpu.registerA))
+																A2($author$project$Main$displayByte, model.x, model.e.ag))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7705,7 +7633,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																A2($author$project$Main$displayByte, model.cpuDisplayHex, model.cpu.registerB))
+																A2($author$project$Main$displayByte, model.x, model.e.ah))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7713,7 +7641,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																A2($author$project$Main$displayByte, model.cpuDisplayHex, model.cpu.registerC))
+																A2($author$project$Main$displayByte, model.x, model.e.ai))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7721,7 +7649,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																A2($author$project$Main$displayByte, model.cpuDisplayHex, model.cpu.registerD))
+																A2($author$project$Main$displayByte, model.x, model.e.aj))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7732,7 +7660,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																A2($author$project$Main$displayByte, model.cpuDisplayHex, model.cpu.instructionPointer))
+																A2($author$project$Main$displayByte, model.x, model.e.d))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7743,7 +7671,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																A2($author$project$Main$displayByte, model.cpuDisplayHex, model.cpu.stackPointer))
+																A2($author$project$Main$displayByte, model.x, model.e.o))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7751,7 +7679,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																$author$project$Main$displayBool(model.cpu.zeroFlag))
+																$author$project$Main$displayBool(model.e.ac))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7759,7 +7687,7 @@ var $author$project$Main$view = function (model) {
 														_List_fromArray(
 															[
 																$elm$html$Html$text(
-																$author$project$Main$displayBool(model.cpu.carryFlag))
+																$author$project$Main$displayBool(model.e.al))
 															])),
 														A2(
 														$elm$html$Html$td,
@@ -7803,16 +7731,16 @@ var $author$project$Main$view = function (model) {
 										_List_Nil,
 										A4(
 											$author$project$Main$memoryRows,
-											model.cpu.ram,
-											model.cpuDisplayHex,
-											$author$project$Byte$toInt(model.cpu.instructionPointer),
-											$author$project$Byte$toInt(model.cpu.stackPointer)))
+											model.e.D,
+											model.x,
+											$author$project$Byte$toInt(model.e.d),
+											$author$project$Byte$toInt(model.e.o)))
 									]))
 							]))
 					]))
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{init: $author$project$Main$initialModel, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
+	{bH: $author$project$Main$initialModel, b2: $author$project$Main$subscriptions, b6: $author$project$Main$update, b7: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
+	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

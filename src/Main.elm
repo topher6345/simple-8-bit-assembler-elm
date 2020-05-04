@@ -1,4 +1,4 @@
-port module Main exposing (Model, Msg(..))
+port module Main exposing (main)
 
 import Array exposing (Array)
 import Browser
