@@ -105,7 +105,7 @@ main {
 
 main table:nth-of-type(1) {
   border: 1px solid black;
-  font-size: 1.2em;
+  font-size: 1em;
   margin-top: 1em;
   background-color: whitesmoke;
 }
@@ -144,7 +144,7 @@ main table:nth-of-type(2) {
 main table:nth-of-type(2) td {
   width: 2em;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1em;
   box-shadow: 1px 1px 1px #e1e1e1;
 }
 
