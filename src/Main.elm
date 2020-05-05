@@ -368,11 +368,11 @@ view model =
         [ div []
             [ h1
                 []
-                [ text "8 Bit Assembler Simulator "
+                [ text "8∙Bit Assembler "
                 , small []
                     [ a
                         [ href "https://github.com/topher6345/simple-8-bit-assembler-elm " ]
-                        [ text "source" ]
+                        [ text "@topher6345" ]
                     ]
                 ]
             ]
@@ -386,8 +386,9 @@ view model =
             , Html.main_
                 [ class "cpu" ]
                 [ h2 [] [ text "CPU" ]
-                , div [] [ button [ onClick Reset, disabled <| not model.assembled ] [ text "Reset" ] ]
+                , button [ class "reset", onClick Reset, disabled <| not model.assembled ] [ text "Reset" ]
                 , button [ onClick Step, disabled (nullInstructPointer model.cpu) ] [ text "Step" ]
+                , button [ onClick Pause, disabled <| not model.running || nullInstructPointer model.cpu ] [ text "Stop" ]
                 , button
                     [ onClick Play
                     , disabled <|
@@ -397,24 +398,28 @@ view model =
                         )
                     ]
                     [ text "Play" ]
-                , label [] [ text "clock speed" ]
-                , select [ onInput ChangeClockFrequency ]
-                    [ option [ value "100" ] [ text "200" ]
-                    , option [ value "200" ] [ text "200" ]
-                    , option [ value "500" ] [ text "500" ]
-                    , option [ value "1000" ] [ text "1000" ]
-                    , option [ value "2000" ] [ text "2000" ]
-                    , option [ value "3000" ] [ text "3000" ]
+                , div []
+                    [ label [] [ text "clock speed" ]
+                    , select [ onInput ChangeClockFrequency ]
+                        [ option [ value "100" ] [ text "200" ]
+                        , option [ value "200" ] [ text "200" ]
+                        , option [ value "500" ] [ text "500" ]
+                        , option [ value "1000" ] [ text "1000" ]
+                        , option [ value "2000" ] [ text "2000" ]
+                        , option [ value "3000" ] [ text "3000" ]
+                        ]
+                    , text "ms"
                     ]
-                , text "ms"
-                , button [ onClick Pause, disabled <| not model.running || nullInstructPointer model.cpu ] [ text "Stop" ]
                 , h3 [] [ text "Output" ]
                 , div []
                     [ div [] <| showOutput model.cpu.ram
                     ]
-                , h3 [] [ text "Registers/Flags" ]
                 , table []
                     [ thead []
+                        [ th [ attribute "colspan" "6" ] [ text "Registers" ]
+                        , th [ attribute "colspan" "3" ] [ text "Flags" ]
+                        ]
+                    , thead []
                         [ th [] [ text "A" ]
                         , th [] [ text "B" ]
                         , th [] [ text "C" ]
@@ -441,8 +446,6 @@ view model =
                         ]
                     ]
                 , h3 [] [ text "RAM" ]
-                , label [] [ text "Decimal display" ]
-                , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
                 , table
                     []
                     [ tbody [] <|
@@ -451,6 +454,8 @@ view model =
                             (toInt model.cpu.instructionPointer)
                             (toInt model.cpu.stackPointer)
                     ]
+                , input [ type_ "checkbox", onClick ToggleHexDisplay ] []
+                , label [] [ text "Decimal display" ]
                 ]
             ]
         ]

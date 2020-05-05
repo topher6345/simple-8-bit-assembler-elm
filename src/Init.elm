@@ -3,9 +3,9 @@ module Init exposing (program)
 
 program : String
 program =
-    """; from https://schweigi.github.io/assembler-simulator/
-; Simple example
+    """; Simple example
 ; Writes Hello World to the output
+; from https://schweigi.github.io/assembler-simulator/
 
   JMP start
 hello: DB "Hello World!" ; Variable

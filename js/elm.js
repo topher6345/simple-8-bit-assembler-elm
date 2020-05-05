@@ -5381,7 +5381,7 @@ var $author$project$CPU$initalCPU = {
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Init$program = '; from https://schweigi.github.io/assembler-simulator/\n; Simple example\n; Writes Hello World to the output\n\n  JMP start\nhello: DB "Hello World!" ; Variable\n       DB 0              ; String terminator\n\nstart:\n  MOV C, hello           ; Point to var \n  MOV D, 232             ; Point to output\n  CALL print\n        HLT              ; Stop execution\n\nprint:                   ; print(C:*from, D:*to)\n  PUSH A\n  PUSH B\n  MOV B, 0\n.loop:\n  MOV A, [C]             ; Get char from var\n  MOV [D], A             ; Write to output\n  INC C\n  INC D  \n  CMP B, [C]             ; Check if end\n  JNZ .loop              ; jump if not\n\n  POP B\n  POP A\n  RET\n';
+var $author$project$Init$program = '; Simple example\n; Writes Hello World to the output\n; from https://schweigi.github.io/assembler-simulator/\n\n  JMP start\nhello: DB "Hello World!" ; Variable\n       DB 0              ; String terminator\n\nstart:\n  MOV C, hello           ; Point to var \n  MOV D, 232             ; Point to output\n  CALL print\n        HLT              ; Stop execution\n\nprint:                   ; print(C:*from, D:*to)\n  PUSH A\n  PUSH B\n  MOV B, 0\n.loop:\n  MOV A, [C]             ; Get char from var\n  MOV [D], A             ; Write to output\n  INC C\n  INC D  \n  CMP B, [C]             ; Check if end\n  JNZ .loop              ; jump if not\n\n  POP B\n  POP A\n  RET\n';
 var $author$project$Main$initialModel = function (_v0) {
 	return _Utils_Tuple2(
 		{
@@ -6449,6 +6449,14 @@ var $author$project$Main$Reset = {$: 'Reset'};
 var $author$project$Main$Step = {$: 'Step'};
 var $author$project$Main$ToggleHexDisplay = {$: 'ToggleHexDisplay'};
 var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -7412,7 +7420,7 @@ var $author$project$Main$view = function (model) {
 						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$text('8 Bit Assembler Simulator '),
+								$elm$html$Html$text('8∙Bit Assembler '),
 								A2(
 								$elm$html$Html$small,
 								_List_Nil,
@@ -7426,7 +7434,7 @@ var $author$project$Main$view = function (model) {
 											]),
 										_List_fromArray(
 											[
-												$elm$html$Html$text('source')
+												$elm$html$Html$text('@topher6345')
 											]))
 									]))
 							]))
@@ -7456,21 +7464,16 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$text('CPU')
 									])),
 								A2(
-								$elm$html$Html$div,
-								_List_Nil,
+								$elm$html$Html$button,
 								_List_fromArray(
 									[
-										A2(
-										$elm$html$Html$button,
-										_List_fromArray(
-											[
-												$elm$html$Html$Events$onClick($author$project$Main$Reset),
-												$elm$html$Html$Attributes$disabled(!model.assembled)
-											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Reset')
-											]))
+										$elm$html$Html$Attributes$class('reset'),
+										$elm$html$Html$Events$onClick($author$project$Main$Reset),
+										$elm$html$Html$Attributes$disabled(!model.assembled)
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Reset')
 									])),
 								A2(
 								$elm$html$Html$button,
@@ -7488,6 +7491,18 @@ var $author$project$Main$view = function (model) {
 								$elm$html$Html$button,
 								_List_fromArray(
 									[
+										$elm$html$Html$Events$onClick($author$project$Main$Pause),
+										$elm$html$Html$Attributes$disabled(
+										(!model.running) || $author$project$Main$nullInstructPointer(model.cpu))
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Stop')
+									])),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
 										$elm$html$Html$Events$onClick($author$project$Main$Play),
 										$elm$html$Html$Attributes$disabled(
 										(!model.assembled) || (model.running || $author$project$Main$nullInstructPointer(model.cpu)))
@@ -7497,93 +7512,87 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$text('Play')
 									])),
 								A2(
-								$elm$html$Html$label,
+								$elm$html$Html$div,
 								_List_Nil,
 								_List_fromArray(
 									[
-										$elm$html$Html$text('clock speed')
-									])),
-								A2(
-								$elm$html$Html$select,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onInput($author$project$Main$ChangeClockFrequency)
-									]),
-								_List_fromArray(
-									[
 										A2(
-										$elm$html$Html$option,
+										$elm$html$Html$label,
+										_List_Nil,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$value('100')
-											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('200')
+												$elm$html$Html$text('clock speed')
 											])),
 										A2(
-										$elm$html$Html$option,
+										$elm$html$Html$select,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$value('200')
+												$elm$html$Html$Events$onInput($author$project$Main$ChangeClockFrequency)
 											]),
 										_List_fromArray(
 											[
-												$elm$html$Html$text('200')
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('100')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('200')
+													])),
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('200')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('200')
+													])),
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('500')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('500')
+													])),
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('1000')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('1000')
+													])),
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('2000')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('2000')
+													])),
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('3000')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('3000')
+													]))
 											])),
-										A2(
-										$elm$html$Html$option,
-										_List_fromArray(
-											[
-												$elm$html$Html$Attributes$value('500')
-											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('500')
-											])),
-										A2(
-										$elm$html$Html$option,
-										_List_fromArray(
-											[
-												$elm$html$Html$Attributes$value('1000')
-											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('1000')
-											])),
-										A2(
-										$elm$html$Html$option,
-										_List_fromArray(
-											[
-												$elm$html$Html$Attributes$value('2000')
-											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('2000')
-											])),
-										A2(
-										$elm$html$Html$option,
-										_List_fromArray(
-											[
-												$elm$html$Html$Attributes$value('3000')
-											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('3000')
-											]))
-									])),
-								$elm$html$Html$text('ms'),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick($author$project$Main$Pause),
-										$elm$html$Html$Attributes$disabled(
-										(!model.running) || $author$project$Main$nullInstructPointer(model.cpu))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Stop')
+										$elm$html$Html$text('ms')
 									])),
 								A2(
 								$elm$html$Html$h3,
@@ -7603,17 +7612,36 @@ var $author$project$Main$view = function (model) {
 										$author$project$Main$showOutput(model.cpu.ram))
 									])),
 								A2(
-								$elm$html$Html$h3,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Registers/Flags')
-									])),
-								A2(
 								$elm$html$Html$table,
 								_List_Nil,
 								_List_fromArray(
 									[
+										A2(
+										$elm$html$Html$thead,
+										_List_Nil,
+										_List_fromArray(
+											[
+												A2(
+												$elm$html$Html$th,
+												_List_fromArray(
+													[
+														A2($elm$html$Html$Attributes$attribute, 'colspan', '6')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Registers')
+													])),
+												A2(
+												$elm$html$Html$th,
+												_List_fromArray(
+													[
+														A2($elm$html$Html$Attributes$attribute, 'colspan', '3')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Flags')
+													]))
+											])),
 										A2(
 										$elm$html$Html$thead,
 										_List_Nil,
@@ -7781,21 +7809,6 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$text('RAM')
 									])),
 								A2(
-								$elm$html$Html$label,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Decimal display')
-									])),
-								A2(
-								$elm$html$Html$input,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$type_('checkbox'),
-										$elm$html$Html$Events$onClick($author$project$Main$ToggleHexDisplay)
-									]),
-								_List_Nil),
-								A2(
 								$elm$html$Html$table,
 								_List_Nil,
 								_List_fromArray(
@@ -7809,6 +7822,21 @@ var $author$project$Main$view = function (model) {
 											model.cpuDisplayHex,
 											$author$project$Byte$toInt(model.cpu.instructionPointer),
 											$author$project$Byte$toInt(model.cpu.stackPointer)))
+									])),
+								A2(
+								$elm$html$Html$input,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$type_('checkbox'),
+										$elm$html$Html$Events$onClick($author$project$Main$ToggleHexDisplay)
+									]),
+								_List_Nil),
+								A2(
+								$elm$html$Html$label,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Decimal display')
 									]))
 							]))
 					]))
