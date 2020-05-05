@@ -95,6 +95,7 @@ textarea {
   background: rgb(202,238,174);
   background: radial-gradient(circle, rgb(56, 68, 47) 0%, rgb(32, 32, 32) 100%);
   resize: none;
+  font-family: Monospace;
 }
 
 main {
