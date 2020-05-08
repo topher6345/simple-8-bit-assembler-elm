@@ -1,10 +1,17 @@
-module AssemblerV2 exposing (RegexParseResult, assemble, getValue, parse, parseLabel, parseRegOrNumber, parseRegister, regex, regexParse, toBytes)
+module AssemblerV2 exposing (AssemblerV2Result, RegexParseResult, assemble, getValue, parse, parseLabel, parseRegOrNumber, parseRegister, regex, regexParse, toBytes)
 
 import Array exposing (Array)
 import Byte exposing (Byte, mkByte)
 import CPU
-import Dict
-import Regex
+import Dict exposing (Dict)
+import Regex exposing (..)
+
+
+type alias AssemblerV2Result =
+    { code : List Int
+    , mapping : Dict String Int
+    , label : Dict String Int
+    }
 
 
 
@@ -27,10 +34,15 @@ type alias RegexParseResult =
     }
 
 
+mkRegex : String -> Regex
 mkRegex string =
     string
         |> Regex.fromString
         |> Maybe.withDefault Regex.never
+
+
+
+--regex : Regex
 
 
 regex =
@@ -38,12 +50,24 @@ regex =
         "^[\\t ]*(?:([.A-Za-z]\\w*)[:])?(?:[\\t ]*([A-Za-z]{2,4})(?:[\\t ]+(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*)(?:[\\t ]*[,][\\t ]*(\\[(\\w+((\\+|-)\\d+)?)\\]|\\\".+?\\\"|\\'.+?\\'|[.A-Za-z0-9]\\w*))?)?)?"
 
 
+
+--regexNum : Regex
+
+
 regexNum =
     mkRegex "^[-+]?[0-9]+$"
 
 
+
+--regexLabel : Regex
+
+
 regexLabel =
     mkRegex "^[.A-Za-z]\\w*$"
+
+
+
+--regexFind : String -> Array Match
 
 
 regexFind string =
@@ -55,6 +79,15 @@ regexFind string =
             []
 
 
+type alias Line =
+    { label : Maybe String
+    , instruction : Maybe String
+    , operand1 : Maybe String
+    , operand2 : Maybe String
+    }
+
+
+regexParse : String -> Line
 regexParse string =
     let
         fetch i =
@@ -314,48 +347,82 @@ lookupInstruction instr =
             Err "Not Implemented"
 
 
-parse :
-    String
-    ->
-        { code : List Integer
-        , mapping : Dict String Integer
-        , label : Dict String Integer
-        }
+initAssemblerV2Result : AssemblerV2Result
+initAssemblerV2Result =
+    { code = []
+    , mapping = Dict.fromList []
+    , label = Dict.fromList []
+    }
+
+
+type alias AssemblerError =
+    { error : String
+    , line : Maybe Int
+    }
+
+
+firstPass :
+    List String
+    -> Result AssemblerError AssemblerV2Result
+firstPass lines =
+    let
+        firstPass_ :
+            List String
+            -> AssemblerV2Result
+            -> Result AssemblerError AssemblerV2Result
+        firstPass_ lines_ data =
+            case lines_ of
+                line :: [] ->
+                    Ok data
+
+                line :: rest ->
+                    firstPass_ rest data
+
+                _ ->
+                    Err { error = "Something Went wrong", line = Nothing }
+    in
+    firstPass_ lines initAssemblerV2Result
+
+
+secondPass :
+    AssemblerV2Result
+    -> Result AssemblerError AssemblerV2Result
+secondPass a =
+    let
+        { code } =
+            a
+
+        secondPass_ :
+            List Int
+            -> AssemblerV2Result
+            -> Result AssemblerError AssemblerV2Result
+        secondPass_ inCode out =
+            case inCode of
+                x :: [] ->
+                    Ok out
+
+                x :: xs ->
+                    secondPass_ xs out
+
+                _ ->
+                    Err { error = "Something Went wrong", line = Nothing }
+    in
+    secondPass_ code initAssemblerV2Result
+
+
+parse : String -> AssemblerV2Result
 parse input =
     let
+        lines : List String
         lines =
             String.split input "\n"
 
-        firstPass :
-            List String
-            ->
-                { code : List Integer
-                , mapping : Dict String Integer
-                , label : Dict String Integer
-                }
-            ->
-                Res
-                    { error : String
-                    , line : Maybe Integer
-                    }
-        firstPass lines data =
-            case lines of
-                x :: xs ->
-                    firstPass xs data
+        result =
+            Debug.todo "todo"
 
-                x :: [] ->
-                    Debug.todo "firsPass"
-
-        secondPass : List Integer -> List Integer -> Res String (List Integer)
-        secondPass inCode outCode =
-            case inCode of
-                x :: xs ->
-                    secondPass xs outCode
-
-                x :: [] ->
-                    Debug.todo "secondPass"
+        --firstPass lines initAssemblerV2Result
     in
-    { code = code
-    , mapping = mapping
-    , labels = labels
+    { code = result.code
+    , mapping = result.mapping
+    , label = result.label
     }

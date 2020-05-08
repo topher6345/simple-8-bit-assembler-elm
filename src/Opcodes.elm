@@ -1,297 +1,297 @@
-module Opcodes exposing (..)
+module Opcodes exposing (add_address_to_reg, add_number_to_reg, add_reg_to_reg, add_regaddress_to_reg, and_address_with_reg, and_number_with_reg, and_reg_with_reg, and_regaddress_with_reg, call_address, call_regaddress, cmp_address_with_reg, cmp_number_with_reg, cmp_reg_with_reg, cmp_regaddress_with_reg, dec_reg, div_address, div_number, div_reg, div_regaddress, inc_reg, ja_address, ja_regaddress, jc_address, jc_regaddress, jmp_address, jmp_regaddress, jna_address, jna_regaddress, jnc_address, jnc_regaddress, jnz_address, jnz_regaddress, jz_address, jz_regaddress, mov_address_to_reg, mov_number_to_address, mov_number_to_reg, mov_number_to_regaddress, mov_reg_to_address, mov_reg_to_reg, mov_reg_to_regaddress, mov_regaddress_to_reg, mul_address, mul_number, mul_reg, mul_regaddress, none, not_reg, or_address_with_reg, or_number_with_reg, or_reg_with_reg, or_regaddress_with_reg, pop_reg, push_address, push_number, push_reg, push_regaddress, ret, shl_address_with_reg, shl_number_with_reg, shl_reg_with_reg, shl_regaddress_with_reg, shr_address_with_reg, shr_number_with_reg, shr_reg_with_reg, shr_regaddress_with_reg, sub_address_from_reg, sub_number_from_reg, sub_reg_from_reg, sub_regaddress_from_reg, xor_address_with_reg, xor_number_with_reg, xor_reg_with_reg, xor_regaddress_with_reg)
 
 
-NONE =
+none =
     0
 
 
-MOV_REG_TO_REG =
+mov_reg_to_reg =
     1
 
 
-MOV_ADDRESS_TO_REG =
+mov_address_to_reg =
     2
 
 
-MOV_REGADDRESS_TO_REG =
+mov_regaddress_to_reg =
     3
 
 
-MOV_REG_TO_ADDRESS =
+mov_reg_to_address =
     4
 
 
-MOV_REG_TO_REGADDRESS =
+mov_reg_to_regaddress =
     5
 
 
-MOV_NUMBER_TO_REG =
+mov_number_to_reg =
     6
 
 
-MOV_NUMBER_TO_ADDRESS =
+mov_number_to_address =
     7
 
 
-MOV_NUMBER_TO_REGADDRESS =
+mov_number_to_regaddress =
     8
 
 
-ADD_REG_TO_REG =
+add_reg_to_reg =
     10
 
 
-ADD_REGADDRESS_TO_REG =
+add_regaddress_to_reg =
     11
 
 
-ADD_ADDRESS_TO_REG =
+add_address_to_reg =
     12
 
 
-ADD_NUMBER_TO_REG =
+add_number_to_reg =
     13
 
 
-SUB_REG_FROM_REG =
+sub_reg_from_reg =
     14
 
 
-SUB_REGADDRESS_FROM_REG =
+sub_regaddress_from_reg =
     15
 
 
-SUB_ADDRESS_FROM_REG =
+sub_address_from_reg =
     16
 
 
-SUB_NUMBER_FROM_REG =
+sub_number_from_reg =
     17
 
 
-INC_REG =
+inc_reg =
     18
 
 
-DEC_REG =
+dec_reg =
     19
 
 
-CMP_REG_WITH_REG =
+cmp_reg_with_reg =
     20
 
 
-CMP_REGADDRESS_WITH_REG =
+cmp_regaddress_with_reg =
     21
 
 
-CMP_ADDRESS_WITH_REG =
+cmp_address_with_reg =
     22
 
 
-CMP_NUMBER_WITH_REG =
+cmp_number_with_reg =
     23
 
 
-JMP_REGADDRESS =
+jmp_regaddress =
     30
 
 
-JMP_ADDRESS =
+jmp_address =
     31
 
 
-JC_REGADDRESS =
+jc_regaddress =
     32
 
 
-JC_ADDRESS =
+jc_address =
     33
 
 
-JNC_REGADDRESS =
+jnc_regaddress =
     34
 
 
-JNC_ADDRESS =
+jnc_address =
     35
 
 
-JZ_REGADDRESS =
+jz_regaddress =
     36
 
 
-JZ_ADDRESS =
+jz_address =
     37
 
 
-JNZ_REGADDRESS =
+jnz_regaddress =
     38
 
 
-JNZ_ADDRESS =
+jnz_address =
     39
 
 
-JA_REGADDRESS =
+ja_regaddress =
     40
 
 
-JA_ADDRESS =
+ja_address =
     41
 
 
-JNA_REGADDRESS =
+jna_regaddress =
     42
 
 
-JNA_ADDRESS =
+jna_address =
     43
 
 
-PUSH_REG =
+push_reg =
     50
 
 
-PUSH_REGADDRESS =
+push_regaddress =
     51
 
 
-PUSH_ADDRESS =
+push_address =
     52
 
 
-PUSH_NUMBER =
+push_number =
     53
 
 
-POP_REG =
+pop_reg =
     54
 
 
-CALL_REGADDRESS =
+call_regaddress =
     55
 
 
-CALL_ADDRESS =
+call_address =
     56
 
 
-RET =
+ret =
     57
 
 
-MUL_REG =
+mul_reg =
     60
 
 
-MUL_REGADDRESS =
+mul_regaddress =
     61
 
 
-MUL_ADDRESS =
+mul_address =
     62
 
 
-MUL_NUMBER =
+mul_number =
     63
 
 
-DIV_REG =
+div_reg =
     64
 
 
-DIV_REGADDRESS =
+div_regaddress =
     65
 
 
-DIV_ADDRESS =
+div_address =
     66
 
 
-DIV_NUMBER =
+div_number =
     67
 
 
-AND_REG_WITH_REG =
+and_reg_with_reg =
     70
 
 
-AND_REGADDRESS_WITH_REG =
+and_regaddress_with_reg =
     71
 
 
-AND_ADDRESS_WITH_REG =
+and_address_with_reg =
     72
 
 
-AND_NUMBER_WITH_REG =
+and_number_with_reg =
     73
 
 
-OR_REG_WITH_REG =
+or_reg_with_reg =
     74
 
 
-OR_REGADDRESS_WITH_REG =
+or_regaddress_with_reg =
     75
 
 
-OR_ADDRESS_WITH_REG =
+or_address_with_reg =
     76
 
 
-OR_NUMBER_WITH_REG =
+or_number_with_reg =
     77
 
 
-XOR_REG_WITH_REG =
+xor_reg_with_reg =
     78
 
 
-XOR_REGADDRESS_WITH_REG =
+xor_regaddress_with_reg =
     79
 
 
-XOR_ADDRESS_WITH_REG =
+xor_address_with_reg =
     80
 
 
-XOR_NUMBER_WITH_REG =
+xor_number_with_reg =
     81
 
 
-NOT_REG =
+not_reg =
     82
 
 
-SHL_REG_WITH_REG =
+shl_reg_with_reg =
     90
 
 
-SHL_REGADDRESS_WITH_REG =
+shl_regaddress_with_reg =
     91
 
 
-SHL_ADDRESS_WITH_REG =
+shl_address_with_reg =
     92
 
 
-SHL_NUMBER_WITH_REG =
+shl_number_with_reg =
     93
 
 
-SHR_REG_WITH_REG =
+shr_reg_with_reg =
     94
 
 
-SHR_REGADDRESS_WITH_REG =
+shr_regaddress_with_reg =
     95
 
 
-SHR_ADDRESS_WITH_REG =
+shr_address_with_reg =
     96
 
 
-SHR_NUMBER_WITH_REG =
+shr_number_with_reg =
     97

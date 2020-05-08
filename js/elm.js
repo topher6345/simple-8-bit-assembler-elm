@@ -5381,11 +5381,23 @@ var $author$project$CPU$initalCPU = {
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$core$Debug$todo = _Debug_todo;
+var $author$project$AssemblerV2$parse = function (input) {
+	var result = _Debug_todo(
+		'AssemblerV2',
+		{
+			start: {line: 421, column: 13},
+			end: {line: 421, column: 23}
+		})('todo');
+	var lines = A2($elm$core$String$split, input, '\n');
+	return {code: result.code, label: result.label, mapping: result.mapping};
+};
 var $author$project$Init$program = '; Simple example\n; Writes Hello World to the output\n; from https://schweigi.github.io/assembler-simulator/\n\n  JMP start\nhello: DB "Hello World!" ; Variable\n       DB 0              ; String terminator\n\nstart:\n  MOV C, hello           ; Point to var \n  MOV D, 232             ; Point to output\n  CALL print\n        HLT              ; Stop execution\n\nprint:                   ; print(C:*from, D:*to)\n  PUSH A\n  PUSH B\n  MOV B, 0\n.loop:\n  MOV A, [C]             ; Get char from var\n  MOV [D], A             ; Write to output\n  INC C\n  INC D  \n  CMP B, [C]             ; Check if end\n  JNZ .loop              ; jump if not\n\n  POP B\n  POP A\n  RET\n';
 var $author$project$Main$initialModel = function (_v0) {
 	return _Utils_Tuple2(
 		{
 			assembled: false,
+			assemblerV2Result: $author$project$AssemblerV2$parse($author$project$Init$program),
 			clockRate: 200,
 			code: $author$project$Init$program,
 			count: 0,

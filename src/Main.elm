@@ -1,6 +1,7 @@
 port module Main exposing (main)
 
 import Array exposing (Array)
+import AssemblerV2 exposing (..)
 import Browser
 import Browser.Dom as Dom
 import Byte exposing (..)
@@ -33,6 +34,7 @@ type alias Model =
     , mapping : Dict String Int
     , labels : Dict String Int
     , editing : Bool
+    , assemblerV2Result : AssemblerV2Result
     }
 
 
@@ -50,6 +52,7 @@ initialModel _ =
       , mapping = Dict.fromList []
       , labels = Dict.fromList []
       , editing = True
+      , assemblerV2Result = AssemblerV2.parse Init.program
       }
     , Cmd.none
     )
