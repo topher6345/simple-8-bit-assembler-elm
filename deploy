@@ -1,0 +1,7 @@
+elm make src/Main.elm --optimize --output js/elm.js
+cp js/asm.js build/js/asm.js
+cp js/elm.js build/js/elm.js
+cp styles.css
+cp index.html build/index.html
+
+gh-pages -d build

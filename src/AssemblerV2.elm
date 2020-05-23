@@ -406,7 +406,7 @@ parseLine line data =
     if isNothing label && isNothing instruction then
         Debug.todo ""
 
-    else if String.trim line !== "" && String.startsWith ";" line then
+    else if String.trim line /= "" && String.startsWith ";" line then
         Err { line = 1, message = "syntax error" }
 
     else
