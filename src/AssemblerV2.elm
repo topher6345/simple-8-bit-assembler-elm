@@ -361,9 +361,7 @@ type alias AssemblerError =
     }
 
 
-firstPass :
-    List String
-    -> Result AssemblerError AssemblerV2Result
+firstPass : List String -> Result AssemblerError AssemblerV2Result
 firstPass lines =
     let
         firstPass_ :
@@ -372,21 +370,50 @@ firstPass lines =
             -> Result AssemblerError AssemblerV2Result
         firstPass_ lines_ data =
             case lines_ of
-                line :: [] ->
+                [] ->
                     Ok data
 
                 line :: rest ->
-                    firstPass_ rest data
-
-                _ ->
-                    Err { error = "Something Went wrong", line = Nothing }
+                    --parseLine
+                    Debug.todo ""
     in
     firstPass_ lines initAssemblerV2Result
 
 
-secondPass :
-    AssemblerV2Result
-    -> Result AssemblerError AssemblerV2Result
+isJust maybe =
+    case maybe of
+        Just _ ->
+            True
+
+        Nothing ->
+            False
+
+
+isNothing maybe =
+    case maybe of
+        Nothing ->
+            True
+
+        _ ->
+            False
+
+
+parseLine line data =
+    let
+        { label, instruction, operand1, operand2 } =
+            regexParse line
+    in
+    if isNothing label && isNothing instruction then
+        Debug.todo ""
+
+    else if String.trim line !== "" && String.startsWith ";" line then
+        Err { line = 1, message = "syntax error" }
+
+    else
+        Ok data
+
+
+secondPass : AssemblerV2Result -> Result AssemblerError AssemblerV2Result
 secondPass a =
     let
         { code } =
@@ -398,14 +425,11 @@ secondPass a =
             -> Result AssemblerError AssemblerV2Result
         secondPass_ inCode out =
             case inCode of
-                x :: [] ->
+                [] ->
                     Ok out
 
                 x :: xs ->
                     secondPass_ xs out
-
-                _ ->
-                    Err { error = "Something Went wrong", line = Nothing }
     in
     secondPass_ code initAssemblerV2Result
 
