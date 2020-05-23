@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>8-bit Assembler Simulator</title>
+    <script type="text/javascript" src="js/elm.js"></script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript" src="js/asm.js"></script>
+    <script type="text/javascript">
+      var node = document.getElementById('root');
+      var app = Elm.Main.init({node});
+      app.ports.sendMessage.subscribe(function(fromElm){      
+        var assembled;
+        try {  
+          assembled = parse(fromElm)
+        } catch(e) {
+          console.log(`${e.error} line: ${e.line}`)
+          assembled = { code: [], mapping: {}, labels: {}};
+        }
+        var toElm = JSON.stringify(assembled)
+        console.log(toElm)
+        app.ports.messageReceiver.send(toElm);
+      })
+    </script>
+   </body>
+</html>
